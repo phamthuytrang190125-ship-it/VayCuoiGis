@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bản đồ Váy Cưới GIS</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        /* CSS cho bản đồ hiển thị full màn hình */
+        #map { height: 500px; width: 100%; margin-top: 20px; }
+        body { font-family: sans-serif; padding: 20px; }
+        .store-item { border-bottom: 1px solid #ddd; padding: 10px; }
+    </style>
+</head>
+<body>
+
+    <h1>Hệ thống Tìm kiếm Váy Cưới (GIS)</h1>
+    
+    <div style="display: flex;">
+        <div style="width: 30%; padding-right: 20px;">
+            <h3>Danh sách cửa hàng</h3>
+            {% for store in stores_json|safe %}
+                {% endfor %}
+            <p>Đang có các cửa hàng trên bản đồ...</p>
+        </div>
+
+        <div style="width: 70%;">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // Lấy dữ liệu từ Django gửi sang (JSON)
+        var stores = {{ stores_json|safe }};
+
+        // 3. Khởi tạo bản đồ (Tọa độ trung tâm TP.HCM)
+        var map = L.map('map').setView([10.7769, 106.7009], 12);
+
+        // 4. Thêm lớp nền bản đồ (OpenStreetMap - Miễn phí)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // 5. Chạy vòng lặp để ghim các điểm cửa hàng lên bản đồ
+        stores.forEach(function(store) {
+            L.marker([store.lat, store.lon])
+                .addTo(map)
+                .bindPopup("<b>" + store.name + "</b><br>" + store.address);
+        });
+    </script>
+</body>
+</html>

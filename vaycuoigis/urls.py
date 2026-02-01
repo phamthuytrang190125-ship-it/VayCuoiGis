@@ -17,7 +17,9 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
+from store import views # Import view bạn vừa viết
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path('admin/', admin.site.urls),
+    path('', views.home, name='home'), # Đường dẫn trang chủ
 ]
