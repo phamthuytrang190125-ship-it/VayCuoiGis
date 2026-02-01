@@ -1,3 +1,4 @@
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -6,49 +7,140 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <style>
-        /* CSS cho bản đồ hiển thị full màn hình */
-        #map { height: 500px; width: 100%; margin-top: 20px; }
-        body { font-family: sans-serif; padding: 20px; }
-        .store-item { border-bottom: 1px solid #ddd; padding: 10px; }
+        /* CSS cho giao diện đẹp hơn */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; display: flex; height: 100vh; }
+        
+        /* Cột bên trái (Sidebar) */
+        .sidebar { width: 350px; padding: 20px; overflow-y: auto; background-color: #f8f9fa; border-right: 1px solid #ddd; box-shadow: 2px 0 5px rgba(0,0,0,0.1); }
+        
+        /* Khu vực bản đồ bên phải */
+        .map-container { flex: 1; position: relative; }
+        #map { height: 100vh; width: 100%; }
+
+        /* Style cho từng Cửa hàng trong danh sách */
+        .store-item { background: white; padding: 15px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #eee; cursor: pointer; transition: 0.3s; }
+        .store-item:hover { background-color: #e9ecef; border-color: #aaa; }
+        .store-name { font-weight: bold; font-size: 1.1em; color: #2c3e50; }
+        .store-dist { color: #e74c3c; font-weight: bold; margin-top: 5px; }
+
+        /* Style cho ô tìm kiếm */
+        .search-box { background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 20px; }
+        .search-box input { width: 80px; padding: 5px; margin-right: 5px; }
+        .btn-search { background: #3498db; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+        .btn-search:hover { background: #2980b9; }
+
+        /* Style cho danh sách váy cưới */
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; max-height: 400px;       /* Chỉ cho cao tối đa 400px (khoảng 2 hàng váy) */
+    overflow-y: auto;        /* Dài quá thì hiện thanh cuộn dọc */
+    padding-right: 5px; }
+        .product-item { background: white; border: 1px solid #ddd; border-radius: 5px; overflow: hidden; text-align: center; font-size: 0.9em; }
+        .product-item img { width: 100%; height: 120px; object-fit: cover; }
+        .price { color: #27ae60; font-weight: bold; }
+        .store-list {
+            max-height: 300px;  /* Chiều cao tối đa */
+            overflow-y: auto;   /* Tự hiện thanh cuộn khi danh sách dài */
+            border: 1px solid #eee; /* Kẻ khung mờ cho đẹp (tùy chọn) */
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Hệ thống Tìm kiếm Váy Cưới (GIS)</h1>
-    
-    <div style="display: flex;">
-        <div style="width: 30%; padding-right: 20px;">
-            <h3>Danh sách cửa hàng</h3>
-            {% for store in stores_json|safe %}
-                {% endfor %}
-            <p>Đang có các cửa hàng trên bản đồ...</p>
+    <div class="sidebar">
+        <h2 style="text-align: center; color: #d35400;">💒 Váy Cưới GIS</h2>
+        
+        <div class="search-box">
+            <h4 style="margin-top: 0;">📍 Vị trí của bạn</h4>
+            <form method="POST">
+                {% csrf_token %}
+                <label>Lat:</label> 
+                <input type="text" name="lat" value="{{ user_lat }}">
+                <label>Lon:</label> 
+                <input type="text" name="lon" value="{{ user_lon }}">
+                <button type="submit" class="btn-search">Tìm</button>
+            </form>
+            <small style="color: #666; display: block; margin-top: 5px;">*Mặc định là Chợ Bến Thành</small>
         </div>
 
-        <div style="width: 70%;">
-            <div id="map"></div>
+       <h3>🏪 Cửa hàng gần nhất</h3>
+
+<div class="store-list">  {% for store in stores %}
+        <div class="store-item" onclick="focusMap({{ store.lat }}, {{ store.lon }})">
+            <div class="store-name">{{ store.name }}</div>
+            <div>{{ store.address }}</div>
+            <div class="store-dist">➤ Cách bạn: {{ store.distance }} km</div>
         </div>
+    {% endfor %}
+</div>
+
+        <hr>
+
+        <h3>👗 Bộ sưu tập Váy cưới</h3>
+        <div class="product-grid">
+            {% for p in products %}
+            <div class="product-item">
+                {% if p.image %}
+                <img src="{{ p.image.url }}" alt="{{ p.name }}">
+                {% else %}
+                <div style="height: 120px; background: #eee; line-height: 120px;">No Image</div>
+                {% endif %}
+                <div style="padding: 5px;">
+                    <b>{{ p.name }}</b>
+                    <div class="price">{{ p.price|intcomma }} đ</div>
+                </div>
+            </div>
+            {% empty %}
+            <p>Chưa có dữ liệu váy.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="map-container">
+        <div id="map"></div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        // Lấy dữ liệu từ Django gửi sang (JSON)
+        // 1. Nhận dữ liệu từ Django View
         var stores = {{ stores_json|safe }};
+        var userLat = {{ user_lat|stringformat:"f" }};
+        var userLon = {{ user_lon|stringformat:"f" }};
 
-        // 3. Khởi tạo bản đồ (Tọa độ trung tâm TP.HCM)
-        var map = L.map('map').setView([10.7769, 106.7009], 12);
+        // 2. Khởi tạo bản đồ (Tập trung vào vị trí người dùng)
+        var map = L.map('map').setView([userLat, userLon], 13);
 
-        // 4. Thêm lớp nền bản đồ (OpenStreetMap - Miễn phí)
+        // 3. Thêm lớp nền bản đồ OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
 
-        // 5. Chạy vòng lặp để ghim các điểm cửa hàng lên bản đồ
+        // --- ICON ĐẶC BIỆT CHO NGƯỜI DÙNG (MÀU ĐỎ) ---
+        var redIcon = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+
+        // 4. Marker vị trí người dùng
+        L.marker([userLat, userLon], {icon: redIcon}).addTo(map)
+            .bindPopup("<b>Bạn đang ở đây</b><br>(" + userLat + ", " + userLon + ")")
+            .openPopup();
+
+        // 5. Marker các cửa hàng (Màu xanh mặc định)
         stores.forEach(function(store) {
             L.marker([store.lat, store.lon])
                 .addTo(map)
-                .bindPopup("<b>" + store.name + "</b><br>" + store.address);
+                .bindPopup("<b>" + store.name + "</b><br>" + store.address + "<br>Cách: " + store.distance + " km");
         });
+
+        // 6. Hàm click vào danh sách thì map bay tới đó
+        function focusMap(lat, lon) {
+            map.flyTo([lat, lon], 16);
+        }
     </script>
 </body>
 </html>
