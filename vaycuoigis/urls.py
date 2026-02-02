@@ -24,6 +24,7 @@ from store import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('api/shipping-fee/', views.api_calculate_shipping, name='api_shipping'),
 ]
 
 # Thêm dòng này để hiển thị ảnh trong môi trường DEV

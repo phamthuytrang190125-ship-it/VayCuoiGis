@@ -21,7 +21,8 @@
         .store-item { background: white; padding: 15px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #eee; cursor: pointer; transition: 0.3s; }
         .store-item:hover { background-color: #e9ecef; border-color: #aaa; }
         .store-name { font-weight: bold; font-size: 1.1em; color: #2c3e50; }
-        .store-dist { color: #e74c3c; font-weight: bold; margin-top: 5px; }
+        .store-dist { color: #555; font-size: 0.9em; margin-top: 5px; }
+        .store-fee { color: #e74c3c; font-weight: bold; font-size: 0.95em; } /* Style cho giá tiền */
 
         /* Style cho ô tìm kiếm */
         .search-box { background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 20px; }
@@ -30,16 +31,18 @@
         .btn-search:hover { background: #2980b9; }
 
         /* Style cho danh sách váy cưới */
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; max-height: 400px;       /* Chỉ cho cao tối đa 400px (khoảng 2 hàng váy) */
-    overflow-y: auto;        /* Dài quá thì hiện thanh cuộn dọc */
-    padding-right: 5px; }
+        .product-grid { 
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; 
+            max-height: 400px; overflow-y: auto; padding-right: 5px; 
+        }
         .product-item { background: white; border: 1px solid #ddd; border-radius: 5px; overflow: hidden; text-align: center; font-size: 0.9em; }
         .product-item img { width: 100%; height: 120px; object-fit: cover; }
         .price { color: #27ae60; font-weight: bold; }
+        
         .store-list {
-            max-height: 300px;  /* Chiều cao tối đa */
-            overflow-y: auto;   /* Tự hiện thanh cuộn khi danh sách dài */
-            border: 1px solid #eee; /* Kẻ khung mờ cho đẹp (tùy chọn) */
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #eee;
             margin-bottom: 20px;
         }
     </style>
@@ -64,14 +67,17 @@
 
        <h3>🏪 Cửa hàng gần nhất</h3>
 
-<div class="store-list">  {% for store in stores %}
-        <div class="store-item" onclick="focusMap({{ store.lat }}, {{ store.lon }})">
-            <div class="store-name">{{ store.name }}</div>
-            <div>{{ store.address }}</div>
-            <div class="store-dist">➤ Cách bạn: {{ store.distance }} km</div>
+        <div class="store-list">  
+            {% for store in stores %}
+                <div class="store-item" onclick="focusMap({{ store.lat }}, {{ store.lon }})">
+                    <div class="store-name">{{ store.name }}</div>
+                    <div style="font-size: 0.9em; color:#777;">{{ store.address }}</div>
+                    
+                    <div class="store-dist">➤ Cách bạn: {{ store.distance }} km</div>
+                    <div class="store-fee">💰 Ship: {{ store.formatted_fee }} VNĐ</div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-</div>
 
         <hr>
 
@@ -125,16 +131,25 @@
             shadowSize: [41, 41]
         });
 
-        // 4. Marker vị trí người dùng
+        // 4. Marker vị trí người dùng (Dùng Icon Đỏ)
         L.marker([userLat, userLon], {icon: redIcon}).addTo(map)
             .bindPopup("<b>Bạn đang ở đây</b><br>(" + userLat + ", " + userLon + ")")
             .openPopup();
 
-        // 5. Marker các cửa hàng (Màu xanh mặc định)
+        // 5. Marker các cửa hàng (Mặc định màu xanh)
+        // --- SỬA: Cập nhật nội dung Popup để hiện tiền Ship ---
         stores.forEach(function(store) {
             L.marker([store.lat, store.lon])
                 .addTo(map)
-                .bindPopup("<b>" + store.name + "</b><br>" + store.address + "<br>Cách: " + store.distance + " km");
+                .bindPopup(`
+                    <div style="text-align:center">
+                        <b style="font-size:14px; color:#2980b9">${store.name}</b><br>
+                        <span style="font-size:12px">${store.address}</span>
+                        <hr style="margin: 5px 0;">
+                        📍 Cách bạn: <b>${store.distance} km</b><br>
+                        💰 Phí ship: <b style="color:red; font-size:14px;">${store.formatted_fee} VNĐ</b>
+                    </div>
+                `);
         });
 
         // 6. Hàm click vào danh sách thì map bay tới đó
