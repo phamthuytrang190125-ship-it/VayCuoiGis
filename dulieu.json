@@ -1,0 +1,250 @@
+[
+{
+  "model": "store.store",
+  "pk": 1,
+  "fields": {
+    "name": "Phiêu Studio - Áo cưới",
+    "address": "378 Đ. Lũy Bán Bích, Hòa Thạnh, Tân Phú, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0342498886",
+    "latitude": 10.776380604861505,
+    "longitude": 106.63338661796918
+  }
+},
+{
+  "model": "store.store",
+  "pk": 2,
+  "fields": {
+    "name": "Kami Anna Studio - Chụp hình cưới đẹp HCM",
+    "address": "328A Nguyễn Sơn, Phú Thọ Hoà, Tân Phú, Thành phố Hồ Chí Minh 760000, Việt Nam",
+    "phone": "0933683127",
+    "latitude": 10.784946539744386,
+    "longitude": 106.62335628646679
+  }
+},
+{
+  "model": "store.store",
+  "pk": 3,
+  "fields": {
+    "name": "Áo Cưới Phương Du(ANITA makeup)",
+    "address": "173/15 Khuông Việt, Phú Trung, Tân Phú, Thành phố Hồ Chí Minh 07000, Việt Nam",
+    "phone": "0909124306",
+    "latitude": 10.775439822587822,
+    "longitude": 106.63898142599315
+  }
+},
+{
+  "model": "store.store",
+  "pk": 4,
+  "fields": {
+    "name": "Maison de Orenji Wedding - Bridal",
+    "address": "Celadon Boulevard, Đ. Tân Thạnh, phường Tân Sơn Nhì, Tân Phú, Thành phố Hồ Chí Minh 70000, Việt Nam",
+    "phone": "0932121293",
+    "latitude": 10.805738279560382,
+    "longitude": 106.61323785583215
+  }
+},
+{
+  "model": "store.store",
+  "pk": 5,
+  "fields": {
+    "name": "Helen Bridal",
+    "address": "130 Tân Sơn Nhì, Tân Phú, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0935359365",
+    "latitude": 10.802112980032717,
+    "longitude": 106.63272142288075
+  }
+},
+{
+  "model": "store.store",
+  "pk": 6,
+  "fields": {
+    "name": "Tony Wedding - Chụp ảnh cưới đẹp Tân Phú",
+    "address": "19 Đ. Gò Dầu, Tân Sơn Nhì, Tân Phú, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0938605466",
+    "latitude": 10.796200697395596,
+    "longitude": 106.62844266074345
+  }
+},
+{
+  "model": "store.store",
+  "pk": 7,
+  "fields": {
+    "name": "SONO Wedding",
+    "address": "202 Lê Trọng Tấn, Tây Thạnh, Tân Phú, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0902734571",
+    "latitude": 10.807698452314478,
+    "longitude": 106.62524342434399
+  }
+},
+{
+  "model": "store.store",
+  "pk": 8,
+  "fields": {
+    "name": "Sweet's Wedding",
+    "address": "465 Đ. Vườn Lài, Phú Thọ Hoà, Tân Phú, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0938309429",
+    "latitude": 10.789097373276839,
+    "longitude": 106.62284016554959
+  }
+},
+{
+  "model": "store.product",
+  "pk": 1,
+  "fields": {
+    "store": 3,
+    "name": "Váy Cưới Công Chúa Đính Đá",
+    "price": "2500000",
+    "image": "products/Vay_Cuoi_Cong_Chua_Đinh_Đa.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 2,
+  "fields": {
+    "store": 3,
+    "name": "Váy cưới Ball Gown trễ vai, xếp tầng",
+    "price": "3000000",
+    "image": "products/Vay_cuoi_Ball_Gown_tre_vai_xep_tang.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 3,
+  "fields": {
+    "store": 3,
+    "name": "Váy cưới tay dài ren, cổ cao",
+    "price": "2900000",
+    "image": "products/Vay_cuoi_tay_dai_ren_co_cao.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 4,
+  "fields": {
+    "store": 3,
+    "name": "Váy đuôi cá đính lông vũ",
+    "price": "2500000",
+    "image": "products/Vay_đuoi_ca_đinh_long_vu.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 5,
+  "fields": {
+    "store": 3,
+    "name": "Váy công chúa trễ vai đính lông vũ",
+    "price": "3200000",
+    "image": "products/Vay_cong_chua_tre_vai_đinh_long_vu.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 6,
+  "fields": {
+    "store": 1,
+    "name": "Váy quây đính hoa nổi",
+    "price": "4000000",
+    "image": "products/Vay_quay_đinh_hoa_noi.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 7,
+  "fields": {
+    "store": 1,
+    "name": "Váy cúp ngực ren cao cấp",
+    "price": "4500000",
+    "image": "products/Vay_cup_nguc_ren_cao_cap.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 8,
+  "fields": {
+    "store": 1,
+    "name": "Váy đuôi cá phối tà phụ",
+    "price": "3800000",
+    "image": "products/Vay_đuoi_ca_phoi_ta_phu.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 9,
+  "fields": {
+    "store": 1,
+    "name": "Váy Cưới Công Chúa Ánh Kim",
+    "price": "5000000",
+    "image": "products/Vay_Cuoi_Cong_Chua_Anh_Kim.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 10,
+  "fields": {
+    "store": 1,
+    "name": "Váy Cưới Công Chúa Tay Dài Đính Đá",
+    "price": "6500000",
+    "image": "products/Vay_Cuoi_Cong_Chua_Tay_Dai_Đinh_Đa.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 11,
+  "fields": {
+    "store": 1,
+    "name": "Váy cổ cao phong cách Hoàng gia",
+    "price": "12000000",
+    "image": "products/vay_co_cao_phong_cach_Hoang_gia.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 12,
+  "fields": {
+    "store": 1,
+    "name": "Váy Ren Cổ điển",
+    "price": "9000000",
+    "image": "products/Vay_Ren_Co_đien.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 13,
+  "fields": {
+    "store": 1,
+    "name": "Váy Mullet Hiện đại",
+    "price": "4000000",
+    "image": "products/Vay_Mullet_Hien_đai.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 14,
+  "fields": {
+    "store": 2,
+    "name": "Váy Công Chúa Xếp Nếp Nghệ Thuật",
+    "price": "7000000",
+    "image": "products/Vay_Cong_Chua_Xep_Nep_Nghe_Thuat.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 15,
+  "fields": {
+    "store": 2,
+    "name": "Váy Cúp ngực Kim sa Tối giản",
+    "price": "5300000",
+    "image": "products/Vay_Cup_nguc_Kim_sa_Toi_gian.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 16,
+  "fields": {
+    "store": 2,
+    "name": "Goddess of Moonlight",
+    "price": "8200000",
+    "image": "products/Goddess_of_Moonlight.jpg"
+  }
+}
+]
