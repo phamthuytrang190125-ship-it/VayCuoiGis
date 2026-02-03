@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Store, Product
+from .models import Store, Product, Booking 
 
 # 1. Quản lý Cửa hàng (Store)
 @admin.register(Store)
@@ -24,3 +24,11 @@ class ProductAdmin(admin.ModelAdmin):
     
     # (Tùy chọn) Sắp xếp danh sách theo giá giảm dần (váy đắt nhất lên đầu)
     ordering = ('-price',)
+
+# 3. Quản lý đặt lịch 
+@admin.register(Booking)
+class BookingAdmin(admin.ModelAdmin):
+    list_display = ('customer_name', 'phone', 'product', 'booking_date', 'status')
+    list_filter = ('status', 'booking_date')
+    search_fields = ('customer_name', 'phone')
+    list_editable = ('status',) # Cho phép sửa trạng thái (Duyệt/Hủy) nhanh ngay bên ngoài

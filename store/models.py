@@ -22,3 +22,25 @@ class Product(models.Model):
     
     def __str__(self):
         return self.name
+    
+# Bảng Đặt lịch hẹn (Booking)
+class Booking(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Chờ duyệt'),
+        ('confirmed', 'Đã duyệt'),
+        ('done', 'Đã xong'),
+        ('cancelled', 'Đã hủy'),
+    ]
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Váy muốn thử")
+    customer_name = models.CharField(max_length=100, verbose_name="Tên khách")
+    phone = models.CharField(max_length=20, verbose_name="Số điện thoại")
+    booking_date = models.DateTimeField(verbose_name="Ngày giờ hẹn")
+    note = models.TextField(blank=True, null=True, verbose_name="Ghi chú thêm")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending', verbose_name="Trạng thái")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Ngày đặt")
+
+    def __str__(self):
+        return f"{self.customer_name} - {self.product.name}"
+    
+    
