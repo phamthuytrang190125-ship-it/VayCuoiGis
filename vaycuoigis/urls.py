@@ -25,8 +25,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('api/shipping-fee/', views.api_calculate_shipping, name='api_shipping'),
+    path('product/<int:pk>/', views.product_detail, name='product_detail'),
 ]
 
-# Thêm dòng này để hiển thị ảnh trong môi trường DEV
+# Thêm dòng này để Django "mở cửa" cho phép xem ảnh trong thư mục media
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

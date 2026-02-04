@@ -84,17 +84,19 @@
         <h3>👗 Bộ sưu tập Váy cưới</h3>
         <div class="product-grid">
             {% for p in products %}
-            <div class="product-item">
-                {% if p.image %}
-                <img src="{{ p.image.url }}" alt="{{ p.name }}">
-                {% else %}
-                <div style="height: 120px; background: #eee; line-height: 120px;">No Image</div>
-                {% endif %}
-                <div style="padding: 5px;">
-                    <b>{{ p.name }}</b>
-                    <div class="price">{{ p.price|intcomma }} đ</div>
+            <a href="{% url 'product_detail' p.id %}" style="text-decoration: none; color: inherit;">
+                <div class="product-item">
+                    {% if p.image %}
+                    <img src="{{ p.image.url }}" alt="{{ p.name }}">
+                    {% else %}
+                    <div style="height: 120px; background: #eee; line-height: 120px;">No Image</div>
+                    {% endif %}
+                    <div style="padding: 5px;">
+                        <b>{{ p.name }}</b>
+                        <div class="price">{{ p.price|intcomma }} đ</div>
+                    </div>
                 </div>
-            </div>
+            </a>
             {% empty %}
             <p>Chưa có dữ liệu váy.</p>
             {% endfor %}
@@ -137,7 +139,6 @@
             .openPopup();
 
         // 5. Marker các cửa hàng (Mặc định màu xanh)
-        // --- SỬA: Cập nhật nội dung Popup để hiện tiền Ship ---
         stores.forEach(function(store) {
             L.marker([store.lat, store.lon])
                 .addTo(map)

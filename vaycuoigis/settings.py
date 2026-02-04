@@ -114,6 +114,9 @@ USE_I18N = True
 
 USE_TZ = True
 
+USE_L10N = True
+USE_THOUSAND_SEPARATOR = True
+THOUSAND_SEPARATOR = '.'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -134,3 +137,19 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+# --- CẤU HÌNH BỔ SUNG CHO JAZZMIN (Tùy chọn nhưng nên có) ---
+JAZZMIN_SETTINGS = {
+    "site_title": "Hệ thống Váy Cưới GIS",
+    "site_header": "Váy Cưới GIS",
+    "site_brand": "Quản trị Váy Cưới",
+    "welcome_sign": "Chào mừng bạn đến với hệ thống quản lý Váy Cưới",
+    "search_model": ["store.Product", "store.Booking"],
+    "topmenu_links": [
+        {"name": "Trang chủ", "url": "home", "permissions": ["auth.view_user"]},
+    ],
+    "show_ui_builder": True, # Bật cái này để bạn tự chỉnh màu sắc giao diện Admin theo ý thích
+}
+
+JAZZMIN_UI_CONFIG = {
+    "theme": "flatly", # Bạn có thể đổi sang 'lux', 'pulse', hoặc 'simplex'
+}
