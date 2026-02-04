@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Store, Product, Booking, ProductImage # Thêm ProductImage vào đây
+from .models import Store, Product, Booking, ProductImage 
 from django.utils import timezone
 
 # 1. Quản lý Ảnh phụ (Hiện theo dạng hàng ngang trong trang Product)
@@ -20,13 +20,14 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     ordering = ('-price',)
     
-    # THÊM DÒNG NÀY: Để hiện chỗ upload nhiều ảnh cùng lúc
+    # Hiện chỗ upload nhiều ảnh cùng lúc trong trang chỉnh sửa sản phẩm
     inlines = [ProductImageInline]
 
     def description_short(self, obj):
         return obj.description[:50] + "..." if obj.description else "Không có mô tả"
     description_short.short_description = 'Mô tả ngắn'
 
+# 3. Quản lý đặt lịch (Booking)
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
     list_display = ('customer_name', 'phone', 'product', 'get_store', 'formatted_date', 'status')
