@@ -1,0 +1,88 @@
+/* static/css/admin_royal.css */
+
+/* 1. Import Font chữ giống trang Bản đồ */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@400;600&display=swap');
+
+/* 2. Tổng thể - Nền màu kem nhạt */
+body, .content-wrapper {
+    font-family: 'Quicksand', sans-serif !important;
+    background-color: #fdfbf7 !important; 
+    color: #4a4a4a !important;
+}
+
+/* 3. THANH HEADER (Ngang bên trên) - Màu Hồng Đất */
+.main-header.navbar {
+    background-color: #d88a9a !important; /* Màu hồng chủ đạo */
+    border-bottom: none !important;
+}
+.main-header .nav-link {
+    color: white !important;
+}
+
+/* 4. SIDEBAR (Thanh bên trái) - Màu Trắng sang trọng */
+.main-sidebar {
+    background-color: #ffffff !important;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.05);
+    border-right: 1px solid #ebd4d8;
+}
+
+/* Logo Brand ở góc trên trái Sidebar */
+.brand-link {
+    background-color: #d88a9a !important; 
+    color: white !important;
+    font-family: 'Playfair Display', serif !important;
+    border-bottom: 1px solid #c06c7d !important;
+}
+.brand-link:hover { color: #fff !important; }
+
+/* Link trong sidebar */
+.nav-sidebar .nav-item .nav-link {
+    color: #555 !important;
+}
+.nav-sidebar .nav-item .nav-link:hover {
+    background-color: #fff0f3 !important; /* Hover hồng nhạt */
+    color: #d88a9a !important;
+}
+
+/* Link đang Active (Đang chọn) */
+.nav-sidebar .nav-item .nav-link.active {
+    background-color: #d88a9a !important;
+    color: white !important;
+    box-shadow: 0 4px 10px rgba(216, 138, 154, 0.4) !important;
+    border-radius: 8px;
+}
+
+/* 5. NÚT BẤM (BUTTONS) */
+/* Nút Chính (Search, Save) -> Màu Vàng Kim */
+.btn-primary {
+    background-color: #bfa05f !important;
+    border-color: #bfa05f !important;
+    font-weight: 600;
+}
+.btn-primary:hover {
+    background-color: #a68b4f !important;
+}
+
+/* Nút Thêm mới (Add) -> Màu Hồng */
+.btn-success {
+    background-color: #d88a9a !important;
+    border-color: #d88a9a !important;
+}
+.btn-success:hover {
+    background-color: #c06c7d !important;
+}
+
+/* 6. CÁC CARD/BẢNG DỮ LIỆU */
+.card {
+    border-radius: 12px !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05) !important;
+    border: none !important;
+}
+.card-header {
+    background-color: white !important;
+    border-bottom: 2px solid #f0f0f0 !important;
+    font-family: 'Playfair Display', serif;
+    color: #d88a9a !important;
+    font-size: 1.2em;
+    font-weight: bold;
+}

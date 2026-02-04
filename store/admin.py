@@ -25,7 +25,7 @@ class ProductAdmin(admin.ModelAdmin):
     # (Tùy chọn) Sắp xếp danh sách theo giá giảm dần (váy đắt nhất lên đầu)
     ordering = ('-price',)
 
-# 3. Quản lý đặt lịch 
+# 3. Quản lý đặt lịch (Booking)
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
     list_display = ('customer_name', 'phone', 'product', 'booking_date', 'status')
