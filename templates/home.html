@@ -28,7 +28,7 @@
             color: var(--text-dark);
         }
         
-        /* --- SIDEBAR SANG TRỌNG --- */
+        /* --- SIDEBAR --- */
         .sidebar { 
             width: 380px; 
             background-color: var(--white); 
@@ -38,7 +38,6 @@
             box-shadow: 5px 0 15px rgba(0,0,0,0.05);
         }
         
-        /* HEADER */
         .sidebar-header { 
             padding: 20px; 
             background: linear-gradient(to bottom, #fff, #fdfbf7);
@@ -57,7 +56,6 @@
         
         .sub-title { font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
 
-        /* SEARCH BOX ĐẸP */
         .location-panel {
             background: #fff;
             border: 1px solid #ebd4d8;
@@ -82,7 +80,11 @@
         .btn-gps { background-color: white; border: 1px solid var(--primary-color); color: var(--primary-color); }
         .btn-gps:hover { background-color: #fff0f3; }
 
+<<<<<<< HEAD
         /* --- THANH TAB CHUYỂN ĐỔI --- */
+=======
+        /* --- TAB CHUYỂN ĐỔI --- */
+>>>>>>> 5c1c15d511eb909412b75542b6bfd207842031bd
         .tab-container {
             display: flex;
             justify-content: center;
@@ -106,7 +108,10 @@
         }
 
         .tab-btn.active { color: var(--primary-color); }
+<<<<<<< HEAD
         
+=======
+>>>>>>> 5c1c15d511eb909412b75542b6bfd207842031bd
         .tab-btn.active::after {
             content: '';
             position: absolute;
@@ -119,10 +124,8 @@
         /* --- VÙNG NỘI DUNG CUỘN --- */
         .scroll-content { flex: 1; overflow-y: auto; padding: 15px; background-color: #fdfbf7; }
         .scroll-content::-webkit-scrollbar { width: 6px; }
-        .scroll-content::-webkit-scrollbar-track { background: #f1f1f1; }
         .scroll-content::-webkit-scrollbar-thumb { background: #e0c0c0; border-radius: 10px; }
 
-        /* Ẩn/Hiện nội dung theo tab */
         .tab-content { display: none; animation: fadeIn 0.5s; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -133,23 +136,18 @@
             padding: 15px;
             margin-bottom: 15px;
             border-radius: 10px;
-            border: 1px solid #fff;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
         }
-        .store-card::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 4px; background: var(--accent-color); opacity: 0; transition: 0.3s; }
         .store-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
-        .store-card:hover::before { opacity: 1; }
-        
         .store-name { font-family: 'Playfair Display', serif; font-size: 1.2em; color: #333; font-weight: 700; margin-bottom: 4px; }
-        .store-addr { font-size: 0.85em; color: #777; display: flex; align-items: center; gap: 5px; }
+        .store-addr { font-size: 0.85em; color: #777; }
         .badge-dist { background: #f0f0f0; padding: 3px 8px; border-radius: 12px; font-size: 0.75em; color: #555; }
         .badge-fee { color: var(--primary-color); font-weight: 600; font-size: 0.9em; float: right; }
 
-        /* --- CARD VÁY CƯỚI (GRID) --- */
+        /* --- GRID VÁY CƯỚI --- */
         .dress-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .dress-card {
             background: white;
@@ -157,13 +155,12 @@
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             transition: 0.3s;
+            text-decoration: none; /* Bỏ gạch chân cho thẻ a */
+            display: block;
         }
         .dress-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(216, 138, 154, 0.2); }
-        
-        .dress-img-box { height: 160px; overflow: hidden; position: relative; }
-        .dress-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .dress-card:hover img { transform: scale(1.1); }
-        
+        .dress-img-box { height: 160px; overflow: hidden; background: #f9f9f9; }
+        .dress-img-box img { width: 100%; height: 100%; object-fit: cover; }
         .dress-info { padding: 10px; text-align: center; }
         .dress-name { font-size: 0.9em; font-weight: 600; color: #333; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .dress-price { font-family: 'Playfair Display', serif; color: var(--accent-color); font-weight: bold; font-size: 1.1em; }
@@ -172,14 +169,11 @@
         .map-container { flex: 1; }
         #map { width: 100%; height: 100%; }
 
-        /* Custom Popup Leaflet */
-        .leaflet-popup-content-wrapper { border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); padding: 0; }
-        .leaflet-popup-content { margin: 0; width: 220px !important; }
-        .popup-header { background: var(--primary-color); color: white; padding: 10px; text-align: center; border-radius: 10px 10px 0 0; font-family: 'Playfair Display', serif; }
-        .popup-body { padding: 15px; text-align: center; font-size: 13px; }
-        .btn-route-pop { background: var(--text-dark); color: white; border: none; padding: 6px 15px; border-radius: 20px; font-size: 12px; cursor: pointer; margin-top: 10px; }
-    
-        /* Ẩn input Lat/Lon xấu xí đi */
+        /* Popup */
+        .popup-header { background: var(--primary-color); color: white; padding: 10px; text-align: center; border-radius: 10px 10px 0 0; }
+        .popup-body { padding: 10px; text-align: center; font-size: 13px; }
+        .btn-route-pop { background: var(--text-dark); color: white; border: none; padding: 6px 15px; border-radius: 20px; font-size: 12px; cursor: pointer; margin-top: 5px; }
+        
         .hidden-inputs { display: none; }
     </style>
 </head>
@@ -198,30 +192,25 @@
                         <input type="text" name="lon" id="lonInput" value="{{ user_lon }}">
                     </div>
                     
-                    <div style="font-size: 13px; color: #777; margin-bottom: 5px;">📍 Vị trí hiện tại của bạn:</div>
+                    <div style="font-size: 13px; color: #777; margin-bottom: 5px;">📍 Vị trí của bạn:</div>
                     <div style="font-weight: bold; color: var(--primary-color); margin-bottom: 10px;">
-                        {% if request.method == "POST" %}
-                            Đã xác định tọa độ
-                        {% else %}
-                            Đang ở Chợ Bến Thành (Mặc định)
-                        {% endif %}
+                        {% if request.method == "POST" %} Đã xác định tọa độ {% else %} Chợ Bến Thành (Mặc định) {% endif %}
                     </div>
 
                     <div style="display: flex; gap: 8px;">
                         <button type="submit" class="btn-action btn-find">🔄 Tìm Shop Gần Đây</button>
-                        <button type="button" onclick="forceGetLocation()" class="btn-action btn-gps">🎯 Định Vị Tôi</button>
+                        <button type="button" onclick="forceGetLocation()" class="btn-action btn-gps">🎯 Định Vị</button>
                     </div>
                 </form>
             </div>
         </div>
 
         <div class="tab-container">
-            <button class="tab-btn active" onclick="openTab('storeTab')">Danh Sách Cửa Hàng</button>
-            <button class="tab-btn" onclick="openTab('dressTab')">Bộ Sưu Tập Váy</button>
+            <button class="tab-btn active" onclick="openTab(event, 'storeTab')">Cửa Hàng</button>
+            <button class="tab-btn" onclick="openTab(event, 'dressTab')">Váy Cưới</button>
         </div>
 
         <div class="scroll-content">
-            
             <div id="storeTab" class="tab-content active">
                 {% for store in stores %}
                 <div class="store-card" onclick="focusAndRoute({{ store.lat|stringformat:'f' }}, {{ store.lon|stringformat:'f' }})">
@@ -232,12 +221,15 @@
                         <span class="badge-fee">Ship: {{ store.formatted_fee }} đ</span>
                     </div>
                 </div>
+                {% empty %}
+                <p style="text-align:center;">Không tìm thấy cửa hàng nào gần đây.</p>
                 {% endfor %}
             </div>
 
             <div id="dressTab" class="tab-content">
                 <div class="dress-grid">
                     {% for p in products %}
+<<<<<<< HEAD
                     <a href="{% url 'product_detail' p.id %}" style="text-decoration: none; color: inherit;">
                         <div class="dress-card">
                             <div class="dress-img-box">
@@ -253,13 +245,30 @@
                                 <div style="font-size: 11px; color: #d88a9a; margin-top: 5px;">👉 Xem chi tiết</div>
                             </div>
                         </div>
+=======
+                    <a href="{% url 'product_detail' p.id %}" class="dress-card">
+                        <div class="dress-img-box">
+                            {% if p.image %}
+                                <img src="{{ p.image.url }}" alt="{{ p.name }}">
+                            {% else %}
+                                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#aaa;">No Image</div>
+                            {% endif %}
+                        </div>
+                        <div class="dress-info">
+                            <div class="dress-name">{{ p.name }}</div>
+                            <div class="dress-price">{{ p.price|intcomma }} đ</div>
+                        </div>
+>>>>>>> 5c1c15d511eb909412b75542b6bfd207842031bd
                     </a>
                     {% empty %}
-                    <p style="text-align:center; width:200%;">Chưa có dữ liệu váy.</p>
+                    <p style="text-align:center; grid-column: 1/3;">Chưa có dữ liệu váy.</p>
                     {% endfor %}
                 </div>
             </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c1c15d511eb909412b75542b6bfd207842031bd
         </div>
     </div>
 
@@ -271,6 +280,7 @@
     <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
 
     <script>
+<<<<<<< HEAD
         // --- LOGIC CHUYỂN TAB ---
         function openTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -280,18 +290,29 @@
         }
 
         // --- MAP LOGIC ---
+=======
+        function openTab(evt, tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+>>>>>>> 5c1c15d511eb909412b75542b6bfd207842031bd
         var stores = {{ stores_json|safe }};
         var userLat = parseFloat("{{ user_lat|stringformat:'f' }}");
         var userLon = parseFloat("{{ user_lon|stringformat:'f' }}");
-        var defaultLat = 10.7721;
-        var defaultLon = 106.6983;
 
         var map = L.map('map').setView([userLat, userLon], 14);
 
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+<<<<<<< HEAD
             attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
             subdomains: 'abcd',
             maxZoom: 20
+=======
+            attribution: '&copy; OpenStreetMap & CARTO'
+>>>>>>> 5c1c15d511eb909412b75542b6bfd207842031bd
         }).addTo(map);
 
         var redIcon = new L.Icon({
@@ -301,45 +322,42 @@
         });
 
         var userMarker = L.marker([userLat, userLon], {icon: redIcon}).addTo(map)
-            .bindPopup("<b style='color:#d88a9a'>Vị trí của nàng 💃</b>").openPopup();
+            .bindPopup("<b>Vị trí của bạn 💃</b>").openPopup();
 
+<<<<<<< HEAD
         // Markers Stores (Giữ phiên bản Royal có nút chỉ đường)
+=======
+>>>>>>> 5c1c15d511eb909412b75542b6bfd207842031bd
         stores.forEach(function(store) {
             var m = L.marker([store.lat, store.lon]).addTo(map);
-            var popupContent = `
-                <div class="popup-header">${store.name}</div>
+            m.bindPopup(`
+                <div class="popup-header"><b>${store.name}</b></div>
                 <div class="popup-body">
-                    📍 Cách bạn: <b>${store.distance} km</b><br>
-                    💰 Ship: <b style="color:#d88a9a">${store.formatted_fee} đ</b><br>
-                    <button class="btn-route-pop" onclick="showRouteTo(${store.lat}, ${store.lon})">
-                        🚗 Chỉ đường tới shop
-                    </button>
+                    Cách bạn: <b>${store.distance} km</b><br>
+                    <button class="btn-route-pop" onclick="showRouteTo(${store.lat}, ${store.lon})">🚗 Chỉ đường</button>
                 </div>
-            `;
-            m.bindPopup(popupContent);
+            `);
         });
 
-        // Routing
         var routingControl = null;
         function showRouteTo(destLat, destLon) {
             if (routingControl !== null) map.removeControl(routingControl);
             routingControl = L.Routing.control({
                 waypoints: [L.latLng(userLat, userLon), L.latLng(destLat, destLon)],
-                routeWhileDragging: false,
                 createMarker: function() { return null; },
                 lineOptions: { styles: [{color: '#d88a9a', opacity: 0.9, weight: 6}] }
             }).addTo(map);
         }
 
         function focusAndRoute(lat, lon) {
-            map.flyTo([lat, lon], 16, {duration: 1.5});
+            map.flyTo([lat, lon], 16);
             showRouteTo(lat, lon);
         }
 
-        // Auto Geolocation
         function forceGetLocation() {
-            if (!navigator.geolocation) { alert("Trình duyệt không hỗ trợ!"); return; }
+            if (!navigator.geolocation) return;
             navigator.geolocation.getCurrentPosition(function(pos) {
+<<<<<<< HEAD
                 var rLat = pos.coords.latitude;
                 var rLon = pos.coords.longitude;
                 document.getElementById('latInput').value = rLat;
@@ -352,6 +370,12 @@
 
         if (Math.abs(userLat - defaultLat) < 0.0001 && Math.abs(userLon - defaultLon) < 0.0001) {
             forceGetLocation();
+=======
+                document.getElementById('latInput').value = pos.coords.latitude;
+                document.getElementById('lonInput').value = pos.coords.longitude;
+                document.getElementById('locationForm').submit();
+            });
+>>>>>>> 5c1c15d511eb909412b75542b6bfd207842031bd
         }
     </script>
 </body>
