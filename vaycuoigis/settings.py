@@ -113,6 +113,9 @@ USE_I18N = True
 
 USE_TZ = True
 
+USE_L10N = True
+USE_THOUSAND_SEPARATOR = True
+THOUSAND_SEPARATOR = '.'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -120,7 +123,6 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 # Đường dẫn thư mục Static (CSS, JS)
-# Đảm bảo bạn đã tạo file: vaycuoigis/static/css/admin_royal.css
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
@@ -137,51 +139,51 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # ==============================================
-# CẤU HÌNH GIAO DIỆN QUẢN TRỊ (JAZZMIN) - ROYAL THEME
+# CẤU HÌNH GIAO DIỆN QUẢN TRỊ (JAZZMIN) - ĐÃ GỘP
 # ==============================================
 
 JAZZMIN_SETTINGS = {
-    # Tiêu đề Tab trình duyệt
+    # --- PHẦN GIAO DIỆN ROYAL CỦA BẠN ---
     "site_title": "Quản trị Váy Cưới GIS",
-    
-    # Tiêu đề chính trên thanh Navbar
     "site_header": "Bridal Admin",
-    
-    # Tên thương hiệu hiển thị ở Sidebar
     "site_brand": "Bridal Luxury",
-    
-    # Thông điệp chào mừng
     "welcome_sign": "Chào mừng đến với hệ thống quản trị Váy Cưới",
     "copyright": "Bridal GIS Team",
     
-    # --- QUAN TRỌNG: Kết nối file CSS tùy chỉnh ---
-    # File này phải nằm tại: static/css/admin_royal.css
+    # KẾT NỐI FILE CSS ROYAL MÀU HỒNG
     "custom_css": "css/admin_royal.css",
+
+    # --- PHẦN TÍNH NĂNG TỪ BẠN CỦA BẠN (Đã thêm vào) ---
+    # Cho phép tìm kiếm cả Váy cưới và Đơn đặt lịch
+    "search_model": ["store.Product", "store.Store", "store.Booking"],
+    
+    # Thêm menu link ra trang chủ
+    "topmenu_links": [
+        {"name": "Trang chủ bản đồ", "url": "home", "permissions": ["auth.view_user"]},
+    ],
 
     "show_sidebar": True,
     "navigation_expanded": True,
+    "show_ui_builder": False, # Tắt cái này đi để dùng giao diện Royal đẹp hơn
     
-    # Icon cho Menu (FontAwesome)
+    # Cấu hình Icons (Thêm icon cho Booking)
     "icons": {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
-        "store.Product": "fas fa-female",   # Icon Cô dâu/Váy
-        "store.Store": "fas fa-store-alt",  # Icon Cửa hàng
+        "store.Product": "fas fa-female",          # Icon Cô dâu/Váy
+        "store.Store": "fas fa-store-alt",         # Icon Cửa hàng
+        "store.Booking": "fas fa-calendar-check",  # Icon Đặt lịch (MỚI)
     },
 }
 
+# --- CẤU HÌNH UI TWEAKS (GIỮ NGUYÊN BẢN ROYAL CỦA BẠN) ---
+# Phần này quan trọng để file CSS custom hoạt động đúng
 JAZZMIN_UI_TWEAKS = {
-    # 1. Theme nền tảng: Flatly (Phẳng, sáng, dễ tùy chỉnh màu)
     "theme": "flatly",
-    
-    # 2. Sidebar: Light (Sáng) - Để CSS của chúng ta biến nó thành trắng tinh
     "sidebar": "sidebar-light-primary", 
-    
-    # 3. Navbar: Dark (Để chữ màu trắng) - CSS của chúng ta sẽ biến nền thành màu Hồng
     "navbar": "navbar-dark",
     
-    # 4. Các tùy chỉnh khác
     "accent": "accent-primary",
     "brand_colour": "navbar-primary",
     
@@ -197,7 +199,6 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_legacy_style": False,
     "sidebar_nav_flat_style": True,
     
-    # Class Bootstrap cho các nút bấm
     "button_classes": {
         "primary": "btn-primary",
         "secondary": "btn-secondary",
