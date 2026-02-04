@@ -1,0 +1,1109 @@
+[
+{
+  "model": "store.store",
+  "pk": 1,
+  "fields": {
+    "name": "Phiêu Studio - Áo cưới",
+    "address": "378 Đ. Lũy Bán Bích, Hòa Thạnh, Tân Phú, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0342498886",
+    "latitude": 10.776380604861505,
+    "longitude": 106.63338661796918
+  }
+},
+{
+  "model": "store.store",
+  "pk": 2,
+  "fields": {
+    "name": "Kami Anna Studio - Chụp hình cưới đẹp HCM",
+    "address": "328A Nguyễn Sơn, Phú Thọ Hoà, Tân Phú, Thành phố Hồ Chí Minh 760000, Việt Nam",
+    "phone": "0933683127",
+    "latitude": 10.784946539744386,
+    "longitude": 106.62335628646679
+  }
+},
+{
+  "model": "store.store",
+  "pk": 3,
+  "fields": {
+    "name": "Áo Cưới Phương Du(ANITA makeup)",
+    "address": "173/15 Khuông Việt, Phú Trung, Tân Phú, Thành phố Hồ Chí Minh 07000, Việt Nam",
+    "phone": "0909124306",
+    "latitude": 10.775439822587822,
+    "longitude": 106.63898142599315
+  }
+},
+{
+  "model": "store.store",
+  "pk": 4,
+  "fields": {
+    "name": "Maison de Orenji Wedding - Bridal",
+    "address": "Celadon Boulevard, Đ. Tân Thạnh, phường Tân Sơn Nhì, Tân Phú, Thành phố Hồ Chí Minh 70000, Việt Nam",
+    "phone": "0932121293",
+    "latitude": 10.805738279560382,
+    "longitude": 106.61323785583215
+  }
+},
+{
+  "model": "store.store",
+  "pk": 5,
+  "fields": {
+    "name": "Helen Bridal",
+    "address": "130 Tân Sơn Nhì, Tân Phú, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0935359365",
+    "latitude": 10.802112980032717,
+    "longitude": 106.63272142288075
+  }
+},
+{
+  "model": "store.store",
+  "pk": 6,
+  "fields": {
+    "name": "Tony Wedding - Chụp ảnh cưới đẹp Tân Phú",
+    "address": "19 Đ. Gò Dầu, Tân Sơn Nhì, Tân Phú, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0938605466",
+    "latitude": 10.796200697395596,
+    "longitude": 106.62844266074345
+  }
+},
+{
+  "model": "store.store",
+  "pk": 7,
+  "fields": {
+    "name": "SONO Wedding",
+    "address": "202 Lê Trọng Tấn, Tây Thạnh, Tân Phú, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0902734571",
+    "latitude": 10.807698452314478,
+    "longitude": 106.62524342434399
+  }
+},
+{
+  "model": "store.store",
+  "pk": 8,
+  "fields": {
+    "name": "Sweet's Wedding",
+    "address": "465 Đ. Vườn Lài, Phú Thọ Hoà, Tân Phú, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0938309429",
+    "latitude": 10.789097373276839,
+    "longitude": 106.62284016554959
+  }
+},
+{
+  "model": "store.store",
+  "pk": 9,
+  "fields": {
+    "name": "MAILOAN Bridal",
+    "address": "37 Đ. Trần Hưng Đạo, Tân Thành, Tân Phú, Thành phố Hồ Chí Minh 70000, Việt Nam",
+    "phone": "0359705752",
+    "latitude": 10.795525398524195,
+    "longitude": 106.6367263903984
+  }
+},
+{
+  "model": "store.store",
+  "pk": 10,
+  "fields": {
+    "name": "Princess Bridal",
+    "address": "25 Đ. Trần Hưng Đạo, Tân Thành, Tân Phú, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0909865988",
+    "latitude": 10.795525398524195,
+    "longitude": 106.63717058698224
+  }
+},
+{
+  "model": "store.store",
+  "pk": 11,
+  "fields": {
+    "name": "Mê váy cưới",
+    "address": "122 Đ. Gò Dầu, Tân Quý, Tân Phú, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0937966525",
+    "latitude": 10.796506326281467,
+    "longitude": 106.62495353820677
+  }
+},
+{
+  "model": "store.store",
+  "pk": 12,
+  "fields": {
+    "name": "CiLove Bridal - Váy cưới nhập khẩu chất lượng",
+    "address": "32 Đ. Nguyễn Hồng Đào, Phường Tân Bình, Tân Bình, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0979000640",
+    "latitude": 10.798691866269147,
+    "longitude": 106.64629594999413
+  }
+},
+{
+  "model": "store.store",
+  "pk": 13,
+  "fields": {
+    "name": "Tiệm áo cưới Ami",
+    "address": "10 Ngô Bệ, Phường Tân Bình, Tân Bình, Thành phố Hồ Chí Minh 72110, Việt Nam",
+    "phone": "0938808860",
+    "latitude": 10.805227486430034,
+    "longitude": 106.64081632845186
+  }
+},
+{
+  "model": "store.store",
+  "pk": 14,
+  "fields": {
+    "name": "Calla Wedding",
+    "address": "353/4 Đ. Nguyễn Thái Bình, Phường 12, Tân Bình, Thành phố Hồ Chí Minh 70000, Việt Nam",
+    "phone": "0932554819",
+    "latitude": 10.797555276401072,
+    "longitude": 106.65206014950279
+  }
+},
+{
+  "model": "store.store",
+  "pk": 15,
+  "fields": {
+    "name": "Qwedding",
+    "address": "72A Đ. Bạch Đằng, Phường 2, Tân Bình, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0936013673",
+    "latitude": 10.816356057600705,
+    "longitude": 106.67317449774207
+  }
+},
+{
+  "model": "store.store",
+  "pk": 16,
+  "fields": {
+    "name": "Luu bridal",
+    "address": "25/1 Giải Phóng, Phường 4, Tân Bình, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0962024058",
+    "latitude": 10.804384395883892,
+    "longitude": 106.65987074173765
+  }
+},
+{
+  "model": "store.store",
+  "pk": 17,
+  "fields": {
+    "name": "KHÁNH NGỌC Wedding",
+    "address": "439H-439G Đ. Trường Chinh, Phường Tân Bình, Tân Bình, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0938675099",
+    "latitude": 10.801433560839502,
+    "longitude": 106.63995802307298
+  }
+},
+{
+  "model": "store.store",
+  "pk": 18,
+  "fields": {
+    "name": "Son Studio - 331 Cộng Hoà",
+    "address": "331 Cộng Hòa, Phường Tân Bình, Tân Bình, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0973090331",
+    "latitude": 10.804300086713646,
+    "longitude": 106.64424955726795
+  }
+},
+{
+  "model": "store.store",
+  "pk": 19,
+  "fields": {
+    "name": "Tiệm Váy Cưới HCM",
+    "address": "22 Nguyễn Đình Khơi, Ward 4, Tân Bình, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0931018092",
+    "latitude": 10.796796475762998,
+    "longitude": 106.65635168369778
+  }
+},
+{
+  "model": "store.store",
+  "pk": 20,
+  "fields": {
+    "name": "Áo cưới Omni",
+    "address": "1076 Lạc Long Quân, Phường 8, Tân Bình, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0902858119",
+    "latitude": 10.786931893120903,
+    "longitude": 106.6507726892443
+  }
+},
+{
+  "model": "store.store",
+  "pk": 21,
+  "fields": {
+    "name": "Chụp hình Gia đình - Qbridal Studio",
+    "address": "295 Phạm Văn Hai, Phường 5, Tân Bình, Thành phố Hồ Chí Minh 72100, Việt Nam",
+    "phone": "0938830629",
+    "latitude": 10.789940481682573,
+    "longitude": 106.66060251144177
+  }
+},
+{
+  "model": "store.store",
+  "pk": 22,
+  "fields": {
+    "name": "Studio áo cưới Hoàng Linh",
+    "address": "245 Phạm Văn Hai, Phường 5, Tân Bình, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0909377230",
+    "latitude": 10.790382786214733,
+    "longitude": 106.66247284495583
+  }
+},
+{
+  "model": "store.store",
+  "pk": 23,
+  "fields": {
+    "name": "Ngan Vo Studio",
+    "address": "78/17 Đ. Số 12, Phường 11, Gò Vấp, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0976004488",
+    "latitude": 10.845337754221557,
+    "longitude": 106.66284434182745
+  }
+},
+{
+  "model": "store.store",
+  "pk": 24,
+  "fields": {
+    "name": "Áo cưới Queen Studio",
+    "address": "693 Nguyễn Kiệm, Phường 3, Gò Vấp, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0975720902",
+    "latitude": 10.818300025136988,
+    "longitude": 106.67985974075893
+  }
+},
+{
+  "model": "store.store",
+  "pk": 25,
+  "fields": {
+    "name": "2Q Studio - Váy cưới Gò Vấp",
+    "address": "125-127 Đ. Phạm Văn Đồng, Phường 3, Gò Vấp, Thành phố Hồ Chí Minh 71409, Việt Nam",
+    "phone": "0332299893",
+    "latitude": 10.818371101318462,
+    "longitude": 106.68286129958751
+  }
+},
+{
+  "model": "store.store",
+  "pk": 26,
+  "fields": {
+    "name": "SoHee Wedding Gò Vấp",
+    "address": "Đ. Phan Văn Trị, Phường 5, Gò Vấp, Thành phố Hồ Chí Minh 71400, Việt Nam",
+    "phone": "0932893579",
+    "latitude": 10.82616284391978,
+    "longitude": 106.69114827741704
+  }
+},
+{
+  "model": "store.store",
+  "pk": 27,
+  "fields": {
+    "name": "Mây Wedding (CN Gò Vấp)",
+    "address": "174 Đ. Nguyễn Thái Sơn, Phường 1, Gò Vấp, Thành phố Hồ Chí Minh 71408, Việt Nam",
+    "phone": "0903152946",
+    "latitude": 10.820444572469247,
+    "longitude": 106.68417126930532
+  }
+},
+{
+  "model": "store.store",
+  "pk": 28,
+  "fields": {
+    "name": "Áo cưới the view",
+    "address": "68 Hồ Văn Huê, Phường 9, Phú Nhuận, Thành phố Hồ Chí Minh 725060, Việt Nam",
+    "phone": "0888266922",
+    "latitude": 10.801796818253827,
+    "longitude": 106.67566895383773
+  }
+},
+{
+  "model": "store.store",
+  "pk": 29,
+  "fields": {
+    "name": "Công ty Áo Cưới Thiên Đường",
+    "address": "124 Hồ Văn Huê, Phường 9, Phú Nhuận, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0903170029",
+    "latitude": 10.803483011218818,
+    "longitude": 106.67665600670256
+  }
+},
+{
+  "model": "store.store",
+  "pk": 30,
+  "fields": {
+    "name": "REN Bridal",
+    "address": "130 Hồ Văn Huê, Phường 9, Phú Nhuận, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0946322222",
+    "latitude": 10.802941063090682,
+    "longitude": 106.67687896102345
+  }
+},
+{
+  "model": "store.store",
+  "pk": 31,
+  "fields": {
+    "name": "Ahihi Studio",
+    "address": "170 Hồ Văn Huê, Phường 9, Phú Nhuận, Thành phố Hồ Chí Minh 72216, Việt Nam",
+    "phone": "0978880150",
+    "latitude": 10.80377942199094,
+    "longitude": 106.67788306200367
+  }
+},
+{
+  "model": "store.store",
+  "pk": 32,
+  "fields": {
+    "name": "CEM Bridal Studio",
+    "address": "123 Hồ Văn Huê, P.9, Phú Nhuận, Thành phố Hồ Chí Minh 70000, Việt Nam",
+    "phone": "0916355885",
+    "latitude": 10.804903740974499,
+    "longitude": 106.67784409156158
+  }
+},
+{
+  "model": "store.store",
+  "pk": 33,
+  "fields": {
+    "name": "Kim Couture",
+    "address": "143 Hồ Văn Huê, Phường 9, Phú Nhuận, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0921320666",
+    "latitude": 10.805491984051963,
+    "longitude": 106.6779117888592
+  }
+},
+{
+  "model": "store.store",
+  "pk": 34,
+  "fields": {
+    "name": "Bridal Corner Studio",
+    "address": "57-59 Nguyễn Trọng Tuyển, Phường 5, Phú Nhuận, Thành phố Hồ Chí Minh 72200, Việt Nam",
+    "phone": "0902902490",
+    "latitude": 10.79739557302552,
+    "longitude": 106.67944977130365
+  }
+},
+{
+  "model": "store.store",
+  "pk": 35,
+  "fields": {
+    "name": "Hanah Bridal - Chuyên may và cho thuê áo cưới, áo dài cưới",
+    "address": "140 Đ. Trần Huy Liệu, Phường 15, Phú Nhuận, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0932611369",
+    "latitude": 10.798037824534566,
+    "longitude": 106.67895653286979
+  }
+},
+{
+  "model": "store.store",
+  "pk": 36,
+  "fields": {
+    "name": "IDY WEDDING",
+    "address": "24 Đ. Hoa Cúc, Phường 7, Phú Nhuận, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0938330448",
+    "latitude": 10.799763945471117,
+    "longitude": 106.68771314833786
+  }
+},
+{
+  "model": "store.store",
+  "pk": 37,
+  "fields": {
+    "name": "Váy cưới Quỳnh Anh",
+    "address": "214 Huỳnh Văn Bánh, Phường 11, Phú Nhuận, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0865262688",
+    "latitude": 10.792686778154978,
+    "longitude": 106.67754762293558
+  }
+},
+{
+  "model": "store.store",
+  "pk": 38,
+  "fields": {
+    "name": "Cho thuê váy cưới - Lemi Bridal",
+    "address": "525/66 Huỳnh Văn Bánh, Phường 13, Phú Nhuận, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0937362462",
+    "latitude": 10.79237504065705,
+    "longitude": 106.67166521714995
+  }
+},
+{
+  "model": "store.store",
+  "pk": 39,
+  "fields": {
+    "name": "Omni Bridal (Chi Nhánh 2)",
+    "address": "293 Huỳnh Văn Bánh, Phường 11, Phú Nhuận, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0909359983",
+    "latitude": 10.792533627092315,
+    "longitude": 106.67765300242863
+  }
+},
+{
+  "model": "store.store",
+  "pk": 40,
+  "fields": {
+    "name": "Phat Pro Studio",
+    "address": "137 Hồ Văn Huê, Phường 9, Phú Nhuận, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0981735554",
+    "latitude": 10.805551219400925,
+    "longitude": 106.6778671917617
+  }
+},
+{
+  "model": "store.store",
+  "pk": 41,
+  "fields": {
+    "name": "Bao Ny Nguyen Bridal",
+    "address": "348/2 Đ. Ung Văn Khiêm, Phường 25, Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0785583579",
+    "latitude": 10.80468854348474,
+    "longitude": 106.72229866414983
+  }
+},
+{
+  "model": "store.store",
+  "pk": 42,
+  "fields": {
+    "name": "Sansan Bridal",
+    "address": "2M Đinh Bộ Lĩnh, Phường 2, Bình Thạnh, Thành phố Hồ Chí Minh 70000, Việt Nam",
+    "phone": "0388779888",
+    "latitude": 10.805194397496596,
+    "longitude": 106.7080507706225
+  }
+},
+{
+  "model": "store.store",
+  "pk": 43,
+  "fields": {
+    "name": "Váy Cưới C.H.I Bridal",
+    "address": "354/76 Đ. Phan Văn Trị, Phường 11, Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0902346198",
+    "latitude": 10.823741789009865,
+    "longitude": 106.69689278171558
+  }
+},
+{
+  "model": "store.store",
+  "pk": 44,
+  "fields": {
+    "name": "Min Bridal",
+    "address": "64 16 Lê Quang Định, Phường 14, Bình Thạnh, Thành phố Hồ Chí Minh 70000, Việt Nam",
+    "phone": "0902328832",
+    "latitude": 10.808566735790976,
+    "longitude": 106.69878105676138
+  }
+},
+{
+  "model": "store.store",
+  "pk": 45,
+  "fields": {
+    "name": "Mona Bridal",
+    "address": "43 Đ. Phan Văn Trị, Phường 14, Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam",
+    "phone": "0938189003",
+    "latitude": 10.809086442332259,
+    "longitude": 106.6980490747809
+  }
+},
+{
+  "model": "store.store",
+  "pk": 46,
+  "fields": {
+    "name": "Mai's Choice Wedding",
+    "address": "3A Cư xá, Phan Đăng Lưu, Phường 1, Bình Thạnh, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0988475225",
+    "latitude": 10.803524329437801,
+    "longitude": 106.69593762349173
+  }
+},
+{
+  "model": "store.store",
+  "pk": 47,
+  "fields": {
+    "name": "Nhiên Bridal",
+    "address": "110E Đinh Tiên Hoàng, Phường 1, Bình Thạnh, Thành phố Hồ Chí Minh 70000, Việt Nam",
+    "phone": "0977875565",
+    "latitude": 10.799187695355199,
+    "longitude": 106.69660944890192
+  }
+},
+{
+  "model": "store.store",
+  "pk": 48,
+  "fields": {
+    "name": "Váy cưới Luciola Bridal",
+    "address": "243a Đ. Nguyễn Thượng Hiền, Phường 5, Bình Thạnh, Thành phố Hồ Chí Minh 700000, Việt Nam",
+    "phone": "0903026023",
+    "latitude": 10.80734014211879,
+    "longitude": 106.6877745727603
+  }
+},
+{
+  "model": "store.product",
+  "pk": 1,
+  "fields": {
+    "store": 3,
+    "name": "Váy Cưới Công Chúa Đính Đá",
+    "price": "2500000",
+    "image": "products/Vay_Cuoi_Cong_Chua_Dinh_Da_6O1T0cz_ZQDDHDe.jpg",
+    "description": ""
+  }
+},
+{
+  "model": "store.product",
+  "pk": 2,
+  "fields": {
+    "store": 3,
+    "name": "Váy cưới Ball Gown trễ vai, xếp tầng",
+    "price": "3000000",
+    "image": "products/Vay_cuoi_Ball_Gown_tre_vai_xep_tang.jpg",
+    "description": null
+  }
+},
+{
+  "model": "store.product",
+  "pk": 3,
+  "fields": {
+    "store": 3,
+    "name": "Váy cưới tay dài ren, cổ cao",
+    "price": "2900000",
+    "image": "products/Vay_cuoi_tay_dai_ren_co_cao.jpg",
+    "description": null
+  }
+},
+{
+  "model": "store.product",
+  "pk": 4,
+  "fields": {
+    "store": 3,
+    "name": "Váy đuôi cá đính lông vũ",
+    "price": "2500000",
+    "image": "products/Vay_duoi_ca_dinh_long_vu_7M2U0n7_S9O97vW.jpg",
+    "description": ""
+  }
+},
+{
+  "model": "store.product",
+  "pk": 5,
+  "fields": {
+    "store": 3,
+    "name": "Váy công chúa trễ vai đính lông vũ",
+    "price": "3200000",
+    "image": "products/Vay_cong_chua_tre_vai_dinh_long_vu_m3Fi2b1_UWpZraO.jpg",
+    "description": ""
+  }
+},
+{
+  "model": "store.product",
+  "pk": 6,
+  "fields": {
+    "store": 1,
+    "name": "Váy quây đính hoa nổi",
+    "price": "4000000",
+    "image": "products/Vay_quay_dinh_hoa_noi_67Dvvts_8KIjWeb.jpg",
+    "description": ""
+  }
+},
+{
+  "model": "store.product",
+  "pk": 7,
+  "fields": {
+    "store": 1,
+    "name": "Váy cúp ngực ren cao cấp",
+    "price": "4500000",
+    "image": "products/Vay_cup_nguc_ren_cao_cap.jpg",
+    "description": null
+  }
+},
+{
+  "model": "store.product",
+  "pk": 8,
+  "fields": {
+    "store": 1,
+    "name": "Váy đuôi cá phối tà phụ",
+    "price": "3800000",
+    "image": "products/Vay_duoi_ca_phoi_ta_phu_P0atGjb_PVL4whn.jpg",
+    "description": ""
+  }
+},
+{
+  "model": "store.product",
+  "pk": 9,
+  "fields": {
+    "store": 1,
+    "name": "Váy Cưới Công Chúa Ánh Kim",
+    "price": "5000000",
+    "image": "products/Vay_Cuoi_Cong_Chua_Anh_Kim.jpg",
+    "description": null
+  }
+},
+{
+  "model": "store.product",
+  "pk": 10,
+  "fields": {
+    "store": 1,
+    "name": "Váy Cưới Công Chúa Tay Dài Đính Đá",
+    "price": "6500000",
+    "image": "products/Vay_Cuoi_Cong_Chua_Tay_Dai_Dinh_Da_chkaz5J_3A3CfaE.jpg",
+    "description": ""
+  }
+},
+{
+  "model": "store.product",
+  "pk": 11,
+  "fields": {
+    "store": 1,
+    "name": "Váy cổ cao phong cách Hoàng gia",
+    "price": "12000000",
+    "image": "products/vay_co_cao_phong_cach_Hoang_gia.jpg",
+    "description": ""
+  }
+},
+{
+  "model": "store.product",
+  "pk": 12,
+  "fields": {
+    "store": 1,
+    "name": "Váy Ren Cổ điển",
+    "price": "9000000",
+    "image": "products/Vay_Ren_Co_dien_tS55KIO_0SPqYra.jpg",
+    "description": ""
+  }
+},
+{
+  "model": "store.product",
+  "pk": 13,
+  "fields": {
+    "store": 1,
+    "name": "Váy Mullet Hiện đại",
+    "price": "4000000",
+    "image": "products/Vay_Mullet_Hien_Dai_I4iDSv2_TIq6AGy.jpg",
+    "description": ""
+  }
+},
+{
+  "model": "store.product",
+  "pk": 14,
+  "fields": {
+    "store": 2,
+    "name": "Váy Công Chúa Xếp Nếp Nghệ Thuật",
+    "price": "7000000",
+    "image": "products/Vay_Cong_Chua_Xep_Nep_Nghe_Thuat.jpg",
+    "description": null
+  }
+},
+{
+  "model": "store.product",
+  "pk": 15,
+  "fields": {
+    "store": 2,
+    "name": "Váy Cúp ngực Kim sa Tối giản",
+    "price": "5300000",
+    "image": "products/Vay_Cup_nguc_Kim_sa_Toi_gian.jpg",
+    "description": null
+  }
+},
+{
+  "model": "store.product",
+  "pk": 16,
+  "fields": {
+    "store": 2,
+    "name": "Goddess of Moonlight",
+    "price": "8200000",
+    "image": "products/Goddess_of_Moonlight.jpg",
+    "description": null
+  }
+},
+{
+  "model": "store.product",
+  "pk": 18,
+  "fields": {
+    "store": 9,
+    "name": "Váy Cưới Công Chúa Dáng Đính Đá Pha Lê",
+    "price": "6500000",
+    "image": "products/vay_cuoi_cong_chua_chinh.jpg",
+    "description": "Váy cưới thiết kế cao cấp, cúp ngực tim, đính đá pha lê và ren thủ công. Chân váy xòe nhiều tầng lộng lẫy, phù hợp cho lễ đường sang trọng."
+  }
+},
+{
+  "model": "store.product",
+  "pk": 19,
+  "fields": {
+    "store": 9,
+    "name": "Váy Cưới Lụa Trắng Dáng A",
+    "price": "2500000",
+    "image": "products/vay_cuoi_lua_trang_chinh.jpg",
+    "description": ""
+  }
+},
+{
+  "model": "store.product",
+  "pk": 20,
+  "fields": {
+    "store": 9,
+    "name": "Váy Cưới Fairy Tale Xòe Tầng",
+    "price": "4500000",
+    "image": "products/vay_cuoi_fairy_tale_chinh.jpg",
+    "description": ""
+  }
+},
+{
+  "model": "store.product",
+  "pk": 21,
+  "fields": {
+    "store": 9,
+    "name": "Váy Cưới Ren Trễ Vai Dáng Đuôi Cá",
+    "price": "3800000",
+    "image": "products/vay_cuoi_ren_duoi_ca_chinh.jpg",
+    "description": ""
+  }
+},
+{
+  "model": "store.product",
+  "pk": 25,
+  "fields": {
+    "store": 9,
+    "name": "Váy cưới cổ yếm phối ren cao cấp",
+    "price": "450000",
+    "image": "products/vay_cuoi_co_yem_phoi_ren_cao_cap_chinh_Ptb8gOA.jpg",
+    "description": "Marie lựa chọn sự tinh tế và thanh lịch để khắc họa một phiên bản đầy cuốn hút. Chiếc váy nổi bật với chất liệu ren cao cấp cùng họa tiết hoa văn thêu tay tỉ mỉ, mang đến cảm giác nhẹ nhàng và nữ tính tuyệt đối.\r\nĐiểm nhấn độc đáo nằm ở phần cổ yếm bằng lớp lưới mỏng manh kết hợp chi tiết hoa tinh xảo, giúp tôn vinh bờ vai thon gọn. Phía sau được nhấn nhá bằng peplum nơ to bản, tạo nên sự quyến rũ, thanh thoát và vẻ ngoài lộng lẫy để nàng dâu tỏa sáng rạng ngời trong khoảnh khắc thiêng liêng nhất của cuộc đời."
+  }
+},
+{
+  "model": "store.product",
+  "pk": 28,
+  "fields": {
+    "store": 4,
+    "name": "Váy cưới Mullet dáng ngắn phối nơ",
+    "price": "3000000",
+    "image": "products/vay_cuoi-Mullet_dang_ngan_phoi_no_chinh.jpg",
+    "description": "hiếc váy là sự kết hợp táo bạo giữa nét cổ điển và hơi thở hiện đại. Thiết kế dáng Mullet (vạt trước ngắn, vạt sau dài) giúp nàng dâu khoe trọn đôi chân thon dài nhưng vẫn giữ được sự thướt tha, kiều diễm.\r\nĐược chế tác từ chất liệu vải gấm hoa nổi cao cấp với bề mặt vân sần sang trọng, chiếc váy tạo nên form dáng phồng xòe tự nhiên cực kỳ ấn tượng. Điểm nhấn là những chiếc nơ xinh xắn được đính kết tinh tế ở eo và ngực, mang đến vẻ đẹp ngọt ngào, trẻ trung và tràn đầy năng lượng cho nàng dâu hiện đại."
+  }
+},
+{
+  "model": "store.product",
+  "pk": 29,
+  "fields": {
+    "store": 4,
+    "name": "Váy cưới công chúa đính kim sa lấp lánh",
+    "price": "6500000",
+    "image": "products/vay_cuoi_dinh_kim_sa_chinh.jpg",
+    "description": "Một thiết kế đỉnh cao đến từ Maison de Orenji, dành riêng cho những nàng dâu muốn trở thành tâm điểm tuyệt đối trong đêm tiệc. Chiếc váy gây ấn tượng mạnh với hàng ngàn hạt kim sa và pha lê được đính kết thủ công tỉ mỉ theo họa tiết uốn lượn mềm mại trên nền vải voan cao cấp, tạo nên hiệu ứng lấp lánh như hàng vạn viên kim cương dưới ánh đèn.\r\nPhần cúp ngực tinh tế kết hợp cùng dây vai mảnh đính đá giúp tôn vinh vòng một gợi cảm và bờ vai trần quyến rũ. Form dáng công chúa xòe rộng với độ phồng hoàn hảo không chỉ mang lại vẻ ngoài lộng lẫy mà còn giúp nàng dâu toát lên phong thái hoàng gia, sang trọng trong từng bước đi."
+  }
+},
+{
+  "model": "store.product",
+  "pk": 30,
+  "fields": {
+    "store": 4,
+    "name": "Váy cưới đuôi cá cổ trụ hoàng gia",
+    "price": "5000000",
+    "image": "products/vay_duoi_ca_co_tru_chinh.jpg",
+    "description": "Khơi nguồn cảm hứng từ những đóa hoa tinh khôi, mẫu thiết kế mang đến diện mạo thanh thoát và lộng lẫy cho nàng dâu trong ngày trọng đại.\r\nThiết kế sở hữu phom dáng đuôi cá (Mermaid) ôm sát, kết hợp cùng cổ trụ cao và tay dài mang hơi hướng hoàng gia, giúp tôn vinh triệt để những đường cong quyến rũ mà vẫn giữ trọn nét kín đáo, quý phái. Toàn bộ thân váy được đính kết ren họa tiết dây leo và sequin lấp lánh, tạo hiệu ứng ánh sáng mềm mại và mang lại chuyển động uyển chuyển, giúp cô dâu toả sáng rạng ngời trong từng khoảnh khắc."
+  }
+},
+{
+  "model": "store.product",
+  "pk": 31,
+  "fields": {
+    "store": 5,
+    "name": "Váy cưới công chúa voan tầng tinh khôi",
+    "price": "4800000",
+    "image": "products/vay_cuoi_voan_tang_chinh.jpg",
+    "description": "Một thiết kế dành cho những nàng dâu yêu thích vẻ đẹp mong manh, thanh khiết như những áng mây. Chiếc váy sở hữu phom dáng Ball Gown với phần chân váy được tạo nên từ nhiều lớp voan lưới cao cấp xếp chồng lên nhau, tạo độ phồng xòe tự nhiên và sự uyển chuyển theo từng bước đi.\r\nĐiểm nhấn là phần cúp ngực đính ren nổi nhẹ nhàng, kết hợp cùng dải lụa thắt nơ tinh tế giúp tôn vinh vòng eo thon gọn. Đây là sự lựa chọn hoàn hảo cho không gian tiệc cưới ngoài trời hoặc phong cách lãng mạn, giúp nàng dâu toát lên vẻ đẹp dịu dàng và đầy nữ tính."
+  }
+},
+{
+  "model": "store.product",
+  "pk": 32,
+  "fields": {
+    "store": 5,
+    "name": "Váy cưới đại xòe đính đá cao cấp",
+    "price": "4500000",
+    "image": "products/vay_cuoi_dai_xoe_chinh.jpg",
+    "description": "Biểu tượng của sự xa hoa và lộng lẫy dành cho nàng dâu trong ngày lễ trọng đại. Thiết kế gây choáng ngợp với phom dáng Ball Gown đại xòe đa lớp, tạo độ phồng hoàn hảo giúp nàng dâu tỏa sáng như một nữ hoàng bước ra từ thần thoại.\r\nToàn bộ thân váy là một tác phẩm nghệ thuật với kỹ thuật đính kết đá pha lê và cườm cao cấp trải dài từ ngực áo xuống tận chân tà, tạo hiệu ứng ánh sáng lấp lánh cực đại trong mỗi chuyển động. Phần cúp ngực tinh xảo kết hợp cùng tay voan bồng nhẹ nhàng điểm xuyết thêm nét thanh thoát, biến mọi khoảnh khắc trên lễ đường trở nên huyền ảo và khó quên."
+  }
+},
+{
+  "model": "store.product",
+  "pk": 33,
+  "fields": {
+    "store": 5,
+    "name": "Váy cưới công chúa thêu họa tiết hoàng gia",
+    "price": "7000000",
+    "image": "products/vay_cong_chua_thue_hoa_tiet_hoang_gia_chinh.jpg",
+    "description": "Một tuyệt phẩm dành cho những nàng dâu yêu thích sự sang trọng và quyền quý. Chiếc váy gây ấn tượng mạnh với phom dáng Ball Gown bồng bềnh, được chế tác từ chất liệu vải cao cấp có độ bóng mờ sang trọng.\r\nĐiểm đắt giá nhất của thiết kế chính là các họa tiết thêu Baroque đối xứng chạy dọc thân váy, kết hợp cùng kỹ thuật đính đá và kim sa bắt sáng, tạo nên vẻ đẹp tinh xảo trong từng milimet. Phần cúp ngực trễ vai phối voan phồng nhẹ nhàng không chỉ giúp che khuyết điểm bắp tay mà còn tôn vinh nét kiêu sa, giúp nàng dâu tựa như một vị công chúa bước ra từ cung điện hoàng gia."
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 1,
+  "fields": {
+    "product": 18,
+    "image": "products/gallery/vay_cuoi_cong_chua_phu_1.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 2,
+  "fields": {
+    "product": 18,
+    "image": "products/gallery/vay_cuoi_cong_chua_phu_2.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 10,
+  "fields": {
+    "product": 20,
+    "image": "products/gallery/vay_cuoi_fairy_tale_phu_1.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 11,
+  "fields": {
+    "product": 20,
+    "image": "products/gallery/vay_cuoi_fairy_tale_phu_2.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 12,
+  "fields": {
+    "product": 20,
+    "image": "products/gallery/vay_cuoi_fairy_tale_phu_3.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 13,
+  "fields": {
+    "product": 20,
+    "image": "products/gallery/vay_cuoi_fairy_tale_phu_4.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 14,
+  "fields": {
+    "product": 20,
+    "image": "products/gallery/vay_cuoi_fairy_tale_phu_5.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 15,
+  "fields": {
+    "product": 19,
+    "image": "products/gallery/vay_cuoi_lua_trang_phu_1.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 16,
+  "fields": {
+    "product": 21,
+    "image": "products/gallery/vay_cuoi_ren_duoi_ca_phu_1.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 17,
+  "fields": {
+    "product": 21,
+    "image": "products/gallery/vay_cuoi_ren_duoi_ca_phu_2.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 18,
+  "fields": {
+    "product": 21,
+    "image": "products/gallery/vay_cuoi_ren_duoi_ca_phu_3.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 19,
+  "fields": {
+    "product": 21,
+    "image": "products/gallery/vay_cuoi_ren_duoi_ca_phu_4.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 23,
+  "fields": {
+    "product": 25,
+    "image": "products/gallery/vay_cuoi_co_yem_phoi_ren_cao_cap_phu_1.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 24,
+  "fields": {
+    "product": 25,
+    "image": "products/gallery/vay_cuoi_co_yem_phoi_ren_cao_cap_phu_2.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 25,
+  "fields": {
+    "product": 25,
+    "image": "products/gallery/vay_cuoi_co_yem_phoi_ren_cao_cap_phu_3.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 26,
+  "fields": {
+    "product": 28,
+    "image": "products/gallery/vay_cuoi-Mullet_dang_ngan_phoi_no_phu_1.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 27,
+  "fields": {
+    "product": 28,
+    "image": "products/gallery/vay_cuoi-Mullet_dang_ngan_phoi_no_phu_2.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 28,
+  "fields": {
+    "product": 28,
+    "image": "products/gallery/vay_cuoi-Mullet_dang_ngan_phoi_no_phu_3.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 29,
+  "fields": {
+    "product": 29,
+    "image": "products/gallery/605649553_122160128930829333_7045263688999798965_n1.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 30,
+  "fields": {
+    "product": 29,
+    "image": "products/gallery/vay_cuoi_dinh_kim_sa_phu_2.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 31,
+  "fields": {
+    "product": 30,
+    "image": "products/gallery/vay_duoi_ca_co_tru_phu_1.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 32,
+  "fields": {
+    "product": 31,
+    "image": "products/gallery/vay_cuoi_voan_tang_phu_1.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 33,
+  "fields": {
+    "product": 31,
+    "image": "products/gallery/vay_cuoi_voan_tang_phu_2.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 34,
+  "fields": {
+    "product": 31,
+    "image": "products/gallery/vay_cuoi_voan_tang_phu_3.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 35,
+  "fields": {
+    "product": 32,
+    "image": "products/gallery/vay_cuoi_dai_xoe_phu_1.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 36,
+  "fields": {
+    "product": 32,
+    "image": "products/gallery/vay_cuoi_dai_xoe_phu_2.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 37,
+  "fields": {
+    "product": 32,
+    "image": "products/gallery/vay_cuoi_dai_xoe_phu_3.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 38,
+  "fields": {
+    "product": 32,
+    "image": "products/gallery/vay_cuoi_dai_xoe_phu_4.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 39,
+  "fields": {
+    "product": 33,
+    "image": "products/gallery/vay_cong_chua_thue_hoa_tiet_hoang_gia_phu_1.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 40,
+  "fields": {
+    "product": 33,
+    "image": "products/gallery/vay_cong_chua_thue_hoa_tiet_hoang_gia_phu_2.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 41,
+  "fields": {
+    "product": 33,
+    "image": "products/gallery/vay_cong_chua_thue_hoa_tiet_hoang_gia_phu_3.jpg"
+  }
+},
+{
+  "model": "store.productimage",
+  "pk": 42,
+  "fields": {
+    "product": 33,
+    "image": "products/gallery/vay_cong_chua_thue_hoa_tiet_hoang_gia_phu_4.jpg"
+  }
+},
+{
+  "model": "store.booking",
+  "pk": 1,
+  "fields": {
+    "product": 13,
+    "customer_name": "Đoàn Gia Hân",
+    "phone": "0363809523",
+    "booking_date": "2026-02-02T17:00:00Z",
+    "note": "1m60, 50kg",
+    "status": "pending",
+    "created_at": "2026-02-03T04:27:56.070Z"
+  }
+},
+{
+  "model": "store.booking",
+  "pk": 2,
+  "fields": {
+    "product": 18,
+    "customer_name": "Nguyễn Thị Thùy Trang",
+    "phone": "0961728619",
+    "booking_date": "2026-10-29T14:00:00Z",
+    "note": "",
+    "status": "pending",
+    "created_at": "2026-02-04T05:04:03.425Z"
+  }
+}
+]
