@@ -66,30 +66,32 @@ def home(request):
     })
 
 def product_detail(request, pk):
-    """ 
-    SỬA TẠI ĐÂY: Thêm logic nhận dữ liệu từ Form của bạn bạn
-    """
+   
     product = get_object_or_404(Product, pk=pk)
 
     if request.method == 'POST':
         name = request.POST.get('customer_name')
         phone_input = request.POST.get('phone_number') 
-        date = request.POST.get('booking_date')
+        date = request.POST.get('booking_date') # Sẽ nhận dạng 2026-02-04T14:30
         note = request.POST.get('note')
 
-        Booking.objects.create(
-            product=product,
-            customer_name=name,
-            phone=phone_input,  
-            booking_date=date,
-            note=note
-    )
-        # Thông báo thành công và giữ khách ở lại trang xem thông tin
-        messages.success(request, f"Cảm ơn {name}, bạn đã đặt lịch thành công!")
-        return render(request, 'product_detail.html', {'product': product, 'success': True})
+        # Kiểm tra dữ liệu cơ bản trước khi lưu
+        if name and phone_input and date:
+            Booking.objects.create(
+                product=product,
+                customer_name=name,
+                phone=phone_input,  
+                booking_date=date,
+                note=note
+            )
+            # Thông báo thành công sang trọng hơn
+            messages.success(request, f"✨ Chúc mừng {name}! Lịch hẹn thử váy tại {product.store.name} đã được ghi nhận.")
+            # Sau khi đặt thành công, nên redirect để tránh việc khách F5 trang bị gửi form 2 lần
+            return redirect('product_detail', pk=pk)
+        else:
+            messages.error(request, "Vui lòng điền đầy đủ thông tin để chúng tôi liên hệ.")
 
     return render(request, 'product_detail.html', {'product': product})
-
 # ==========================================
 # PHẦN 3: API (GIỮ NGUYÊN)
 # ==========================================
