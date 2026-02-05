@@ -22,12 +22,21 @@ from django.conf.urls.static import static
 from store import views
 
 urlpatterns = [
+    # Admin 
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
+    #Trang chính
+    path('', views.home_shop, name='home'),
+    path('about/', views.about, name='about'),
+    path('contact/', views.contact, name='contact'),
+    #Cửa hàng & Sản phẩm 
+    path('stores/', views.store_list, name='store_list'),
+    path('stores/<int:store_id>/', views.store_detail_view, name='store_detail_view'),
+    path('product/<int:product_id>/', views.product_detail, name='product_detail'),
+    #Bản đồ & Tính phí
+    path('map/', views.map_view, name='map_view'),
     path('api/shipping-fee/', views.api_calculate_shipping, name='api_shipping'),
-    path('product/<int:pk>/', views.product_detail, name='product_detail'),
 ]
 
-# Thêm dòng này để Django "mở cửa" cho phép xem ảnh trong thư mục media
+# Cấu hình phục vụ file Media (Ảnh upload)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

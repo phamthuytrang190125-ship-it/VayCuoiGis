@@ -1,382 +1,56 @@
+{% extends 'base.html' %}
 {% load humanize %}
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bridal Map - Thế Giới Váy Cưới</title>
+
+{% block content %}
+
+<div style="background-color: #fce4ec; padding: 50px 20px; text-align: center; margin-bottom: 40px;">
+    <h1 style="font-family: 'Playfair Display', serif; color: #d88a9a; font-size: 3em; margin: 0;">
+        Bridal Luxury
+    </h1>
+    <p style="color: #666; margin: 15px 0 25px;">
+        Hệ thống cho thuê váy cưới cao cấp tích hợp bản đồ thông minh
+    </p>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <a href="{% url 'map_view' %}" style="background: #d88a9a; color: white; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1.1em; transition: 0.3s; box-shadow: 0 4px 10px rgba(216, 138, 154, 0.3);">
+        🗺️ Mở Bản Đồ Tìm Cửa Hàng
+    </a>
+</div>
+
+<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
     
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <h2 style="text-align: center; color: #4a4a4a; margin-bottom: 30px; font-family: 'Playfair Display', serif;">
+        Bộ Sưu Tập Mới Nhất
+    </h2>
     
-    <style>
-        /* --- TỔNG THỂ --- */
-        :root {
-            --primary-color: #d88a9a; /* Hồng đất sang trọng */
-            --accent-color: #bfa05f;  /* Vàng kim (Gold) */
-            --bg-color: #fdfbf7;      /* Trắng kem */
-            --text-dark: #4a4a4a;
-            --white: #ffffff;
-        }
-
-        body { 
-            font-family: 'Quicksand', sans-serif; 
-            margin: 0; padding: 0; display: flex; height: 100vh; overflow: hidden; 
-            background-color: var(--bg-color);
-            color: var(--text-dark);
-        }
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; margin-bottom: 50px;">
         
-        /* --- SIDEBAR --- */
-        .sidebar { 
-            width: 380px; 
-            background-color: var(--white); 
-            border-right: 1px solid #eee; 
-            display: flex; flex-direction: column; 
-            z-index: 1000; height: 100vh; 
-            box-shadow: 5px 0 15px rgba(0,0,0,0.05);
-        }
-        
-        .sidebar-header { 
-            padding: 20px; 
-            background: linear-gradient(to bottom, #fff, #fdfbf7);
-            border-bottom: 1px solid #f0f0f0;
-            text-align: center;
-        }
-
-        h2.brand-title {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary-color);
-            font-size: 28px;
-            font-weight: 700;
-            margin: 0 0 5px 0;
-            letter-spacing: 1px;
-        }
-        
-        .sub-title { font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
-
-        .location-panel {
-            background: #fff;
-            border: 1px solid #ebd4d8;
-            border-radius: 12px;
-            padding: 10px;
-            box-shadow: 0 4px 10px rgba(216, 138, 154, 0.1);
-        }
-        
-        .btn-action {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 5px;
-            font-family: 'Quicksand', sans-serif;
-        }
-        .btn-find { background-color: var(--primary-color); color: white; margin-bottom: 5px;}
-        .btn-find:hover { background-color: #c06c7d; box-shadow: 0 4px 10px rgba(216, 138, 154, 0.4); }
-        .btn-gps { background-color: white; border: 1px solid var(--primary-color); color: var(--primary-color); }
-        .btn-gps:hover { background-color: #fff0f3; }
-
-<<<<<<< HEAD
-        /* --- THANH TAB CHUYỂN ĐỔI --- */
-=======
-        /* --- TAB CHUYỂN ĐỔI --- */
->>>>>>> 5c1c15d511eb909412b75542b6bfd207842031bd
-        .tab-container {
-            display: flex;
-            justify-content: center;
-            padding: 0 15px;
-            margin-top: 10px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .tab-btn {
-            background: none;
-            border: none;
-            padding: 12px 20px;
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            font-size: 16px;
-            color: #aaa;
-            cursor: pointer;
-            position: relative;
-            flex: 1;
-            transition: color 0.3s;
-        }
-
-        .tab-btn.active { color: var(--primary-color); }
-<<<<<<< HEAD
-        
-=======
->>>>>>> 5c1c15d511eb909412b75542b6bfd207842031bd
-        .tab-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px; left: 0; width: 100%;
-            height: 3px;
-            background-color: var(--primary-color);
-            border-radius: 3px 3px 0 0;
-        }
-
-        /* --- VÙNG NỘI DUNG CUỘN --- */
-        .scroll-content { flex: 1; overflow-y: auto; padding: 15px; background-color: #fdfbf7; }
-        .scroll-content::-webkit-scrollbar { width: 6px; }
-        .scroll-content::-webkit-scrollbar-thumb { background: #e0c0c0; border-radius: 10px; }
-
-        .tab-content { display: none; animation: fadeIn 0.5s; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- CARD CỬA HÀNG --- */
-        .store-card {
-            background: white;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        .store-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
-        .store-name { font-family: 'Playfair Display', serif; font-size: 1.2em; color: #333; font-weight: 700; margin-bottom: 4px; }
-        .store-addr { font-size: 0.85em; color: #777; }
-        .badge-dist { background: #f0f0f0; padding: 3px 8px; border-radius: 12px; font-size: 0.75em; color: #555; }
-        .badge-fee { color: var(--primary-color); font-weight: 600; font-size: 0.9em; float: right; }
-
-        /* --- GRID VÁY CƯỚI --- */
-        .dress-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .dress-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: 0.3s;
-            text-decoration: none; /* Bỏ gạch chân cho thẻ a */
-            display: block;
-        }
-        .dress-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(216, 138, 154, 0.2); }
-        .dress-img-box { height: 160px; overflow: hidden; background: #f9f9f9; }
-        .dress-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .dress-info { padding: 10px; text-align: center; }
-        .dress-name { font-size: 0.9em; font-weight: 600; color: #333; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .dress-price { font-family: 'Playfair Display', serif; color: var(--accent-color); font-weight: bold; font-size: 1.1em; }
-
-        /* MAP */
-        .map-container { flex: 1; }
-        #map { width: 100%; height: 100%; }
-
-        /* Popup */
-        .popup-header { background: var(--primary-color); color: white; padding: 10px; text-align: center; border-radius: 10px 10px 0 0; }
-        .popup-body { padding: 10px; text-align: center; font-size: 13px; }
-        .btn-route-pop { background: var(--text-dark); color: white; border: none; padding: 6px 15px; border-radius: 20px; font-size: 12px; cursor: pointer; margin-top: 5px; }
-        
-        .hidden-inputs { display: none; }
-    </style>
-</head>
-<body>
-
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <h2 class="brand-title">WEDDING DRESS GIS</h2>
-            <div class="sub-title">Bản đồ váy cưới cao cấp</div>
-            
-            <div class="location-panel">
-                <form method="POST" id="locationForm">
-                    {% csrf_token %}
-                    <div class="hidden-inputs">
-                        <input type="text" name="lat" id="latInput" value="{{ user_lat }}">
-                        <input type="text" name="lon" id="lonInput" value="{{ user_lon }}">
-                    </div>
+        {% for p in products %}
+        <div style="border-radius: 15px; overflow: hidden; background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s;">
+            <a href="{% url 'product_detail' p.id %}" style="text-decoration: none; color: inherit;">
+                
+                <div style="height: 350px; overflow: hidden; position: relative;">
+                    {% if p.image %}
+                        <img src="{{ p.image.url }}" style="width: 100%; height: 100%; object-fit: cover; transition: 0.5s;">
+                    {% else %}
+                        <div style="width:100%; height:100%; background:#eee; display:flex; align-items:center; justify-content:center; color:#aaa;">
+                            No Image
+                        </div>
+                    {% endif %}
                     
-                    <div style="font-size: 13px; color: #777; margin-bottom: 5px;">📍 Vị trí của bạn:</div>
-                    <div style="font-weight: bold; color: var(--primary-color); margin-bottom: 10px;">
-                        {% if request.method == "POST" %} Đã xác định tọa độ {% else %} Chợ Bến Thành (Mặc định) {% endif %}
-                    </div>
-
-                    <div style="display: flex; gap: 8px;">
-                        <button type="submit" class="btn-action btn-find">🔄 Tìm Shop Gần Đây</button>
-                        <button type="button" onclick="forceGetLocation()" class="btn-action btn-gps">🎯 Định Vị</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="tab-container">
-            <button class="tab-btn active" onclick="openTab(event, 'storeTab')">Cửa Hàng</button>
-            <button class="tab-btn" onclick="openTab(event, 'dressTab')">Váy Cưới</button>
-        </div>
-
-        <div class="scroll-content">
-            <div id="storeTab" class="tab-content active">
-                {% for store in stores %}
-                <div class="store-card" onclick="focusAndRoute({{ store.lat|stringformat:'f' }}, {{ store.lon|stringformat:'f' }})">
-                    <div class="store-name">{{ store.name }}</div>
-                    <div class="store-addr">🏠 {{ store.address }}</div>
-                    <div style="margin-top: 10px; border-top: 1px dashed #eee; padding-top: 8px;">
-                        <span class="badge-dist">➤ {{ store.distance }} km</span>
-                        <span class="badge-fee">Ship: {{ store.formatted_fee }} đ</span>
+                    <div style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); padding: 5px 10px; border-radius: 20px; font-weight: bold; color: #d88a9a; font-size: 0.9em;">
+                        {{ p.price|intcomma }} đ
                     </div>
                 </div>
-                {% empty %}
-                <p style="text-align:center;">Không tìm thấy cửa hàng nào gần đây.</p>
-                {% endfor %}
-            </div>
 
-            <div id="dressTab" class="tab-content">
-                <div class="dress-grid">
-                    {% for p in products %}
-<<<<<<< HEAD
-                    <a href="{% url 'product_detail' p.id %}" style="text-decoration: none; color: inherit;">
-                        <div class="dress-card">
-                            <div class="dress-img-box">
-                                {% if p.image %}
-                                    <img src="{{ p.image.url }}" alt="{{ p.name }}">
-                                {% else %}
-                                    <div style="width:100%; height:100%; background:#eee; display:flex; align-items:center; justify-content:center; color:#aaa;">No Image</div>
-                                {% endif %}
-                            </div>
-                            <div class="dress-info">
-                                <div class="dress-name">{{ p.name }}</div>
-                                <div class="dress-price">{{ p.price|intcomma }} đ</div>
-                                <div style="font-size: 11px; color: #d88a9a; margin-top: 5px;">👉 Xem chi tiết</div>
-                            </div>
-                        </div>
-=======
-                    <a href="{% url 'product_detail' p.id %}" class="dress-card">
-                        <div class="dress-img-box">
-                            {% if p.image %}
-                                <img src="{{ p.image.url }}" alt="{{ p.name }}">
-                            {% else %}
-                                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#aaa;">No Image</div>
-                            {% endif %}
-                        </div>
-                        <div class="dress-info">
-                            <div class="dress-name">{{ p.name }}</div>
-                            <div class="dress-price">{{ p.price|intcomma }} đ</div>
-                        </div>
->>>>>>> 5c1c15d511eb909412b75542b6bfd207842031bd
-                    </a>
-                    {% empty %}
-                    <p style="text-align:center; grid-column: 1/3;">Chưa có dữ liệu váy.</p>
-                    {% endfor %}
+                <div style="padding: 15px; text-align: center;">
+                    <h3 style="margin: 0; font-size: 1.1em; color: #333;">{{ p.name }}</h3>
+                    <p style="color: #888; font-size: 0.9em; margin-top: 5px;">{{ p.store.name }}</p>
                 </div>
-            </div>
-<<<<<<< HEAD
-
-=======
->>>>>>> 5c1c15d511eb909412b75542b6bfd207842031bd
+            </a>
         </div>
+        {% endfor %}
+
     </div>
+</div>
 
-    <div class="map-container">
-        <div id="map"></div>
-    </div>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
-
-    <script>
-<<<<<<< HEAD
-        // --- LOGIC CHUYỂN TAB ---
-        function openTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-
-        // --- MAP LOGIC ---
-=======
-        function openTab(evt, tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            evt.currentTarget.classList.add('active');
-        }
-
->>>>>>> 5c1c15d511eb909412b75542b6bfd207842031bd
-        var stores = {{ stores_json|safe }};
-        var userLat = parseFloat("{{ user_lat|stringformat:'f' }}");
-        var userLon = parseFloat("{{ user_lon|stringformat:'f' }}");
-
-        var map = L.map('map').setView([userLat, userLon], 14);
-
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-<<<<<<< HEAD
-            attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-            subdomains: 'abcd',
-            maxZoom: 20
-=======
-            attribution: '&copy; OpenStreetMap & CARTO'
->>>>>>> 5c1c15d511eb909412b75542b6bfd207842031bd
-        }).addTo(map);
-
-        var redIcon = new L.Icon({
-            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-            iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
-        });
-
-        var userMarker = L.marker([userLat, userLon], {icon: redIcon}).addTo(map)
-            .bindPopup("<b>Vị trí của bạn 💃</b>").openPopup();
-
-<<<<<<< HEAD
-        // Markers Stores (Giữ phiên bản Royal có nút chỉ đường)
-=======
->>>>>>> 5c1c15d511eb909412b75542b6bfd207842031bd
-        stores.forEach(function(store) {
-            var m = L.marker([store.lat, store.lon]).addTo(map);
-            m.bindPopup(`
-                <div class="popup-header"><b>${store.name}</b></div>
-                <div class="popup-body">
-                    Cách bạn: <b>${store.distance} km</b><br>
-                    <button class="btn-route-pop" onclick="showRouteTo(${store.lat}, ${store.lon})">🚗 Chỉ đường</button>
-                </div>
-            `);
-        });
-
-        var routingControl = null;
-        function showRouteTo(destLat, destLon) {
-            if (routingControl !== null) map.removeControl(routingControl);
-            routingControl = L.Routing.control({
-                waypoints: [L.latLng(userLat, userLon), L.latLng(destLat, destLon)],
-                createMarker: function() { return null; },
-                lineOptions: { styles: [{color: '#d88a9a', opacity: 0.9, weight: 6}] }
-            }).addTo(map);
-        }
-
-        function focusAndRoute(lat, lon) {
-            map.flyTo([lat, lon], 16);
-            showRouteTo(lat, lon);
-        }
-
-        function forceGetLocation() {
-            if (!navigator.geolocation) return;
-            navigator.geolocation.getCurrentPosition(function(pos) {
-<<<<<<< HEAD
-                var rLat = pos.coords.latitude;
-                var rLon = pos.coords.longitude;
-                document.getElementById('latInput').value = rLat;
-                document.getElementById('lonInput').value = rLon;
-                userMarker.setLatLng([rLat, rLon]).bindPopup("Đã tìm thấy nàng!").openPopup();
-                map.setView([rLat, rLon], 16);
-                setTimeout(() => document.getElementById('locationForm').submit(), 500);
-            }, function(err) { alert("Hãy cấp quyền vị trí!"); });
-        }
-
-        if (Math.abs(userLat - defaultLat) < 0.0001 && Math.abs(userLon - defaultLon) < 0.0001) {
-            forceGetLocation();
-=======
-                document.getElementById('latInput').value = pos.coords.latitude;
-                document.getElementById('lonInput').value = pos.coords.longitude;
-                document.getElementById('locationForm').submit();
-            });
->>>>>>> 5c1c15d511eb909412b75542b6bfd207842031bd
-        }
-    </script>
-</body>
-</html>
+{% endblock %}

@@ -6,7 +6,7 @@ from django.utils import timezone
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 3 # Hiện sẵn 3 ô trống để chọn ảnh cho nhanh
-    verbose_name = "Ảnh chi tiết váy"
+    verbose_name = "Ảnh chi tiết"
 
 @admin.register(Store)
 class StoreAdmin(admin.ModelAdmin):

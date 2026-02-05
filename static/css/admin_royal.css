@@ -1,88 +1,110 @@
 /* static/css/admin_royal.css */
 
-/* 1. Import Font chữ giống trang Bản đồ */
+/* --- CẤU HÌNH CHUNG & BIẾN MÀU --- */
+:root {
+    --primary-pink: #d88a9a;       /* Màu hồng chủ đạo */
+    --primary-pink-dark: #c06c7d;  /* Màu hồng đậm khi hover */
+    --accent-gold: #bfa05f;        /* Màu vàng kim */
+    --bg-cream: #fdfbf7;           /* Màu nền kem */
+    --text-dark: #4a4a4a;          /* Màu chữ chính */
+    --white: #ffffff;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@400;600&display=swap');
 
-/* 2. Tổng thể - Nền màu kem nhạt */
+/* --- GLOBAL STYLES --- */
 body, .content-wrapper {
     font-family: 'Quicksand', sans-serif !important;
-    background-color: #fdfbf7 !important; 
-    color: #4a4a4a !important;
+    background-color: var(--bg-cream) !important;
+    color: var(--text-dark) !important;
 }
 
-/* 3. THANH HEADER (Ngang bên trên) - Màu Hồng Đất */
+/* --- TOP NAVIGATION (HEADER) --- */
 .main-header.navbar {
-    background-color: #d88a9a !important; /* Màu hồng chủ đạo */
+    background-color: var(--primary-pink) !important;
     border-bottom: none !important;
 }
-.main-header .nav-link {
-    color: white !important;
+
+.main-header .nav-link, 
+.main-header .navbar-nav .nav-link {
+    color: var(--white) !important;
 }
 
-/* 4. SIDEBAR (Thanh bên trái) - Màu Trắng sang trọng */
+/* --- SIDEBAR (MENU TRÁI) --- */
 .main-sidebar {
-    background-color: #ffffff !important;
+    background-color: var(--white) !important;
     box-shadow: 4px 0 15px rgba(0,0,0,0.05);
     border-right: 1px solid #ebd4d8;
 }
 
-/* Logo Brand ở góc trên trái Sidebar */
+/* Logo Brand */
 .brand-link {
-    background-color: #d88a9a !important; 
-    color: white !important;
+    background-color: var(--primary-pink) !important;
+    color: var(--white) !important;
     font-family: 'Playfair Display', serif !important;
-    border-bottom: 1px solid #c06c7d !important;
+    border-bottom: 1px solid var(--primary-pink-dark) !important;
 }
-.brand-link:hover { color: #fff !important; }
 
-/* Link trong sidebar */
+.brand-link:hover {
+    color: var(--white) !important;
+}
+
+/* Sidebar Links */
 .nav-sidebar .nav-item .nav-link {
     color: #555 !important;
-}
-.nav-sidebar .nav-item .nav-link:hover {
-    background-color: #fff0f3 !important; /* Hover hồng nhạt */
-    color: #d88a9a !important;
+    transition: all 0.3s ease;
 }
 
-/* Link đang Active (Đang chọn) */
+.nav-sidebar .nav-item .nav-link:hover {
+    background-color: #fff0f3 !important;
+    color: var(--primary-pink) !important;
+}
+
+/* Active Link (Mục đang chọn) */
 .nav-sidebar .nav-item .nav-link.active {
-    background-color: #d88a9a !important;
-    color: white !important;
+    background-color: var(--primary-pink) !important;
+    color: var(--white) !important;
     box-shadow: 0 4px 10px rgba(216, 138, 154, 0.4) !important;
     border-radius: 8px;
-}
-
-/* 5. NÚT BẤM (BUTTONS) */
-/* Nút Chính (Search, Save) -> Màu Vàng Kim */
-.btn-primary {
-    background-color: #bfa05f !important;
-    border-color: #bfa05f !important;
     font-weight: 600;
 }
-.btn-primary:hover {
-    background-color: #a68b4f !important;
-}
 
-/* Nút Thêm mới (Add) -> Màu Hồng */
-.btn-success {
-    background-color: #d88a9a !important;
-    border-color: #d88a9a !important;
-}
-.btn-success:hover {
-    background-color: #c06c7d !important;
-}
+/* --- COMPONENTS --- */
 
-/* 6. CÁC CARD/BẢNG DỮ LIỆU */
+/* Cards - Bo góc mềm mại */
 .card {
     border-radius: 12px !important;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05) !important;
     border: none !important;
 }
+
 .card-header {
-    background-color: white !important;
+    background-color: var(--white) !important;
     border-bottom: 2px solid #f0f0f0 !important;
     font-family: 'Playfair Display', serif;
-    color: #d88a9a !important;
+    color: var(--primary-pink) !important;
     font-size: 1.2em;
     font-weight: bold;
+}
+
+/* Buttons Override */
+.btn-primary {
+    background-color: var(--accent-gold) !important;
+    border-color: var(--accent-gold) !important;
+    font-weight: 600;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #a68b4f !important;
+    border-color: #a68b4f !important;
+}
+
+.btn-success {
+    background-color: var(--primary-pink) !important;
+    border-color: var(--primary-pink) !important;
+}
+
+.btn-success:hover {
+    background-color: var(--primary-pink-dark) !important;
+    border-color: var(--primary-pink-dark) !important;
 }

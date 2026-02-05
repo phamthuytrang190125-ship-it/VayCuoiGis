@@ -17,15 +17,15 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
-    "jazzmin",  # Jazzmin PHẢI đứng trước admin
+    "jazzmin", # Admin Theme
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "store",  # App quản lý Store và Product của bạn
-    'django.contrib.humanize',
+    "store",
+    "django.contrib.humanize",
 ]
 
 MIDDLEWARE = [
@@ -87,70 +87,59 @@ USE_L10N = True
 USE_THOUSAND_SEPARATOR = True
 THOUSAND_SEPARATOR = '.'
 
-# Static and Media files
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = "static/"
-
-# Đường dẫn thư mục Static (CSS, JS) - Quan trọng để nhận file admin_royal.css
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-# --- CẤU HÌNH MEDIA (Lưu ảnh váy cưới) ---
+# Media files (Uploads)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-# ==============================================
-# CẤU HÌNH GIAO DIỆN QUẢN TRỊ (JAZZMIN) - ĐÃ GỘP
-# ==============================================
-
+# Jazzmin Admin Configuration
 JAZZMIN_SETTINGS = {
-    # --- PHẦN GIAO DIỆN ROYAL CỦA BẠN ---
     "site_title": "Quản trị Váy Cưới GIS",
     "site_header": "Bridal Admin",
     "site_brand": "Bridal Luxury",
     "welcome_sign": "Chào mừng đến với hệ thống quản trị Váy Cưới",
     "copyright": "Bridal GIS Team",
     
-    # KẾT NỐI FILE CSS ROYAL MÀU HỒNG
+    # Custom CSS
     "custom_css": "css/admin_royal.css",
 
-    # --- PHẦN TÍNH NĂNG TỪ BẠN CỦA BẠN (Đã thêm vào) ---
-    # Cho phép tìm kiếm cả Váy cưới, Cửa hàng và Đơn đặt lịch
+    # Search models
     "search_model": ["store.Product", "store.Store", "store.Booking"],
     
-    # Thêm menu link ra trang chủ
+    # Top menu links
     "topmenu_links": [
         {"name": "Trang chủ bản đồ", "url": "home", "permissions": ["auth.view_user"]},
     ],
 
     "show_sidebar": True,
     "navigation_expanded": True,
-    "show_ui_builder": False, # Tắt cái này đi để dùng giao diện Royal đẹp hơn
+    "show_ui_builder": False,
     
-    # Cấu hình Icons (Thêm icon cho Booking)
+    # Icons configuration
     "icons": {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
-        "store.Product": "fas fa-female",          # Icon Cô dâu/Váy
-        "store.Store": "fas fa-store-alt",         # Icon Cửa hàng
-        "store.Booking": "fas fa-calendar-check",  # Icon Đặt lịch (MỚI)
+        "store.Product": "fas fa-female",
+        "store.Store": "fas fa-store-alt",
+        "store.Booking": "fas fa-calendar-check",
     },
 }
 
-# --- CẤU HÌNH UI TWEAKS (GIỮ NGUYÊN BẢN ROYAL CỦA BẠN) ---
-# Phần này quan trọng để file CSS custom hoạt động đúng
 JAZZMIN_UI_TWEAKS = {
     "theme": "flatly",
     "sidebar": "sidebar-light-primary", 
     "navbar": "navbar-dark",
-    
     "accent": "accent-primary",
     "brand_colour": "navbar-primary",
-    
     "no_navbar_border": True,
     "navbar_fixed": False,
     "layout_boxed": False,
@@ -162,7 +151,6 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_compact_style": False,
     "sidebar_nav_legacy_style": False,
     "sidebar_nav_flat_style": True,
-    
     "button_classes": {
         "primary": "btn-primary",
         "secondary": "btn-secondary",

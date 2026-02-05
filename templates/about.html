@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    /* CSS cho trang About */
+    .brand-header {
+        background-color: #fdfbf7;
+        text-align: center;
+        padding: 60px 20px;
+        margin-bottom: 40px;
+    }
+    .brand-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 3rem;
+        color: #d88a9a;
+        margin-bottom: 10px;
+    }
+    .brand-subtitle {
+        font-size: 1.1rem;
+        color: #777;
+        font-style: italic;
+    }
+
+    /* Layout Content */
+    .content-section {
+        display: flex;
+        align-items: center;
+        gap: 50px;
+        margin-bottom: 80px;
+    }
+    .content-section.reverse {
+        flex-direction: row-reverse;
+    }
+
+    /* Text Column */
+    .text-col {
+        flex: 1;
+        line-height: 1.8;
+        color: #555;
+        font-size: 1.05rem;
+    }
+    .text-col h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        color: #333;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    .text-col h2::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 3px;
+        background: #d88a9a;
+        margin-top: 10px;
+    }
+
+    /* Image Column */
+    .img-col { flex: 1; }
+    .img-col img {
+        width: 100%;
+        border-radius: 20px; 
+        box-shadow: 0 10px 25px rgba(216, 138, 154, 0.2);
+    }
+
+    /* Values Section */
+    .values-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 80px; 
+    }
+    .value-item {
+        padding: 30px;
+        background: #fff;
+        border: 1px dashed #e0e0e0;
+        border-radius: 15px;
+        transition: 0.3s;
+    }
+    .value-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        border-color: #d88a9a;
+    }
+    .value-icon {
+        font-size: 40px;
+        color: #d88a9a;
+        margin-bottom: 15px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .content-section, .content-section.reverse {
+            flex-direction: column;
+        }
+        .values-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="brand-header">
+    <h1 class="brand-title">Bridal Luxury</h1>
+    <div class="brand-subtitle">"Biến giấc mơ công chúa của bạn thành hiện thực"</div>
+</div>
+
+<div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+
+    <section class="content-section">
+        <div class="img-col">
+            <img src="https://images.unsplash.com/photo-1546193430-c2d207739ed7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="About Bridal Luxury">
+        </div>
+        <div class="text-col">
+            <h2>Khởi Nguồn Hạnh Phúc</h2>
+            <p>
+                Chào mừng bạn đến với <b>Bridal Luxury</b>. Chúng tôi tin rằng mỗi cô dâu đều xứng đáng trở thành nữ hoàng trong ngày trọng đại nhất của cuộc đời mình.
+            </p>
+            <p>
+                Hơn cả một cửa hàng cho thuê váy cưới, Bridal Luxury là nơi lưu giữ những thiết kế tinh tế nhất, từ phong cách cổ điển sang trọng đến hiện đại phá cách. Mỗi chiếc váy đều được chúng tôi tuyển chọn kỹ lưỡng để tôn vinh vẻ đẹp duy nhất của bạn.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section reverse">
+        <div class="img-col">
+            <img src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Technology GIS">
+        </div>
+        <div class="text-col">
+            <h2>Tiên Phong Công Nghệ Wedding GIS</h2>
+            <p>
+                Thấu hiểu sự bận rộn của các cặp đôi, Bridal Luxury tự hào là đơn vị đầu tiên tại Việt Nam tích hợp <b>Hệ thống Bản đồ Số (GIS)</b> vào dịch vụ thuê váy.
+            </p>
+            <p>
+                Không còn nỗi lo di chuyển xa xôi hay lạc đường. Chỉ với một cú click chuột, hệ thống của chúng tôi sẽ:
+            </p>
+            <ul style="list-style-type: none; padding: 0;">
+                <li>📍 <b>Định vị ngay lập tức</b> cửa hàng gần bạn nhất.</li>
+                <li>🚗 <b>Vẽ lộ trình ngắn nhất</b> giúp bạn tiết kiệm thời gian đi thử váy.</li>
+                <li>💰 <b>Minh bạch chi phí vận chuyển</b> dựa trên khoảng cách thực tế.</li>
+            </ul>
+            <p style="font-style: italic; color: #d88a9a; margin-top: 10px;">
+                "Công nghệ vị nhân sinh - Để bạn dành trọn thời gian cho tình yêu."
+            </p>
+        </div>
+    </section>
+
+    <div>
+        <h2 style="text-align: center; font-family: 'Playfair Display', serif; color: #333; margin-bottom: 10px;">Tại Sao Chọn Chúng Tôi?</h2>
+        <div style="width: 50px; height: 3px; background: #d88a9a; margin: 0 auto;"></div>
+
+        <div class="values-grid">
+            <div class="value-item">
+                <div class="value-icon"><i class="fas fa-gem"></i></div>
+                <h3>Thiết Kế Đẳng Cấp</h3>
+                <p>Hơn 500+ mẫu váy được cập nhật liên tục theo xu hướng thời trang cưới quốc tế.</p>
+            </div>
+            <div class="value-item">
+                <div class="value-icon"><i class="fas fa-map-location-dot"></i></div>
+                <h3>Mạng Lưới Rộng Khắp</h3>
+                <p>Hệ thống cửa hàng phủ sóng toàn thành phố, dễ dàng tìm kiếm qua Bản đồ GIS.</p>
+            </div>
+            <div class="value-item">
+                <div class="value-icon"><i class="fas fa-heart"></i></div>
+                <h3>Dịch Vụ Tận Tâm</h3>
+                <p>Đội ngũ stylist chuyên nghiệp sẵn sàng tư vấn 1:1 để bạn tìm được chiếc váy trong mơ.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
