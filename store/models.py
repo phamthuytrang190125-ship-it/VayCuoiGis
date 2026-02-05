@@ -42,7 +42,6 @@ class Booking(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Váy muốn thử")
     customer_name = models.CharField(max_length=100, verbose_name="Tên khách")
     phone = models.CharField(max_length=20, verbose_name="Số điện thoại")
-    # DateTimeField là chuẩn rồi, chỉ cần HTML dùng type="datetime-local" là sẽ có giờ
     booking_date = models.DateTimeField(verbose_name="Ngày giờ hẹn")
     note = models.TextField(blank=True, null=True, verbose_name="Ghi chú thêm")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending', verbose_name="Trạng thái")

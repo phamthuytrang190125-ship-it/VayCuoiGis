@@ -17,15 +17,15 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
-    "jazzmin",  # Jazzmin PHẢI đứng trước admin
+    "jazzmin", # Admin Theme
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "store",  # App quản lý Store và Product của bạn
-    'django.contrib.humanize',
+    "store",
+    "django.contrib.humanize",
 ]
 
 MIDDLEWARE = [
@@ -87,19 +87,20 @@ USE_L10N = True
 USE_THOUSAND_SEPARATOR = True
 THOUSAND_SEPARATOR = '.'
 
-# Static and Media files
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
+# Media files (Uploads)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# ==============================================================================
-# CẤU HÌNH JAZZMIN (ADMIN INTERFACE)
-# ==============================================================================
 
+# Jazzmin Admin Configuration
 JAZZMIN_SETTINGS = {
     "site_title": "Quản trị Váy Cưới GIS",
     "site_header": "Bridal Admin",
@@ -107,16 +108,22 @@ JAZZMIN_SETTINGS = {
     "welcome_sign": "Chào mừng đến với hệ thống quản trị Váy Cưới",
     "copyright": "Bridal GIS Team",
     
-    "topmenu_links": [
-        {"name": "Trang chủ", "url": "home", "permissions": ["auth.view_user"]},
-    ],
-    
-    "search_model": ["store.Product", "store.Booking"],
+    # Custom CSS
     "custom_css": "css/admin_royal.css",
+
+    # Search models
+    "search_model": ["store.Product", "store.Store", "store.Booking"],
+    
+    # Top menu links
+    "topmenu_links": [
+        {"name": "Trang chủ bản đồ", "url": "home", "permissions": ["auth.view_user"]},
+    ],
+
     "show_sidebar": True,
     "navigation_expanded": True,
-    "show_ui_builder": True,
+    "show_ui_builder": False,
     
+    # Icons configuration
     "icons": {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",

@@ -16,6 +16,7 @@
     {% endif %}
 
     <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+        
         <div style="flex: 1.5; min-width: 350px;">
             
             <div style="width: 100%; background: #fffafb; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #f5ebe0;">
@@ -45,12 +46,26 @@
             
             <h1 style="margin-top: 25px; color: #4a4a4a; font-size: 2.2rem; margin-bottom: 10px;">{{ product.name }}</h1>
             
-            <p style="color: #888; font-size: 1.1rem; margin-bottom: 5px;">🏠 Thuộc tiệm: <span style="color: #b08968; font-weight: bold;">{{ product.store.name }}</span></p>
-            
             <p style="font-size: 32px; color: #b08968; font-weight: bold; margin: 15px 0;">
                 Giá thuê: {{ product.price|intcomma }} VNĐ
             </p>
 
+            <div style="background: #fffafb; border: 2px dashed #d88a9a; padding: 20px; border-radius: 15px; margin: 25px 0;">
+                <h3 style="margin-top: 0; color: #6d6875; font-size: 1.1rem; margin-bottom: 10px;">
+                    📍 Sản phẩm đang có sẵn tại:
+                </h3>
+                <p style="font-size: 1.1rem; font-weight: bold; color: #4a4a4a; margin-bottom: 5px;">
+                    {{ product.store.name }}
+                </p>
+                <p style="color: #666; margin-bottom: 15px; font-size: 0.95rem;">
+                    🏠 Địa chỉ: {{ product.store.address }}
+                </p>
+
+                <a href="{% url 'map_view' %}?focus_store={{ product.store.id }}" 
+                   style="display: block; text-align: center; background: #4a4a4a; color: white; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                   🗺️ Xem vị trí trên bản đồ & Chỉ đường
+                </a>
+            </div>
             <div style="margin-top: 30px;">
                 <h4 style="border-bottom: 2px solid #f5ebe0; padding-bottom: 10px; color: #6d6875; font-size: 1.3rem;">Mô tả sản phẩm</h4>
                 <div style="line-height: 1.8; color: #555; background: #fffafb; padding: 20px; border-radius: 15px; margin-top: 15px; border: 1px dashed #f5ebe0;">
@@ -100,13 +115,13 @@
 <script>
     function changeImage(src) {
         const mainImg = document.getElementById('main-wedding-img');
-        mainImg.style.opacity = '0.3'; // Hiệu ứng mờ chuyển cảnh
+        mainImg.style.opacity = '0.3'; 
         setTimeout(() => {
             mainImg.src = src;
             mainImg.style.opacity = '1';
         }, 150);
         
-        // Cập nhật lại border cho ảnh nhỏ đang chọn
+        
         const thumbs = document.querySelectorAll('.thumb-img');
         thumbs.forEach(t => t.style.border = '1px solid #ddd');
         event.target.style.border = '2px solid #b5838d';
