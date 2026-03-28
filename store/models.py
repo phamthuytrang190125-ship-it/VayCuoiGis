@@ -7,7 +7,7 @@ class Store(models.Model):
     phone = models.CharField(max_length=20, verbose_name="Điện thoại")
     latitude = models.FloatField(verbose_name="Vĩ độ (Lat)")
     longitude = models.FloatField(verbose_name="Kinh độ (Lon)")
-    
+    image = models.ImageField(upload_to='store_images/', null=True, blank=True)
     def __str__(self):
         return self.name
 
@@ -17,11 +17,10 @@ class Product(models.Model):
     name = models.CharField(max_length=200, verbose_name="Tên váy")
     price = models.DecimalField(max_digits=12, decimal_places=0, verbose_name="Giá thuê")
     image = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="Hình ảnh")
-    # THÊM TRƯỜNG MÔ TẢ Ở ĐÂY
     description = models.TextField(blank=True, null=True, verbose_name="Mô tả sản phẩm")
     
     def __str__(self):
-        return f"{self.name} ({self.store.name})" # Hiện kèm tên tiệm để dễ quản lý
+        return f"{self.name} ({self.store.name})" 
 
 # Bảng chứa nhiều ảnh cho một sản phẩm
 class ProductImage(models.Model):

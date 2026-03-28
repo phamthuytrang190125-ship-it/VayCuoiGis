@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/edit_product.css' %}">
+
+<div class="edit-product-container">
+    
+    <h3 class="edit-product-title">
+        ✏️ Sửa Thông Tin Váy Cưới
+    </h3>
+
+    <form method="POST" enctype="multipart/form-data" class="edit-product-form">
+        {% csrf_token %}
+        
+        <label>Tên váy cưới:</label>
+        <input type="text" name="name" value="{{ product.name }}" required>
+
+        <label>Giá thuê (đ):</label>
+        <input type="number" name="price" value="{{ product.price }}" required>
+
+        <label>Mô tả ngắn:</label>
+        <input type="text" name="description" value="{{ product.description|default:'' }}">
+
+        <label>Thuộc cửa hàng:</label>
+        <select name="store" required>
+            {% for s in stores %}
+                <option value="{{ s.id }}" {% if s.id == product.store.id %}selected{% endif %}>
+                    {{ s.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label>Hình ảnh (Bỏ trống nếu giữ nguyên ảnh cũ):</label>
+        {% if product.image %}
+            <div>
+                <img src="{{ product.image.url }}" class="edit-product-img-preview">
+            </div>
+        {% endif %}
+        <input type="file" name="image">
+
+        <div class="edit-product-actions">
+            <button type="submit" class="btn-save-product">💾 Lưu Thay Đổi</button>
+            <a href="{% url 'custom_manager' %}" class="btn-cancel-product">Hủy / Trở về</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

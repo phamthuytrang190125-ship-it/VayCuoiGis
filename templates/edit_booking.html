@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/edit_booking.css' %}">
+
+<div class="edit-booking-container">
+    
+    <h3 class="edit-booking-title">
+        📝 Cập Nhật Đơn Đặt Lịch
+    </h3>
+
+    <form method="POST" class="edit-booking-form">
+        {% csrf_token %}
+        
+        <div class="edit-booking-info-box">
+            <p><b>👗 Váy muốn thử:</b> <span class="info-highlight-pink">{{ booking.product.name }}</span></p>
+            <p><b>⏰ Ngày giờ hẹn:</b> <span class="info-highlight-gold">{{ booking.booking_date|date:"H:i - d/m/Y" }}</span></p>
+        </div>
+
+        <label>Tên khách hàng:</label>
+        <input type="text" name="customer_name" value="{{ booking.customer_name }}" required>
+
+        <label>Số điện thoại:</label>
+        <input type="text" name="phone" value="{{ booking.phone }}" required>
+
+        <label>Ghi chú thêm:</label>
+        <textarea name="note" rows="3">{{ booking.note|default:'' }}</textarea>
+
+        <label>Trạng thái đơn hàng:</label>
+        <select name="status">
+            <option value="pending" {% if booking.status == 'pending' %}selected{% endif %}>Chờ duyệt</option>
+            <option value="confirmed" {% if booking.status == 'confirmed' %}selected{% endif %}>Đã duyệt</option>
+            <option value="done" {% if booking.status == 'done' %}selected{% endif %}>Đã xong</option>
+            <option value="cancelled" {% if booking.status == 'cancelled' %}selected{% endif %}>Đã hủy</option>
+        </select>
+
+        <div class="edit-booking-actions">
+            <button type="submit" class="btn-update">💾 Cập Nhật</button>
+            <a href="{% url 'custom_manager' %}" class="btn-cancel">Hủy / Trở về</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,59 +1,107 @@
 {% extends 'base.html' %}
 {% load humanize %}
+{% load static %} 
 
 {% block content %}
 
-<div style="background-color: #fce4ec; padding: 50px 20px; text-align: center; margin-bottom: 40px;">
-    <h1 style="font-family: 'Playfair Display', serif; color: #d88a9a; font-size: 3em; margin: 0;">
-        Bridal Luxury
-    </h1>
-    <p style="color: #666; margin: 15px 0 25px;">
-        Hệ thống cho thuê váy cưới cao cấp tích hợp bản đồ thông minh
-    </p>
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+<div style="
+    background-image: url('{% static 'images/banner_nen.jpg' %}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 10px 20px; 
+    text-align: center; 
+    margin-bottom: 30px;
+    position: relative;
+">
+    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.3); z-index: 1;"></div>
     
-    <a href="{% url 'map_view' %}" style="background: #d88a9a; color: white; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1.1em; transition: 0.3s; box-shadow: 0 4px 10px rgba(216, 138, 154, 0.3);">
-        🗺️ Mở Bản Đồ Tìm Cửa Hàng
-    </a>
+    <div style="position: relative; z-index: 2;">
+        <h1 style="font-family: 'Playfair Display', serif; color: #d88a9a; font-size: 3em; margin: 0; text-shadow: 1px 1px 3px rgba(255,255,255,0.8);">
+            Bridal Luxury
+        </h1>
+        <p style="color: #555; margin: 10px 0 20px; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">
+            Hệ thống cho thuê váy cưới cao cấp tích hợp bản đồ thông minh
+        </p>
+        
+        <a href="{% url 'map_view' %}" style="background: #d88a9a; color: white; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1.05em; transition: 0.3s; box-shadow: 0 4px 10px rgba(216, 138, 154, 0.4); display: inline-block;">
+            🗺️ Mở Bản Đồ Tìm Cửa Hàng
+        </a>
+    </div>
 </div>
 
 <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
     
-    <h2 style="text-align: center; color: #4a4a4a; margin-bottom: 30px; font-family: 'Playfair Display', serif;">
+    <h2 style="text-align: center; color: #4a4a4a; margin-bottom: 25px; font-family: 'Playfair Display', serif; font-size: 1.8em;">
         Bộ Sưu Tập Mới Nhất
     </h2>
     
-    <div style="height: 800px; overflow-y: auto; padding: 15px; border: 1px solid #eee; border-radius: 15px; box-shadow: inset 0 0 10px rgba(0,0,0,0.03); margin-bottom: 50px;">
+    <div class="product-grid">
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px;">
-            
-            {% for p in products %}
-            <div style="border-radius: 15px; overflow: hidden; background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s; border: 1px solid #f9f9f9;">
-                <a href="{% url 'product_detail' p.id %}" style="text-decoration: none; color: inherit;">
-                    
-                    <div style="height: 350px; overflow: hidden; position: relative;">
-                        {% if p.image %}
-                            <img src="{{ p.image.url }}" style="width: 100%; height: 100%; object-fit: cover; transition: 0.5s;">
-                        {% else %}
-                            <div style="width:100%; height:100%; background:#eee; display:flex; align-items:center; justify-content:center; color:#aaa;">
-                                No Image
-                            </div>
-                        {% endif %}
-                        
-                        <div style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); padding: 5px 10px; border-radius: 20px; font-weight: bold; color: #d88a9a; font-size: 0.9em;">
-                            {{ p.price|intcomma }} đ
+        {% for p in products %}
+        <div class="dress-card">
+            <a href="{% url 'product_detail' p.id %}" style="text-decoration: none; color: inherit;">
+                
+                <div style="height: 240px; overflow: hidden; position: relative;">
+                    {% if p.image %}
+                        <img src="{{ p.image.url }}" class="dress-img" alt="{{ p.name }}">
+                    {% else %}
+                        <div style="width:100%; height:100%; background:#eee; display:flex; align-items:center; justify-content:center; color:#aaa;">
+                            No Image
                         </div>
+                    {% endif %}
+                    
+                    <div style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.95); padding: 5px 12px; border-radius: 20px; font-weight: bold; color: #d88a9a; font-size: 0.85em; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                        {{ p.price|intcomma }} đ
                     </div>
+                </div>
 
-                    <div style="padding: 15px; text-align: center;">
-                        <h3 style="margin: 0; font-size: 1.1em; color: #333;">{{ p.name }}</h3>
-                        <p style="color: #888; font-size: 0.9em; margin-top: 5px;">{{ p.store.name }}</p>
-                    </div>
-                </a>
-            </div>
-            {% endfor %}
-
+                <div style="padding: 12px; text-align: center;">
+                    <h3 style="margin: 0; font-size: 1em; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Quicksand', sans-serif;">
+                        {{ p.name }}
+                    </h3>
+                    <p style="color: #888; font-size: 0.8em; margin-top: 5px; margin-bottom: 0;">📍 {{ p.store.name }}</p>
+                </div>
+            </a>
         </div>
+        {% empty %}
+        <p style="text-align:center; grid-column: 1/-1; width: 100%; color: #888; font-size: 1.1em;">Chưa có dữ liệu váy cưới.</p>
+        {% endfor %}
+
     </div>
+
+    <div style="display: flex; justify-content: center; margin-top: 25px; margin-bottom: 30px;">
+        <ul class="pagination-custom">
+            
+            {% if products.has_previous %}
+                <li>
+                    <a href="?page=1" class="page-link-custom">&laquo; Đầu</a>
+                </li>
+                <li>
+                    <a href="?page={{ products.previous_page_number }}" class="page-link-custom">Trước</a>
+                </li>
+            {% endif %}
+
+            <li>
+                <span class="page-link-active">
+                    Trang {{ products.number }} / {{ products.paginator.num_pages }}
+                </span>
+            </li>
+
+            {% if products.has_next %}
+                <li>
+                    <a href="?page={{ products.next_page_number }}" class="page-link-custom">Sau</a>
+                </li>
+                <li>
+                    <a href="?page={{ products.paginator.num_pages }}" class="page-link-custom">Cuối &raquo;</a>
+                </li>
+            {% endif %}
+
+        </ul>
+    </div>
+
 </div>
 
 {% endblock %}

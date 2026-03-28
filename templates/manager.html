@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% load static %}  
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/manager.css' %}">
+
+<div class="container" style="max-width: 1200px; margin: 40px auto; padding: 0 20px; min-height: 70vh;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #fce4ec; padding-bottom: 15px; margin-bottom: 20px;">
+        <h2 style="font-family: 'Playfair Display', serif; color: #d88a9a; margin: 0;">
+            <i class="fas fa-chart-line"></i> Bảng Điều Khiển
+        </h2>
+        <div style="font-family: 'Quicksand', sans-serif; font-weight: bold; color: #555; display: flex; gap: 15px;">
+            <span style="background: #fdfbf7; padding: 8px 15px; border-radius: 20px; border: 1px solid #ebd4d8;">Đơn hẹn: <span style="color: #d88a9a;">{{ total_bookings }}</span></span>
+            <span style="background: #fdfbf7; padding: 8px 15px; border-radius: 20px; border: 1px solid #ebd4d8;">Kho váy: <span style="color: #d88a9a;">{{ total_products }}</span></span>
+            <span style="background: #fdfbf7; padding: 8px 15px; border-radius: 20px; border: 1px solid #ebd4d8;">Chi nhánh: <span style="color: #d88a9a;">{{ total_stores }}</span></span>
+        </div>
+    </div>
+
+    <div style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #eee;">
+        <button class="mgr-tab active" onclick="openMgrTab(event, 'tab-booking')">📝 Quản Lý Booking</button>
+        <button class="mgr-tab" onclick="openMgrTab(event, 'tab-product')">👗 Quản Lý Váy Cưới</button>
+        <button class="mgr-tab" onclick="openMgrTab(event, 'tab-store')">🏪 Quản Lý Cửa Hàng</button>
+    </div>
+
+    <div id="tab-booking" class="mgr-content active">
+        
+        <div style="margin-bottom: 15px; display: flex; justify-content: flex-end;">
+            <input type="text" id="searchBooking" onkeyup="filterBookings()" placeholder="🔍 Gõ tên khách hoặc SĐT để tìm..." style="width: 300px; padding: 10px 15px; border: 1px solid #ebd4d8; border-radius: 20px; outline: none; font-family: 'Quicksand', sans-serif;">
+        </div>
+
+        <div class="table-container">
+            <table id="bookingTable">
+                <thead>
+                    <tr>
+                        <th>ID</th><th>Khách hàng</th><th>Váy muốn thử</th><th>Ngày hẹn</th><th>Chi nhánh</th><th>Trạng thái</th><th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for b in bookings %}
+                    <tr class="booking-row">
+                        <td>#{{ b.id }}</td>
+                        <td class="booking-name">
+                            <div style="font-weight: bold;">{{ b.customer_name }}</div>
+                            <div style="color: #d88a9a; font-size: 13px;">{{ b.phone }}</div>
+                        </td>
+                        <td>{{ b.product.name }}</td>
+                        <td><span class="badge">{{ b.booking_date|date:"H:i d/m/Y" }}</span></td>
+                        <td>{{ b.product.store.name }}</td>
+                        
+                        <td>
+                            {% if b.status == 'done' %}
+                                <span style="background: #e8f5e9; color: #2e7d32; padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: bold;">{{ b.get_status_display }}</span>
+                            {% elif b.status == 'cancelled' %}
+                                <span style="background: #ffebee; color: #c62828; padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: bold;">{{ b.get_status_display }}</span>
+                            {% elif b.status == 'confirmed' %}
+                                <span style="background: #e3f2fd; color: #1565c0; padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: bold;">{{ b.get_status_display }}</span>
+                            {% else %}
+                                <span style="background: #fff3e0; color: #ef6c00; padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: bold;">{{ b.get_status_display }}</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <a href="{% url 'edit_booking' b.id %}" class="btn-sm" style="text-decoration:none; background: #fff0f3; color: #d88a9a; border: 1px solid #ebd4d8; display: inline-block; text-align: center;">Sửa</a>
+                            <a href="{% url 'delete_booking' b.id %}" class="btn-sm btn-delete" style="text-decoration:none;" onclick="return confirm('Bạn có chắc chắn muốn xóa đơn này không?');">Xóa</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7" style="text-align: center;">Chưa có đơn đặt lịch.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="tab-product" class="mgr-content" style="display: none;">
+        
+        <div style="background: #fff0f3; padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px dashed #d88a9a;">
+            <h4 style="margin-top:0; color:#d88a9a; font-family:'Quicksand', sans-serif;">+ Thêm Váy Cưới Mới</h4>
+            
+            <form action="{% url 'add_product' %}" method="POST" enctype="multipart/form-data" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Tên váy cưới" required style="padding: 8px; border: 1px solid #ebd4d8; border-radius: 5px; flex: 2; min-width: 200px;">
+                <input type="number" name="price" placeholder="Giá thuê (đ)" required style="padding: 8px; border: 1px solid #ebd4d8; border-radius: 5px; flex: 1; min-width: 150px;">
+                
+                <input type="text" name="description" placeholder="Mô tả ngắn" style="padding: 8px; border: 1px solid #ebd4d8; border-radius: 5px; flex: 2; min-width: 200px;">
+                
+                <select name="store" required style="padding: 8px; border: 1px solid #ebd4d8; border-radius: 5px; flex: 1; min-width: 150px; background: white;">
+                    <option value="" disabled selected>-- Chọn cửa hàng --</option>
+                    {% for s in stores %}
+                        <option value="{{ s.id }}">{{ s.name }}</option>
+                    {% endfor %}
+                </select>
+                
+                <input type="file" name="image" style="padding: 5px; background: white; border: 1px solid #ebd4d8; border-radius: 5px;">
+                
+                <button type="submit" class="btn-add" style="border:none; border-radius:5px; cursor:pointer; min-width: 100px;">Lưu lại</button>
+            </form>
+        </div>
+
+        <div style="margin-bottom: 15px; display: flex; justify-content: flex-end;">
+            <input type="text" id="searchProduct" onkeyup="filterProducts()" placeholder="🔍 Gõ tên váy để tìm nhanh..." style="width: 300px; padding: 10px 15px; border: 1px solid #ebd4d8; border-radius: 20px; outline: none; font-family: 'Quicksand', sans-serif;">
+        </div>
+
+        <div class="table-container">
+            <table id="productTable">
+                <thead>
+                    <tr>
+                        <th>ID</th><th>Hình ảnh</th><th>Tên váy cưới</th><th>Giá thuê</th><th>Mô tả ngắn</th><th>Thuộc cửa hàng</th><th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in products %}
+                    <tr class="product-row">
+                        <td>#{{ p.id }}</td>
+                        <td>
+                            {% if p.image %}
+                                <img src="{{ p.image.url }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                            {% else %}
+                                <span style="color:#aaa;">No img</span>
+                            {% endif %}
+                        </td>
+                        <td style="font-weight: bold;" class="product-name">{{ p.name }}</td>
+                        <td style="color: #bfa05f; font-weight: bold;">{{ p.price }} đ</td>
+                        
+                        <td style="font-size: 13px; color: #666;">{{ p.description|default:"Không có mô tả" }}</td>
+                        
+                        <td>{{ p.store.name }}</td>
+                        <td>
+                            <a href="{% url 'edit_product' p.id %}" class="btn-sm" style="text-decoration:none; background: #fff0f3; color: #d88a9a; border: 1px solid #ebd4d8; display: inline-block; text-align: center;">Sửa</a>
+                            <a href="{% url 'delete_product' p.id %}" class="btn-sm btn-delete" style="text-decoration:none;" onclick="return confirm('Xóa váy cưới này khỏi kho?');">Xóa</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7" style="text-align: center;">Chưa có sản phẩm.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="tab-store" class="mgr-content" style="display: none;">
+        
+        <div style="background: #fff0f3; padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px dashed #d88a9a;">
+            <h4 style="margin-top:0; color:#d88a9a; font-family:'Quicksand', sans-serif;">+ Thêm Cửa Hàng Mới</h4>
+            
+            <form action="{% url 'add_store' %}" method="POST" enctype="multipart/form-data" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Tên cửa hàng" required style="padding: 8px; border: 1px solid #ebd4d8; border-radius: 5px; flex: 1; min-width: 200px;">
+                <input type="text" name="phone" placeholder="Hotline" required style="padding: 8px; border: 1px solid #ebd4d8; border-radius: 5px; flex: 1; min-width: 150px;">
+                <input type="text" name="address" placeholder="Địa chỉ chi tiết" required style="padding: 8px; border: 1px solid #ebd4d8; border-radius: 5px; flex: 2; min-width: 250px;">
+                <input type="number" step="any" name="lat" placeholder="Vĩ độ (Latitude)" required style="padding: 8px; border: 1px solid #ebd4d8; border-radius: 5px; width: 120px;">
+                <input type="number" step="any" name="lon" placeholder="Kinh độ (Longitude)" required style="padding: 8px; border: 1px solid #ebd4d8; border-radius: 5px; width: 120px;">
+                <input type="file" name="image" style="padding: 5px; background: white; border: 1px solid #ebd4d8; border-radius: 5px;">
+                
+                <button type="submit" class="btn-add" style="border:none; border-radius:5px; cursor:pointer; min-width: 100px;">Lưu lại</button>
+            </form>
+        </div>
+
+        <div style="margin-bottom: 15px; display: flex; justify-content: flex-end;">
+            <input type="text" id="searchStore" onkeyup="filterStores()" placeholder="🔍 Gõ tên cửa hàng để tìm..." style="width: 300px; padding: 10px 15px; border: 1px solid #ebd4d8; border-radius: 20px; outline: none; font-family: 'Quicksand', sans-serif;">
+        </div>
+
+        <div class="table-container">
+            <table id="storeTable">
+                <thead>
+                    <tr><th>ID</th><th>Tên Cửa Hàng</th><th>Địa chỉ</th><th>Hotline</th><th>Thao tác</th></tr>
+                </thead>
+                <tbody>
+                    {% for s in stores %}
+                    <tr class="store-row">
+                        <td>#{{ s.id }}</td>
+                        <td style="font-weight: bold; color: #d88a9a;" class="store-name">{{ s.name }}</td>
+                        <td style="font-size: 13px;">{{ s.address }}</td>
+                        <td style="font-weight: bold;">{{ s.phone }}</td>
+                        <td>
+                            <a href="{% url 'edit_store' s.id %}" class="btn-sm" style="text-decoration:none; background: #fff0f3; color: #d88a9a; border: 1px solid #ebd4d8; display: inline-block; text-align: center;">Sửa</a>
+                            <a href="{% url 'delete_store' s.id %}" class="btn-sm btn-delete" style="text-decoration:none;" onclick="return confirm('Bạn muốn đóng cửa tiệm này?');">Xóa</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5" style="text-align: center;">Chưa có cửa hàng.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+<script src="{% static 'js/manager.js' %}"></script>
+
+{% endblock %}
