@@ -1,0 +1,119 @@
+/* static/css/edit_booking.css */
+
+.edit-booking-container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: #fff0f3;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px dashed #d88a9a;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.edit-booking-title {
+    color: #d88a9a;
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+}
+
+.edit-booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+/* Hộp thông tin Váy & Ngày hẹn */
+.edit-booking-info-box {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    margin-bottom: 10px;
+}
+
+.edit-booking-info-box p {
+    color: #555;
+    margin: 0 0 5px 0;
+}
+
+.edit-booking-info-box p:last-child {
+    margin: 0;
+}
+
+.info-highlight-pink {
+    color: #d88a9a;
+}
+
+.info-highlight-gold {
+    color: #bfa05f;
+    font-weight: bold;
+}
+
+/* Các ô nhập liệu */
+.edit-booking-form label {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: -10px;
+}
+
+.edit-booking-form input[type="text"],
+.edit-booking-form textarea,
+.edit-booking-form select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ebd4d8;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.edit-booking-form textarea {
+    resize: vertical;
+}
+
+.edit-booking-form select {
+    background: white;
+    font-weight: bold;
+    color: #d88a9a;
+    cursor: pointer;
+}
+
+/* Khu vực nút bấm */
+.edit-booking-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-update {
+    flex: 1;
+    background: #d88a9a;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-update:hover {
+    background: #c47686;
+}
+
+.btn-cancel {
+    flex: 1;
+    text-align: center;
+    background: #ccc;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-cancel:hover {
+    background: #999;
+}

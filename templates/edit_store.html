@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/edit_store.css' %}">
+
+<div class="edit-store-container">
+    
+    <h3 class="edit-store-title">
+        🏪 Sửa Thông Tin Cửa Hàng
+    </h3>
+
+    <form method="POST" enctype="multipart/form-data" class="edit-store-form">
+        {% csrf_token %}
+        
+        <label>Tên cửa hàng:</label>
+        <input type="text" name="name" value="{{ store.name }}" required>
+
+        <label>Hotline:</label>
+        <input type="text" name="phone" value="{{ store.phone }}" required>
+
+        <label>Địa chỉ chi tiết:</label>
+        <input type="text" name="address" value="{{ store.address }}" required>
+
+        <div class="form-row-split">
+            <div class="form-col-half">
+                <label>Vĩ độ (Lat):</label>
+                <input type="number" step="any" name="lat" value="{{ store.latitude|stringformat:'f' }}" required>
+            </div>
+            <div class="form-col-half">
+                <label>Kinh độ (Lon):</label>
+                <input type="number" step="any" name="lon" value="{{ store.longitude|stringformat:'f' }}" required>
+            </div>
+        </div>
+
+        <label>Hình ảnh hiện tại:</label>
+        {% if store.image %}
+            <div>
+                <img src="{{ store.image.url }}" class="edit-store-img-preview">
+            </div>
+        {% endif %}
+        <input type="file" name="image">
+
+        <div class="edit-store-actions">
+            <button type="submit" class="btn-save-store">💾 Lưu Thay Đổi</button>
+            <a href="{% url 'custom_manager' %}" class="btn-cancel-store">Hủy / Trở về</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

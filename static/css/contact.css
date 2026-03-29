@@ -1,0 +1,118 @@
+/* static/css/contact.css */
+
+.contact-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Quicksand', sans-serif; /* Đổi sang font xịn của web */
+}
+
+.contact-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #d88a9a;
+    padding-bottom: 10px;
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.contact-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+/* Phần Thông tin liên lạc (Cột trái) */
+.contact-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+.contact-heading {
+    color: #d88a9a;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.contact-info p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.contact-info hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 20px 0;
+}
+
+.btn-map-contact {
+    display: inline-block;
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.btn-map-contact:hover {
+    background: #555;
+    transform: translateY(-2px);
+}
+
+/* Phần Form gửi tin nhắn (Cột phải) */
+.contact-form-wrapper {
+    flex: 1.5;
+    min-width: 300px;
+}
+
+.contact-form {
+    background: #fdfbf7; /* Đổi nhẹ màu nền cho sang */
+    padding: 20px;
+    border: 1px solid #ebd4d8; /* Viền màu hồng nhạt */
+    border-radius: 8px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #d88a9a;
+}
+
+.btn-submit-contact {
+    background: #d88a9a;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.btn-submit-contact:hover {
+    background: #c47686;
+    transform: translateY(-2px);
+}

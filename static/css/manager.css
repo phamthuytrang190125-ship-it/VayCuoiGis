@@ -1,0 +1,80 @@
+/* static/css/manager.css */
+
+.mgr-tab {
+    background: transparent; 
+    border: none; 
+    padding: 10px 20px; 
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold; 
+    color: #888; 
+    cursor: pointer; 
+    border-bottom: 3px solid transparent; 
+    transition: 0.3s;
+}
+.mgr-tab.active { 
+    color: #d88a9a; 
+    border-bottom: 3px solid #d88a9a; 
+}
+.mgr-tab:hover { 
+    color: #d88a9a; 
+}
+
+.table-container { 
+    background: white; 
+    border-radius: 12px; 
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05); 
+    overflow: hidden; 
+    border: 1px solid #eee; 
+}
+.table-container table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    text-align: left; 
+    font-family: 'Quicksand', sans-serif; 
+    font-size: 16px; 
+}
+.table-container th { 
+    padding: 15px; 
+    background-color: #fce4ec; 
+    color: #d88a9a; 
+    border-bottom: 2px solid #ebd4d8; 
+}
+.table-container td { 
+    padding: 15px; 
+    border-bottom: 1px solid #f0f0f0; 
+}
+.table-container tr:hover { 
+    background-color: #fafafa; 
+}
+
+.badge { 
+    background: #fdf0f3; 
+    color: #333;        
+    padding: 6px 12px;   
+    border-radius: 20px; 
+    font-size: 14px;     
+    font-weight: bold;   
+    border: 1px solid #ebd4d8;
+}
+.btn-sm { 
+    padding: 5px 10px; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-family: 'Quicksand', sans-serif; 
+    font-weight: bold; 
+    margin-right: 5px; 
+}
+.btn-delete { 
+    background: #ffebee; 
+    color: #f44336; 
+    border: 1px solid #ffcdd2; 
+    display: inline-block; 
+}
+.btn-add { 
+    background: #d88a9a; 
+    color: white; 
+    padding: 8px 15px; 
+    font-size: 14px; 
+}
+

@@ -1,0 +1,27 @@
+/* static/css/login.css */
+
+form p { 
+    margin-bottom: 15px; 
+}
+
+form label { 
+    display: block; 
+    font-weight: bold; 
+    margin-bottom: 5px; 
+    color: #333; 
+}
+
+form input { 
+    width: 100%; 
+    padding: 8px; 
+    border: 1px solid #ccc; 
+    box-sizing: border-box; 
+}
+
+ul.errorlist { 
+    color: red; 
+    font-size: 13px; 
+    list-style-type: none; 
+    padding: 0; 
+    margin: 5px 0 0 0; 
+}

@@ -1,0 +1,152 @@
+/* static/css/product_detail.css */
+
+.detail-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+/* CỘT TRÁI: HÌNH ẢNH & THÔNG TIN */
+.detail-main {
+    flex: 1.5;
+    min-width: 350px;
+}
+
+.main-img-box {
+    width: 100%;
+    background: #fffafb;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #f5ebe0;
+}
+
+#main-wedding-img {
+    width: 100%;
+    height: 75vh;
+    max-height: 800px;
+    object-fit: contain;
+    display: block;
+    transition: 0.3s;
+    margin: 0 auto;
+}
+
+
+.thumb-bar {
+    display: flex;
+    gap: 12px;
+    margin-top: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.thumb-img {
+    width: 80px;
+    aspect-ratio: 3/4; 
+    object-fit: cover;
+    object-position: top;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    transition: 0.2s;
+}
+
+.product-title {
+    margin-top: 25px;
+    color: #4a4a4a;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+}
+
+.product-price {
+    font-size: 32px;
+    color: #b08968;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+/* BOX ĐỊA CHỈ & BẢN ĐỒ */
+.store-info-box {
+    background: #fffafb;
+    border: 2px dashed #d88a9a;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 25px 0;
+}
+
+.btn-map-direct {
+    display: block;
+    text-align: center;
+    background: #4a4a4a;
+    color: white !important;
+    padding: 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+/* CỘT PHẢI: FORM ĐẶT LỊCH */
+.detail-sidebar {
+    flex: 1;
+    min-width: 320px;
+}
+
+.booking-card {
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 25px;
+    border: 1px solid #f5ebe0;
+    box-shadow: 0 15px 45px rgba(181, 131, 141, 0.1);
+    position: sticky;
+    top: 20px;
+}
+
+.booking-card h2 {
+    color: #6d6875;
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #4a4a4a;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1.5px solid #eee;
+    border-radius: 10px;
+    outline: none;
+    font-family: 'Quicksand', sans-serif;
+    box-sizing: border-box;
+}
+
+.btn-booking-submit {
+    width: 100%;
+    padding: 16px;
+    background: #b5838d;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(181, 131, 141, 0.3);
+}
+
+.btn-booking-submit:hover {
+    background: #a4717b;
+    transform: translateY(-2px);
+}

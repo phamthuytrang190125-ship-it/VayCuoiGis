@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+
+<div style="max-width: 450px; margin: 50px auto; padding: 30px; border: 1px solid #ddd; border-top: 4px solid #d88a9a; background-color: #fff;">
+    
+    <h2 style="text-align: center; color: #d88a9a; margin-bottom: 20px;">
+        Đăng Ký Tài Khoản
+    </h2>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+
+        <button type="submit" style="width: 100%; padding: 10px; background-color: #d88a9a; color: white; border: none; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 15px;">
+            Đăng Ký
+        </button>
+    </form>
+
+    <div style="text-align: center; margin-top: 20px; font-size: 14px;">
+        Đã có tài khoản? <a href="{% url 'login' %}" style="color: #d88a9a; font-weight: bold; text-decoration: none;">Đăng nhập</a>
+    </div>
+
+</div>
+
+{% endblock %}

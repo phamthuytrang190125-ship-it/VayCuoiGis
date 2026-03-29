@@ -1,0 +1,96 @@
+/* static/css/store_list.css */
+
+.stores-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.stores-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.stores-scroll-box {
+    height: 800px;
+    overflow-y: auto;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 15px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.03);
+    background: #fdfbf7; 
+}
+
+.stores-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.store-item-card {
+    border: 1px solid #eee;
+    border-radius: 15px;
+    padding: 25px;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+.store-item-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(216, 138, 154, 0.15);
+    border-color: #d88a9a;
+}
+
+.store-item-card h3 {
+    margin-top: 0;
+    color: #d88a9a;
+    font-family: 'Playfair Display', serif;
+}
+
+.store-item-card p {
+    font-size: 0.95rem;
+    color: #555;
+    margin: 10px 0;
+}
+
+.store-item-card i {
+    color: #d88a9a;
+    width: 20px;
+}
+
+.store-card-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-store-detail {
+    flex: 1;
+    text-align: center;
+    background: #333;
+    color: white !important;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-store-map {
+    flex: 1;
+    text-align: center;
+    border: 1px solid #d88a9a;
+    color: #d88a9a !important;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-store-detail:hover { background: #555; }
+.btn-store-map:hover { background: #fff0f3; }

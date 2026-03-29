@@ -1,0 +1,36 @@
+/* static/css/register.css */
+
+/* CSS cho Form Đăng ký*/
+form p {
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+form input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.helptext {
+    display: block;
+    font-size: 11px;
+    color: #888;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+ul.errorlist {
+    color: red;
+    font-size: 13px;
+    list-style-type: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+}
