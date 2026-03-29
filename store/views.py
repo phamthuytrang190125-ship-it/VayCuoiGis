@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
-from .models import Store, Product, Booking
+from .models import Store, Product, Booking, ProductImage
 from django.contrib import messages
 import json
 import math
@@ -217,16 +217,27 @@ def add_product(request):
         price = request.POST.get('price')
         store_id = request.POST.get('store')
         description = request.POST.get('description', '') 
-        image = request.FILES.get('image')
+        image = request.FILES.get('image') # Lấy ảnh chính
         
         try:
             store = Store.objects.get(pk=store_id)
-            Product.objects.create(
+            
+            # 1. Tạo váy cưới và gán vào biến 'product' thay vì chỉ create trống
+            product = Product.objects.create(
                 name=name, price=price, store=store, description=description, image=image
             )
-            messages.success(request, f"Đã thêm váy cưới {name} thành công!")
+            
+            # 2. lưu nhìu ảnh phụ chi tiết 
+            extra_images = request.FILES.getlist('extra_images')
+            if extra_images: 
+                for img in extra_images:
+                    ProductImage.objects.create(product=product, image=img)
+            
+            messages.success(request, f"Đã thêm váy cưới '{name}' và ảnh chi tiết thành công!")
         except Store.DoesNotExist:
             messages.error(request, "Lỗi: Không tìm thấy cửa hàng này!")
+        except Exception as e:
+            messages.error(request, f"Lỗi hệ thống khi lưu ảnh: {str(e)}")
             
     return redirect('custom_manager')
 

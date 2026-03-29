@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/store_list.css' %}">
+
+<div class="stores-container">
+    
+    <h2 class="stores-title">
+        Hệ Thống Cửa Hàng
+    </h2>
+    
+    <div class="stores-scroll-box">
+
+        <div class="stores-grid">
+            {% for store in stores %}
+            <div class="store-item-card">
+                
+                <h3>{{ store.name }}</h3>
+                
+                <p><i class="fas fa-map-marker-alt"></i> {{ store.address }}</p>
+                <p><i class="fas fa-phone"></i> {{ store.phone }}</p>
+                
+                <div class="store-card-actions">
+                    <a href="{% url 'store_detail_view' store.id %}" class="btn-store-detail">
+                        Xem Sản Phẩm
+                    </a>
+                    
+                    <a href="{% url 'map_view' %}?focus_store={{ store.id }}" class="btn-store-map">
+                        Xem Bản Đồ
+                    </a>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

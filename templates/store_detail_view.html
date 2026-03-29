@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/store_detail.css' %}">
+
+<div class="store-detail-container">
+
+    <div class="store-header-box">
+        <h1>{{ store.name }}</h1>
+        <p>🏠 {{ store.address }} | 📞 {{ store.phone }}</p>
+        
+        <a href="{% url 'map_view' %}?focus_store={{ store.id }}" class="btn-view-map">
+            📍 Xem vị trí trên bản đồ
+        </a>
+    </div>
+
+    <h3 style="margin-bottom: 20px; font-family: 'Playfair Display', serif; color: #4a4a4a;">
+        Sản phẩm đang có tại cửa hàng:
+    </h3>
+    
+    <div class="store-product-grid">
+        {% for p in products %}
+        <div class="store-product-card">
+            <a href="{% url 'product_detail' p.id %}" style="text-decoration: none;">
+                
+                <div class="store-product-img-box">
+                    {% if p.image %}
+                        <img src="{{ p.image.url }}" alt="{{ p.name }}">
+                    {% else %}
+                        <div style="background: #eee; height: 100%; display: flex; align-items: center; justify-content: center; color: #aaa;">
+                            No Image
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="store-product-info">
+                    <h3>{{ p.name }}</h3>
+                    <p>{{ p.price|intcomma }} đ</p>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+            <p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">
+                Cửa hàng này chưa cập nhật sản phẩm nào.
+            </p>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

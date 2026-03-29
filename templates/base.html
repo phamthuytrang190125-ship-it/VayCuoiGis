@@ -8,133 +8,15 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <style>
-        /* Global styles */
-        body {
-            font-family: 'Quicksand', sans-serif;
-            margin: 0; padding: 0;
-            background-color: #fff;
-            color: #333;
-            scroll-behavior: smooth;
-        }
-        
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
-        ul { list-style: none; padding: 0; margin: 0; }
-
-        /* Navigation Bar */
-        .navbar {
-            background-color: #ffffff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 0 20px;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 70px;
-        }
-
-        .nav-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-            font-weight: bold;
-            color: #d88a9a;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-links li a {
-            font-weight: 600;
-            font-size: 15px;
-            color: #555;
-            padding-bottom: 5px;
-            border-bottom: 2px solid transparent;
-        }
-
-        .nav-links li a:hover {
-            color: #d88a9a;
-            border-bottom: 2px solid #d88a9a;
-        }
-
-        /* User Menu & Buttons */
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .btn-admin-nav {
-            background-color: #333;
-            color: white !important;
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 14px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-admin-nav:hover {
-            background-color: #555;
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            color: #d88a9a; 
-            border: 1px solid #d88a9a; 
-            padding: 8px 20px; 
-            border-radius: 25px; 
-            font-weight: bold; 
-            font-size: 14px;
-        }
-
-        .btn-outline:hover {
-            background-color: #d88a9a; 
-            color: white !important;
-        }
-
-        .btn-filled {
-            background-color: #d88a9a; 
-            color: white !important; 
-            padding: 8px 20px; 
-            border-radius: 25px; 
-            font-weight: bold; 
-            font-size: 14px; 
-            box-shadow: 0 4px 10px rgba(216,138,154,0.3);
-        }
-
-        .btn-filled:hover {
-            background-color: #c47686; 
-            transform: translateY(-2px);
-        }
-
-        /* Footer */
-        footer {
-            background: #333;
-            color: #fff;
-            padding: 40px 0;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 <body>
 
-    <nav class="navbar">
+    <nav class="custom-navbar">
         <div class="nav-container">
             
             <a href="{% url 'home' %}" class="nav-logo">
@@ -206,5 +88,16 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Kích hoạt hiệu ứng bay bay
+        AOS.init({
+            duration: 1000, 
+            once: true,     
+            offset: 100     
+        });
+    </script>
 </body>
 </html>

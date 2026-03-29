@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
-<div style="
+<div data-aos="fade-in" data-aos-duration="1500" style="
     background-image: url('{% static 'images/banner_nen.jpg' %}');
     background-size: cover;
     background-position: center;
@@ -19,14 +19,15 @@
     <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.3); z-index: 1;"></div>
     
     <div style="position: relative; z-index: 2;">
-        <h1 style="font-family: 'Playfair Display', serif; color: #d88a9a; font-size: 3em; margin: 0; text-shadow: 1px 1px 3px rgba(255,255,255,0.8);">
+        <h1 data-aos="fade-up" data-aos-delay="300" style="font-family: 'Playfair Display', serif; color: #d88a9a; font-size: 3em; margin: 0; text-shadow: 1px 1px 3px rgba(255,255,255,0.8);">
             Bridal Luxury
         </h1>
-        <p style="color: #555; margin: 10px 0 20px; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">
+        
+        <p data-aos="fade-up" data-aos-delay="500" style="color: #555; margin: 10px 0 20px; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">
             Hệ thống cho thuê váy cưới cao cấp tích hợp bản đồ thông minh
         </p>
         
-        <a href="{% url 'map_view' %}" style="background: #d88a9a; color: white; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1.05em; transition: 0.3s; box-shadow: 0 4px 10px rgba(216, 138, 154, 0.4); display: inline-block;">
+        <a href="{% url 'map_view' %}" data-aos="zoom-in" data-aos-delay="700" style="background: #d88a9a; color: white; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1.05em; transition: 0.3s; box-shadow: 0 4px 10px rgba(216, 138, 154, 0.4); display: inline-block;">
             🗺️ Mở Bản Đồ Tìm Cửa Hàng
         </a>
     </div>
@@ -34,14 +35,14 @@
 
 <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
     
-    <h2 style="text-align: center; color: #4a4a4a; margin-bottom: 25px; font-family: 'Playfair Display', serif; font-size: 1.8em;">
+    <h2 data-aos="fade-up" style="text-align: center; color: #4a4a4a; margin-bottom: 25px; font-family: 'Playfair Display', serif; font-size: 1.8em;">
         Bộ Sưu Tập Mới Nhất
     </h2>
     
     <div class="product-grid">
         
         {% for p in products %}
-        <div class="dress-card">
+        <div class="dress-card" data-aos="fade-up" data-aos-duration="1000">
             <a href="{% url 'product_detail' p.id %}" style="text-decoration: none; color: inherit;">
                 
                 <div style="height: 240px; overflow: hidden; position: relative;">
@@ -72,7 +73,7 @@
 
     </div>
 
-    <div style="display: flex; justify-content: center; margin-top: 25px; margin-bottom: 30px;">
+    <div data-aos="fade-up" data-aos-offset="0" style="display: flex; justify-content: center; margin-top: 25px; margin-bottom: 30px;">
         <ul class="pagination-custom">
             
             {% if products.has_previous %}

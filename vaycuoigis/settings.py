@@ -160,3 +160,7 @@ JAZZMIN_UI_TWEAKS = {
         "success": "btn-success"
     }
 }
+
+# Cấu hình chuyển hướng Đăng nhập / Đăng xuất
+LOGIN_REDIRECT_URL = '/manager/'  
+LOGOUT_REDIRECT_URL = '/'        
