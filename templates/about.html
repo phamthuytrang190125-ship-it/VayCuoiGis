@@ -2,77 +2,84 @@
 {% load static %}
 
 {% block content %}
-
 <link rel="stylesheet" href="{% static 'css/about.css' %}">
 
-<div class="brand-header">
-    <h1 class="brand-title">Bridal Luxury</h1>
-    <div class="brand-subtitle">"Biến giấc mơ công chúa của bạn thành hiện thực"</div>
+<div class="about-header" data-aos="fade-in">
+    <h1 class="about-title">Về Bridal Luxury</h1>
+    <div class="about-subtitle">"Biến giấc mơ công chúa của bạn thành hiện thực"</div>
 </div>
 
-<div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+<div class="about-container">
 
-    <section class="content-section">
-        <div class="img-col">
-            <img src="https://images.unsplash.com/photo-1546193430-c2d207739ed7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="About Bridal Luxury">
+    <div class="about-section" data-aos="fade-up">
+        <div class="about-img-col" data-aos="fade-right">
+            <img class="about-img" src="https://i.pinimg.com/1200x/0f/37/82/0f3782f56e83807ead6bf86f9eec6352.jpg" alt="About Bridal Luxury">
         </div>
-        <div class="text-col">
-            <h2>Khởi Nguồn Hạnh Phúc</h2>
-            <p>
-                Chào mừng bạn đến với <b>Bridal Luxury</b>. Chúng tôi tin rằng mỗi cô dâu đều xứng đáng trở thành nữ hoàng trong ngày trọng đại nhất của cuộc đời mình.
+        <div class="about-text-col" data-aos="fade-left">
+            <h2 class="about-heading">Khởi Nguồn Hạnh Phúc</h2>
+            <p class="about-desc">
+                Chào mừng bạn đến với <span class="highlight-text">Bridal Luxury</span>. Chúng tôi tin rằng mỗi cô dâu đều xứng đáng trở thành nữ hoàng trong ngày trọng đại nhất của cuộc đời mình.
             </p>
-            <p>
+            <p class="about-desc">
                 Hơn cả một cửa hàng cho thuê váy cưới, Bridal Luxury là nơi lưu giữ những thiết kế tinh tế nhất, từ phong cách cổ điển sang trọng đến hiện đại phá cách. Mỗi chiếc váy đều được chúng tôi tuyển chọn kỹ lưỡng để tôn vinh vẻ đẹp duy nhất của bạn.
             </p>
         </div>
-    </section>
+    </div>
 
-    <section class="content-section reverse">
-        <div class="img-col">
-            <img src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Technology GIS">
+    <div class="about-section reverse" data-aos="fade-up">
+        <div class="about-img-col" data-aos="fade-left">
+            <img class="about-img" src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Technology GIS">
         </div>
-        <div class="text-col">
-            <h2>Tiên Phong Công Nghệ Wedding GIS</h2>
-            <p>
-                Thấu hiểu sự bận rộn của các cặp đôi, Bridal Luxury tự hào là đơn vị đầu tiên tại Việt Nam tích hợp <b>Hệ thống Bản đồ Số (GIS)</b> vào dịch vụ thuê váy.
+        <div class="about-text-col" data-aos="fade-right">
+            <h2 class="about-heading">Tiên Phong Công Nghệ Wedding GIS</h2>
+            <p class="about-desc">
+                Thấu hiểu sự bận rộn của các cặp đôi, Bridal Luxury tự hào là đơn vị đầu tiên tại Việt Nam tích hợp <span class="highlight-text">Hệ thống Bản đồ Số (GIS)</span> vào dịch vụ thuê váy.
             </p>
-            <p>
+            <p class="about-desc">
                 Không còn nỗi lo di chuyển xa xôi hay lạc đường. Chỉ với một cú click chuột, hệ thống của chúng tôi sẽ:
             </p>
-            <ul style="list-style-type: none; padding: 0;">
-                <li>📍 <b>Định vị ngay lập tức</b> cửa hàng gần bạn nhất.</li>
-                <li>🚗 <b>Vẽ lộ trình ngắn nhất</b> giúp bạn tiết kiệm thời gian đi thử váy.</li>
-                <li>💰 <b>Minh bạch chi phí vận chuyển</b> dựa trên khoảng cách thực tế.</li>
+            
+            <ul class="about-list">
+                <li><i class="fa-solid fa-location-dot"></i><b>Định vị ngay lập tức</b> cửa hàng gần bạn nhất.</li>
+                <li><i class="fa-solid fa-route"></i><b>Vẽ lộ trình ngắn nhất</b> giúp bạn tiết kiệm thời gian.</li>
+                <li><i class="fa-solid fa-sack-dollar"></i><b>Minh bạch chi phí</b> vận chuyển dựa trên thực tế.</li>
             </ul>
-            <p style="font-style: italic; color: #d88a9a; margin-top: 10px;">
-                "Công nghệ vị nhân sinh - Để bạn dành trọn thời gian cho tình yêu."
-            </p>
+            
+            <div class="about-quote-box">
+                <p class="about-quote-text">
+                    "Công nghệ vị nhân sinh - Để bạn dành trọn thời gian cho tình yêu."
+                </p>
+            </div>
         </div>
-    </section>
+    </div>
 
-    <div>
-        <h2 style="text-align: center; font-family: 'Playfair Display', serif; color: #333; margin-bottom: 10px;">Tại Sao Chọn Chúng Tôi?</h2>
-        <div style="width: 50px; height: 3px; background: #d88a9a; margin: 0 auto;"></div>
+    <div class="values-wrapper" data-aos="fade-up">
+        
+        <div class="values-header-wrapper">
+            <h2 class="values-main-heading">Tại Sao Chọn Chúng Tôi?</h2>
+            <div class="values-divider"></div>
+        </div>
 
         <div class="values-grid">
-            <div class="value-item">
-                <div class="value-icon"><i class="fas fa-gem"></i></div>
-                <h3>Thiết Kế Đẳng Cấp</h3>
-                <p>Hơn 500+ mẫu váy được cập nhật liên tục theo xu hướng thời trang cưới quốc tế.</p>
+            <div class="value-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="value-icon-wrapper"><i class="fa-solid fa-gem"></i></div>
+                <h3 class="value-title">Thiết Kế Đẳng Cấp</h3>
+                <p class="value-desc">Hơn 500+ mẫu váy được cập nhật liên tục theo xu hướng thời trang cưới quốc tế.</p>
             </div>
-            <div class="value-item">
-                <div class="value-icon"><i class="fas fa-map-location-dot"></i></div>
-                <h3>Mạng Lưới Rộng Khắp</h3>
-                <p>Hệ thống cửa hàng phủ sóng toàn thành phố, dễ dàng tìm kiếm qua Bản đồ GIS.</p>
+            
+            <div class="value-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="value-icon-wrapper"><i class="fa-solid fa-map-location-dot"></i></div>
+                <h3 class="value-title">Mạng Lưới Rộng Khắp</h3>
+                <p class="value-desc">Hệ thống cửa hàng phủ sóng toàn thành phố, dễ dàng tìm kiếm qua Bản đồ GIS.</p>
             </div>
-            <div class="value-item">
-                <div class="value-icon"><i class="fas fa-heart"></i></div>
-                <h3>Dịch Vụ Tận Tâm</h3>
-                <p>Đội ngũ stylist chuyên nghiệp sẵn sàng tư vấn 1:1 để bạn tìm được chiếc váy trong mơ.</p>
+            
+            <div class="value-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="value-icon-wrapper"><i class="fa-solid fa-heart"></i></div>
+                <h3 class="value-title">Dịch Vụ Tận Tâm</h3>
+                <p class="value-desc">Đội ngũ stylist chuyên nghiệp sẵn sàng tư vấn 1:1 để bạn tìm được chiếc váy trong mơ.</p>
             </div>
         </div>
     </div>
 
 </div>
-
 {% endblock %}

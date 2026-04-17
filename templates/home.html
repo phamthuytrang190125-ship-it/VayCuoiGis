@@ -4,6 +4,34 @@
 
 {% block content %}
 
+<style>
+    .dress-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 12px;
+        background: #fff;
+        border: 1px solid #fce4ec;
+        overflow: hidden;
+    }
+    .dress-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 25px rgba(216, 138, 154, 0.25);
+    }
+    .dress-img-container {
+        height: 280px;
+        overflow: hidden; 
+        position: relative;
+    }
+    .dress-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    .dress-card:hover .dress-img {
+        transform: scale(1.08);
+    }
+</style>
+
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
 <div data-aos="fade-in" data-aos-duration="1500" style="
@@ -11,19 +39,18 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 10px 20px; 
+    padding: 60px 20px 80px; /* Tăng padding để banner to ra một xíu */
     text-align: center; 
-    margin-bottom: 30px;
     position: relative;
 ">
-    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.3); z-index: 1;"></div>
+    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.4); z-index: 1;"></div>
     
     <div style="position: relative; z-index: 2;">
-        <h1 data-aos="fade-up" data-aos-delay="300" style="font-family: 'Playfair Display', serif; color: #d88a9a; font-size: 3em; margin: 0; text-shadow: 1px 1px 3px rgba(255,255,255,0.8);">
+        <h1 data-aos="fade-up" data-aos-delay="300" style="font-family: 'Playfair Display', serif; color: #d88a9a; font-size: 3.5em; margin: 0; text-shadow: 1px 1px 3px rgba(255,255,255,0.8);">
             Bridal Luxury
         </h1>
         
-        <p data-aos="fade-up" data-aos-delay="500" style="color: #555; margin: 10px 0 20px; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">
+        <p data-aos="fade-up" data-aos-delay="500" style="color: #555; margin: 15px 0 25px; font-weight: bold; font-size: 1.2em; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">
             Hệ thống cho thuê váy cưới cao cấp tích hợp bản đồ thông minh
         </p>
         
@@ -33,73 +60,91 @@
     </div>
 </div>
 
+<div style="position: relative; z-index: 10; max-width: 850px; margin: -35px auto 40px; background: rgba(255,255,255,0.95); padding: 15px 25px; border-radius: 30px; box-shadow: 0 8px 25px rgba(216, 138, 154, 0.2); border: 1px solid #fce4ec; backdrop-filter: blur(10px);" data-aos="fade-up">
+    <form method="GET" action="{% url 'home' %}" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+        <div style="flex: 2; min-width: 250px; position: relative;">
+            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #d88a9a;"></i>
+            <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Bạn thích váy phong cách nào? (Satin, Ren, Công chúa...)" style="width: 100%; padding: 12px 10px 12px 40px; border: 1px solid #ebd4d8; border-radius: 25px; outline: none; font-family: 'Quicksand', sans-serif; font-size: 0.95em;">
+        </div>
+        
+        <div style="flex: 1; min-width: 180px;">
+            <select name="price_range" style="width: 100%; padding: 12px 15px; border: 1px solid #ebd4d8; border-radius: 25px; outline: none; font-family: 'Quicksand', sans-serif; color: #555; background: white; font-size: 0.95em; cursor: pointer;">
+                <option value="">💎 Mọi mức giá</option>
+                <option value="under_5" {% if request.GET.price_range == 'under_5' %}selected{% endif %}>Dưới 5.000.000 đ</option>
+                <option value="5_to_10" {% if request.GET.price_range == '5_to_10' %}selected{% endif %}>Từ 5 - 10.000.000 đ</option>
+                <option value="over_10" {% if request.GET.price_range == 'over_10' %}selected{% endif %}>Trên 10.000.000 đ</option>
+            </select>
+        </div>
+        
+        <button type="submit" style="background: #d88a9a; color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; cursor: pointer; transition: 0.3s; font-family: 'Quicksand', sans-serif; font-size: 0.95em; box-shadow: 0 3px 8px rgba(216,138,154,0.3);">
+            Tìm Váy
+        </button>
+    </form>
+</div>
+
 <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
     
     <h2 data-aos="fade-up" style="text-align: center; color: #4a4a4a; margin-bottom: 25px; font-family: 'Playfair Display', serif; font-size: 1.8em;">
         Bộ Sưu Tập Mới Nhất
     </h2>
     
-    <div class="product-grid">
-        
+    <div class="product-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
         {% for p in products %}
         <div class="dress-card" data-aos="fade-up" data-aos-duration="1000">
-            <a href="{% url 'product_detail' p.id %}" style="text-decoration: none; color: inherit;">
+            <a href="{% url 'product_detail' p.id %}" style="text-decoration: none; color: inherit; display: block;">
                 
-                <div style="height: 240px; overflow: hidden; position: relative;">
+                <div class="dress-img-container">
                     {% if p.image %}
                         <img src="{{ p.image.url }}" class="dress-img" alt="{{ p.name }}">
                     {% else %}
-                        <div style="width:100%; height:100%; background:#eee; display:flex; align-items:center; justify-content:center; color:#aaa;">
-                            No Image
-                        </div>
+                        <div style="width:100%; height:100%; background:#eee; display:flex; align-items:center; justify-content:center; color:#aaa;">No Image</div>
                     {% endif %}
                     
-                    <div style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.95); padding: 5px 12px; border-radius: 20px; font-weight: bold; color: #d88a9a; font-size: 0.85em; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-                        {{ p.price|intcomma }} đ
+                    <div style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.95); padding: 6px 15px; border-radius: 20px; font-weight: 800; color: #d88a9a; font-size: 0.9em; box-shadow: 0 3px 8px rgba(0,0,0,0.15);">
+                        {{ p.price|intcomma }} VNĐ
                     </div>
                 </div>
 
-                <div style="padding: 12px; text-align: center;">
-                    <h3 style="margin: 0; font-size: 1em; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Quicksand', sans-serif;">
+                <div style="padding: 15px; text-align: center; background: white;">
+                    <h3 style="margin: 0; font-size: 1.05em; color: #333; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-family: 'Quicksand', sans-serif;">
                         {{ p.name }}
                     </h3>
-                    <p style="color: #888; font-size: 0.8em; margin-top: 5px; margin-bottom: 0;">📍 {{ p.store.name }}</p>
+                    <p style="color: #d88a9a; font-size: 0.85em; font-weight: bold; margin-top: 8px; margin-bottom: 0;">
+                        <i class="fa-solid fa-location-dot"></i> {{ p.store.name }}
+                    </p>
                 </div>
             </a>
         </div>
         {% empty %}
-        <p style="text-align:center; grid-column: 1/-1; width: 100%; color: #888; font-size: 1.1em;">Chưa có dữ liệu váy cưới.</p>
+        <p style="text-align:center; grid-column: 1/-1; width: 100%; color: #888; font-size: 1.1em;">Không tìm thấy váy cưới nào phù hợp.</p>
         {% endfor %}
-
     </div>
 
-    <div data-aos="fade-up" data-aos-offset="0" style="display: flex; justify-content: center; margin-top: 25px; margin-bottom: 30px;">
-        <ul class="pagination-custom">
-            
+    <div data-aos="fade-up" data-aos-offset="0" style="display: flex; justify-content: center; margin-top: 35px; margin-bottom: 40px;">
+        <ul class="pagination-custom" style="display: flex; list-style: none; padding: 0; gap: 10px;">
             {% if products.has_previous %}
                 <li>
-                    <a href="?page=1" class="page-link-custom">&laquo; Đầu</a>
+                    <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.price_range %}&price_range={{ request.GET.price_range }}{% endif %}" class="page-link-custom" style="padding: 8px 15px; border-radius: 20px; background: #fff0f3; color: #d88a9a; text-decoration: none; font-weight: bold; border: 1px solid #fce4ec;">&laquo; Đầu</a>
                 </li>
                 <li>
-                    <a href="?page={{ products.previous_page_number }}" class="page-link-custom">Trước</a>
+                    <a href="?page={{ products.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.price_range %}&price_range={{ request.GET.price_range }}{% endif %}" class="page-link-custom" style="padding: 8px 15px; border-radius: 20px; background: #fff0f3; color: #d88a9a; text-decoration: none; font-weight: bold; border: 1px solid #fce4ec;">Trước</a>
                 </li>
             {% endif %}
 
             <li>
-                <span class="page-link-active">
+                <span class="page-link-active" style="padding: 8px 20px; border-radius: 20px; background: #d88a9a; color: white; font-weight: bold; box-shadow: 0 2px 5px rgba(216,138,154,0.3);">
                     Trang {{ products.number }} / {{ products.paginator.num_pages }}
                 </span>
             </li>
 
             {% if products.has_next %}
                 <li>
-                    <a href="?page={{ products.next_page_number }}" class="page-link-custom">Sau</a>
+                    <a href="?page={{ products.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.price_range %}&price_range={{ request.GET.price_range }}{% endif %}" class="page-link-custom" style="padding: 8px 15px; border-radius: 20px; background: #fff0f3; color: #d88a9a; text-decoration: none; font-weight: bold; border: 1px solid #fce4ec;">Sau</a>
                 </li>
                 <li>
-                    <a href="?page={{ products.paginator.num_pages }}" class="page-link-custom">Cuối &raquo;</a>
+                    <a href="?page={{ products.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.price_range %}&price_range={{ request.GET.price_range }}{% endif %}" class="page-link-custom" style="padding: 8px 15px; border-radius: 20px; background: #fff0f3; color: #d88a9a; text-decoration: none; font-weight: bold; border: 1px solid #fce4ec;">Cuối &raquo;</a>
                 </li>
             {% endif %}
-
         </ul>
     </div>
 

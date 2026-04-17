@@ -32,10 +32,19 @@
             {% endfor %}
         </select>
 
+        <label>Tồn kho:</label>
+        <input type="number" name="quantity" value="{{ product.quantity|default:1 }}" required>
+
+        <label>Tình trạng váy:</label>
+        <select name="status" required>
+            <option value="available" {% if product.status == 'available' %}selected{% endif %}>Sẵn sàng</option>
+            <option value="rented" {% if product.status == 'rented' %}selected{% endif %}>Đang thuê</option>
+            <option value="washing" {% if product.status == 'washing' %}selected{% endif %}>Đang giặt</option>
+        </select>
         <label>Hình ảnh (Bỏ trống nếu giữ nguyên ảnh cũ):</label>
         {% if product.image %}
             <div>
-                <img src="{{ product.image.url }}" class="edit-product-img-preview">
+                <img src="{{ product.image.url }}" class="edit-product-img-preview" style="max-width: 150px; border-radius: 8px; margin-bottom: 10px;">
             </div>
         {% endif %}
         <input type="file" name="image">

@@ -7,6 +7,7 @@ import math
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.core.paginator import Paginator
+from django.core.mail import send_mail
 
 # Tính khoảng cách 
 def haversine_distance(lat1, lon1, lat2, lon2):
@@ -28,11 +29,33 @@ def calculate_fee_logic(distance_km):
     else: return distance_km * 10000
 
 # 1. Trang chủ 
+# 1. Trang chủ (ĐÃ BỔ SUNG TÍNH NĂNG TÌM KIẾM VÀ LỌC GIÁ)
 def home_shop(request):
+    # Lấy toàn bộ váy cưới (sắp xếp mới nhất)
     products_list = Product.objects.all().order_by('-id') 
-    paginator = Paginator(products_list, 4) 
+    
+    # === BẮT ĐẦU: XỬ LÝ LỌC TÌM KIẾM ===
+    query = request.GET.get('q')
+    price_range = request.GET.get('price_range')
+
+    # Lọc theo tên (nếu có gõ chữ)
+    if query:
+        products_list = products_list.filter(name__icontains=query)
+
+    # Lọc theo giá (nếu có chọn khoảng giá)
+    if price_range == 'under_5':
+        products_list = products_list.filter(price__lt=5000000)
+    elif price_range == '5_to_10':
+        products_list = products_list.filter(price__gte=5000000, price__lte=10000000)
+    elif price_range == 'over_10':
+        products_list = products_list.filter(price__gt=10000000)
+    # === KẾT THÚC: XỬ LÝ LỌC TÌM KIẾM ===
+
+    # Giữ nguyên code chia trang của bạn
+    paginator = Paginator(products_list, 4) # Lưu ý: Bạn đang để 4 váy/trang. Nếu muốn hiển thị 16 váy/trang như thiết kế giao diện thì đổi số 4 thành 16 nha.
     page_number = request.GET.get('page')
     products = paginator.get_page(page_number)
+    
     return render(request, 'home.html', {'products': products})
 
 def about(request):
@@ -103,6 +126,17 @@ def product_detail(request, product_id):
                 product=product, customer_name=name, phone=phone_input,  
                 booking_date=date, note=note
             )
+            #Mailtrap
+            tieu_de = f"[Bridal Luxury] Có khách đặt lịch: {name}"
+            noi_dung = f"Hệ thống vừa nhận 1 đơn đặt lịch mới:\n\n- Khách hàng: {name}\n- Số điện thoại: {phone_input}\n- Ngày hẹn: {date}\n- Váy muốn thử: {product.name}\n- Ghi chú: {note}\n\nVui lòng vào trang Quản lý để duyệt đơn!"
+            
+            send_mail(
+                subject=tieu_de,
+                message=noi_dung,
+                from_email='hethong@bridalluxury.com', # Mail ảo của hệ thống
+                recipient_list=['admin_test@gmail.com'], # Mail ảo người nhận
+                fail_silently=False,
+            )
             messages.success(request, f"✨ Chúc mừng {name}! Đã đặt lịch tại {product.store.name}.")
             return redirect('product_detail', product_id=product.id)
         else:
@@ -124,21 +158,45 @@ def api_calculate_shipping(request):
     except: return JsonResponse({'error': 'Lỗi'}, status=400)
 
 # 5. Hệ thống cửa hàng
-# Danh sách tất cả cửa hàng
+
+# Danh sách tất cả cửa hàng (Đã thêm phân trang và sắp xếp)
 def store_list(request):
-    stores = Store.objects.all()
+    # Lấy danh sách cửa hàng, sắp xếp theo ID giảm dần (mới nhất lên đầu)
+    store_queryset = Store.objects.all().order_by('-id')
+    
+    # Chia trang: 6 cửa hàng trên mỗi trang (bạn có thể đổi thành 9 hoặc 12 tùy ý)
+    paginator = Paginator(store_queryset, 6) 
+    page_number = request.GET.get('page')
+    stores = paginator.get_page(page_number)
+    
     return render(request, 'store_list.html', {'stores': stores})
 
-# Chi tiết các váy tại cửa hàng 
+# Chi tiết các váy tại cửa hàng (Có sắp xếp sản phẩm mới nhất)
 def store_detail_view(request, store_id):
+    # Lấy thông tin cửa hàng, nếu không có trả về 404
     store = get_object_or_404(Store, pk=store_id)
-    products = Product.objects.filter(store=store) 
-    return render(request, 'store_detail_view.html', {'store': store, 'products': products})
-
+    
+    # Lấy danh sách sản phẩm thuộc cửa hàng này, ưu tiên mẫu mới nhất
+    products = Product.objects.filter(store=store).order_by('-id')
+    
+    # Nếu cửa hàng có quá nhiều váy, bạn cũng có thể cân nhắc thêm Paginator ở đây
+    # Hiện tại tui giữ nguyên danh sách sản phẩm để khách xem hết một lượt
+    
+    return render(request, 'store_detail_view.html', {
+        'store': store, 
+        'products': products
+    })
 # 6. Trang liên hệ 
 def contact(request):
     if request.method == 'POST':
         name = request.POST.get('name')
+        send_mail(
+            subject=f"[Liên hệ mới] Khách hàng: {name}",
+            message=f"Bạn vừa nhận được một yêu cầu liên hệ từ khách hàng tên là {name}. Vui lòng kiểm tra lại hệ thống/hộp thư nhé.",
+            from_email='hethong@bridalluxury.com',
+            recipient_list=['admin_test@gmail.com'],
+            fail_silently=False,
+        )
         messages.success(request, f"Cảm ơn {name}! Chúng tôi đã nhận được tin nhắn và sẽ phản hồi sớm nhất.")
         return redirect('contact')
     return render(request, 'contact.html')
@@ -218,13 +276,16 @@ def add_product(request):
         store_id = request.POST.get('store')
         description = request.POST.get('description', '') 
         image = request.FILES.get('image') # Lấy ảnh chính
+        quantity = request.POST.get('quantity', 1) 
+        status = request.POST.get('status', 'available')
         
         try:
             store = Store.objects.get(pk=store_id)
             
             # 1. Tạo váy cưới và gán vào biến 'product' thay vì chỉ create trống
             product = Product.objects.create(
-                name=name, price=price, store=store, description=description, image=image
+                name=name, price=price, store=store, description=description, image=image,
+                quantity=quantity, status=status 
             )
             
             # 2. lưu nhìu ảnh phụ chi tiết 
@@ -252,7 +313,8 @@ def edit_product(request, id):
         product.name = request.POST.get('name')
         product.price = request.POST.get('price')
         product.description = request.POST.get('description', '')
-        
+        product.quantity = request.POST.get('quantity', 1)
+        product.status = request.POST.get('status', 'available')
         store_id = request.POST.get('store')
         if store_id:
             product.store = Store.objects.get(pk=store_id)
@@ -311,4 +373,5 @@ def edit_store(request, id):
         return redirect('custom_manager')
 
     return render(request, 'edit_store.html', {'store': store})
+
 

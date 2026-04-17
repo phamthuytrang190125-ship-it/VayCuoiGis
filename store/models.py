@@ -19,6 +19,17 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="Hình ảnh")
     description = models.TextField(blank=True, null=True, verbose_name="Mô tả sản phẩm")
     
+    STATUS_CHOICES = (
+        ('available', 'Sẵn sàng'),
+        ('rented', 'Đang thuê'),
+        ('washing', 'Đang giặt'),
+    )
+    
+    # 1.Tồn kho (kiểu số nguyên, mặc định là 1)
+    quantity = models.IntegerField(default=1, verbose_name="Tồn kho")
+    
+    # 2. Cột Tình trạng váy (dạng lựa chọn, mặc định là Sẵn sàng)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='available', verbose_name="Tình trạng")
     def __str__(self):
         return f"{self.name} ({self.store.name})" 
 

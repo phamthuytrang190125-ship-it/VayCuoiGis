@@ -1,118 +1,96 @@
-/* static/css/contact.css */
-
-.contact-container {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 0 20px;
-    font-family: 'Quicksand', sans-serif; /* Đổi sang font xịn của web */
-}
-
-.contact-title {
+.brand-header {
+    background-color: #fdfbf7;
     text-align: center;
-    color: #333;
+    padding: 5px 20px;
     margin-bottom: 40px;
-    border-bottom: 2px solid #d88a9a;
-    padding-bottom: 10px;
-    display: inline-block;
-    width: 100%;
-    box-sizing: border-box;
 }
-
-.contact-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px;
-}
-
-/* Phần Thông tin liên lạc (Cột trái) */
-.contact-info {
-    flex: 1;
-    min-width: 300px;
-}
-
-.contact-heading {
+.brand-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
     color: #d88a9a;
-    margin-top: 0;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+}
+.brand-subtitle {
+    font-size: 1.1rem;
+    color: #777;
+    font-style: italic;
 }
 
-.contact-info p {
-    margin-bottom: 15px;
-    line-height: 1.6;
+/* Layout Content */
+.content-section {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 80px;
+}
+.content-section.reverse {
+    flex-direction: row-reverse;
 }
 
-.contact-info hr {
-    border: 0;
-    border-top: 1px solid #eee;
-    margin: 20px 0;
+/* Text Column */
+.text-col {
+    flex: 1;
+    line-height: 1.8;
+    color: #555;
+    font-size: 1.05rem;
+}
+.text-col h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: #333;
+    margin-bottom: 20px;
+    position: relative;
+}
+.text-col h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #d88a9a;
+    margin-top: 10px;
 }
 
-.btn-map-contact {
-    display: inline-block;
-    background: #333;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
+/* Image Column */
+.img-col { flex: 1; }
+.img-col img {
+    width: 100%;
+    border-radius: 20px; 
+    box-shadow: 0 10px 25px rgba(216, 138, 154, 0.2);
+}
+
+/* Values Section */
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 80px; 
+}
+.value-item {
+    padding: 30px;
+    background: #fff;
+    border: 1px dashed #e0e0e0;
+    border-radius: 15px;
     transition: 0.3s;
 }
-
-.btn-map-contact:hover {
-    background: #555;
-    transform: translateY(-2px);
-}
-
-/* Phần Form gửi tin nhắn (Cột phải) */
-.contact-form-wrapper {
-    flex: 1.5;
-    min-width: 300px;
-}
-
-.contact-form {
-    background: #fdfbf7; /* Đổi nhẹ màu nền cho sang */
-    padding: 20px;
-    border: 1px solid #ebd4d8; /* Viền màu hồng nhạt */
-    border-radius: 8px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
-}
-
-.form-control {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-family: 'Quicksand', sans-serif;
-}
-
-.form-control:focus {
-    outline: none;
+.value-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
     border-color: #d88a9a;
 }
-
-.btn-submit-contact {
-    background: #d88a9a;
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 5px;
-    transition: 0.3s;
+.value-icon {
+    font-size: 40px;
+    color: #d88a9a;
+    margin-bottom: 15px;
 }
 
-.btn-submit-contact:hover {
-    background: #c47686;
-    transform: translateY(-2px);
+/* Responsive */
+@media (max-width: 768px) {
+    .content-section, .content-section.reverse {
+        flex-direction: column;
+    }
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
 }

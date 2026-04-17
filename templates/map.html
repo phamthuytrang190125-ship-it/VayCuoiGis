@@ -12,9 +12,101 @@
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet-search@3.0.2/dist/leaflet-search.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
     
-    <link rel="stylesheet" href="{% static 'css/map.css' %}">
+    <link rel="stylesheet" href="{% static 'css/map.css' %}?v=1">
+    
+    <style>
+        #map { height: 100%; width: 100%; background: #f8f9fa; z-index: 1; }
+
+        .search-box-custom {
+            position: relative; 
+            margin-top: 10px; 
+            padding: 15px;
+            background: #fff0f3; 
+            border-radius: 12px; 
+            border: 1px solid #d88a9a;
+            box-shadow: 0 2px 8px rgba(216, 138, 154, 0.2);
+        }
+
+        .search-box-custom input {
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid #ddd;
+            border-radius: 8px; 
+            font-family: 'Quicksand', sans-serif; 
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .manual-coords { 
+            display: flex; 
+            gap: 10px; 
+            margin-top: 12px; 
+        }
+
+        .manual-coords div { flex: 1; }
+
+        .manual-coords label { 
+            display: block; 
+            font-size: 11px; 
+            color: #888; 
+            margin-bottom: 3px; 
+        }
+
+        .manual-coords input { 
+            width: 100%; 
+            padding: 8px; 
+            border: 1px solid #ffc1cc; 
+            border-radius: 6px; 
+            font-size: 12px; 
+            background: #f9f9f9;
+        }
+
+        .analysis-info { 
+            font-size: 12px; 
+            color: #555; 
+            margin-top: 10px; 
+            background: #fff; 
+            padding: 10px; 
+            border-radius: 8px; 
+            border-left: 4px solid #d88a9a;
+            line-height: 1.4;
+        }
+
+        .leaflet-routing-container {
+            width: 320px;
+            background-color: white !important;
+            padding: 15px !important;
+            border-radius: 12px !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+            max-height: 80vh !important;
+            font-family: 'Quicksand', sans-serif !important;
+            border: 1px solid #eee !important;
+        }
+
+        .leaflet-routing-alt h2 { font-size: 16px; color: #d88a9a; }
+        .leaflet-routing-alt table { font-size: 13px; }
+
+        .btn-route-popup {
+            background: #d88a9a; 
+            color: white; 
+            border: none; 
+            padding: 10px 15px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600; 
+            width: 100%; 
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-route-popup:hover { background: #c07685; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    </style>
 </head>
 <body>
 
@@ -26,25 +118,40 @@
             <div class="location-panel">
                 <form method="POST" id="locationForm">
                     {% csrf_token %}
-                    <div class="hidden-inputs">
-                        <input type="text" name="lat" id="latInput" value="{{ user_lat }}">
-                        <input type="text" name="lon" id="lonInput" value="{{ user_lon }}">
-                    </div>
                     
-                    <div style="font-size: 13px; color: #777; margin-bottom: 5px;">📍 Vị trí của bạn:</div>
-                    
-                    <div style="margin-bottom: 10px;">
-                        {% if is_default %}
-                            <span style="color: #aaa; font-weight: bold;">Chưa xác định tọa độ</span>
-                        {% else %}
-                            <span style="color: #d88a9a; font-weight: bold;">Đã xác định tọa độ</span>
-                        {% endif %}
+                    <div class="search-box-custom">
+                        <div style="font-size: 13px; color: #d88a9a; font-weight: 600; margin-bottom: 8px;">
+                            <i class="fa-solid fa-map-location-dot"></i> Tìm vị trí của bạn:
+                        </div>
+                        
+                        <input type="text" id="custom-address-search" placeholder="Nhập tên đường, phường, quận..." autocomplete="off">
+                        
+                        <div class="manual-coords">
+                            <div><label>Vĩ độ (Lat)</label><input type="text" name="lat" id="latInput" value="{{ user_lat }}" readonly></div>
+                            <div><label>Kinh độ (Lon)</label><input type="text" name="lon" id="lonInput" value="{{ user_lon }}" readonly></div>
+                        </div>
+
+                        <div style="margin-top: 10px;">
+                            <label style="font-size: 12px; color: #d88a9a; font-weight: 500;">Bán kính lọc shop (km):</label>
+                            <input type="number" name="radius" id="radiusInput" value="5" min="0" step="any" style="width: 100%; padding: 8px; border: 1px solid #ffc1cc; border-radius: 6px; margin-top: 5px;">                        </div>
+                        
+                        <div class="btn-action-group" style="display: flex; gap: 10px; margin-top: 15px;">
+                            <button type="button" onclick="runGisAnalysis()" class="btn-scan" style="flex:1; background:#f1a1b1; color:white; border:none; padding:10px; border-radius:8px; cursor:pointer; font-weight:600;">
+                                <i class="fa-solid fa-bullseye"></i> Quét Vùng
+                            </button>
+                            <button type="button" onclick="forceGetLocation()" class="btn-gps-white" style="flex:1; background:white; color:#d88a9a; border:2px solid #d88a9a; padding:10px; border-radius:8px; cursor:pointer; font-weight:600;">
+                                <i class="fa-solid fa-crosshairs"></i> Định Vị
+                            </button>
+                        </div>
+
+                        <div id="gis-analysis" class="analysis-info">
+                            <i class="fa-solid fa-circle-info"></i> Gõ địa chỉ và nhấn Enter, click map, hoặc vẽ để lọc
+                        </div>
                     </div>
 
-                    <div style="display: flex; gap: 8px;">
-                        <button type="submit" class="btn-action btn-find">🔄 Tìm Shop Gần Đây</button>
-                        <button type="button" onclick="forceGetLocation()" class="btn-action btn-gps">🎯 Định Vị</button>
-                    </div>
+                    <button type="submit" class="btn-save-dark" style="width:100%; background:#333; color:white; padding:15px; border-radius:10px; margin-top:15px; font-weight:bold; border:none; cursor:pointer;">
+                        <i class="fa-solid fa-floppy-disk"></i> Lưu vị trí này
+                    </button>
                 </form>
             </div>
         </div>
@@ -57,21 +164,24 @@
         <div class="scroll-content">
             <div id="storeTab" class="tab-content active">
                 {% for store in stores %}
-                <div class="store-card" onclick="focusAndRoute({{ store.lat|stringformat:'f' }}, {{ store.lon|stringformat:'f' }})">
+                <div class="store-card" onclick="checkAndRoute({{ store.lat|stringformat:'f' }}, {{ store.lon|stringformat:'f' }})">
                     <div class="store-name">{{ store.name }}</div>
-                    <div class="store-addr">🏠 {{ store.address }}</div>
-                    <div style="margin-top: 10px; border-top: 1px dashed #eee; padding-top: 8px;">
+                    <div class="store-addr"><i class="fa-solid fa-location-dot"></i> {{ store.address }}</div>
+                    <div style="margin-top: 12px; border-top: 1px dashed #ffd1dc; padding-top: 10px;">
                         {% if not is_default %}
-                            <span class="badge-dist">➤ {{ store.distance }} km</span>
-                            <span class="badge-fee">Ship: {{ store.formatted_fee }}</span>
+                            <span class="badge-dist" style="background:#fff0f3; color:#d88a9a; padding:4px 8px; border-radius:15px; font-size:11px; font-weight:600;">
+                                <i class="fa-solid fa-route"></i> {{ store.distance }} km
+                            </span>
+                            <span class="badge-fee" style="margin-left:10px; font-size:11px; color:#666;">
+                                <i class="fa-solid fa-truck"></i> Ship: {{ store.formatted_fee }}
+                            </span>
                         {% else %}
-                            <span class="badge-dist" style="background: transparent; color: #ccc;">➤ -- km</span>
-                            <span class="badge-fee" style="color: #ccc;">Ship: --- đ</span>
+                            <span style="color:#ccc; font-size:11px;">Chưa có dữ liệu khoảng cách</span>
                         {% endif %}
                     </div>
                 </div>
                 {% empty %}
-                <p style="text-align:center;">Không tìm thấy cửa hàng nào gần đây.</p>
+                <div style="padding:20px; text-align:center; color:#999;">Không có shop nào trong vùng này.</div>
                 {% endfor %}
             </div>
 
@@ -83,7 +193,7 @@
                             {% if p.image %}
                                 <img src="{{ p.image.url }}" alt="{{ p.name }}">
                             {% else %}
-                                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#aaa;">No Image</div>
+                                <div style="background:#eee; height:100%; display:flex; align-items:center; justify-content:center;">No Image</div>
                             {% endif %}
                         </div>
                         <div class="dress-info">
@@ -91,8 +201,6 @@
                             <div class="dress-price">{{ p.price|intcomma }} đ</div>
                         </div>
                     </a>
-                    {% empty %}
-                    <p style="text-align:center; grid-column: 1/3;">Chưa có dữ liệu váy.</p>
                     {% endfor %}
                 </div>
             </div>
@@ -110,15 +218,18 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
     <script src="https://unpkg.com/leaflet-search@3.0.2/dist/leaflet-search.min.js"></script>
+
     <script>
-        var stores = {{ stores_json|safe }};
+        var storesData = {{ stores_json|safe }};
+        var stores = storesData; 
         var userLat = parseFloat("{{ user_lat }}".replace(',', '.'));
         var userLon = parseFloat("{{ user_lon }}".replace(',', '.'));
         var isDefault = {% if is_default %}true{% else %}false{% endif %};
     </script>
     
-    <script src="{% static 'js/map.js' %}"></script>
+    <script src="{% static 'js/map.js' %}?v=6"></script>
 
 </body>
 </html>

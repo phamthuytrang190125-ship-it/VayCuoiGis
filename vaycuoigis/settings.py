@@ -163,4 +163,15 @@ JAZZMIN_UI_TWEAKS = {
 
 # Cấu hình chuyển hướng Đăng nhập / Đăng xuất
 LOGIN_REDIRECT_URL = '/manager/'  
-LOGOUT_REDIRECT_URL = '/'        
+LOGOUT_REDIRECT_URL = '/'    
+
+# CẤU HÌNH GỬI EMAIL BẰNG MAILTRAP (TESTING)
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER = '2b25a6db0e5988'
+EMAIL_HOST_PASSWORD = '6319fbbf80a516'
+EMAIL_PORT = '2525'
+
+# CẤU HÌNH ĐỊNH DẠNG TIỀN TỆ VIỆT NAM
+USE_THOUSAND_SEPARATOR = True
+THOUSAND_SEPARATOR = '.'
+NUMBER_GROUPING = 3

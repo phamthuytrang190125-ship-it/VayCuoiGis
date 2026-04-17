@@ -1,96 +1,193 @@
-.brand-header {
-    background-color: #fdfbf7;
+/* ================= HEADER ================= */
+.about-header {
     text-align: center;
-    padding: 5px 20px;
-    margin-bottom: 40px;
+    padding: 60px 20px 40px;
 }
-.brand-title {
+.about-title {
     font-family: 'Playfair Display', serif;
-    font-size: 3rem;
     color: #d88a9a;
-    margin-bottom: 10px;
+    font-size: 3.2em;
+    margin: 0;
 }
-.brand-subtitle {
-    font-size: 1.1rem;
-    color: #777;
+.about-subtitle {
+    color: #888;
+    margin-top: 15px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.2em;
     font-style: italic;
 }
 
-/* Layout Content */
-.content-section {
+/* ================= BỐ CỤC CHUNG ================= */
+.about-container {
+    max-width: 1100px;
+    margin: 0 auto 80px;
+    padding: 0 20px;
+}
+.about-section {
     display: flex;
     align-items: center;
     gap: 50px;
-    margin-bottom: 80px;
+    margin-bottom: 70px;
 }
-.content-section.reverse {
+.about-section.reverse {
     flex-direction: row-reverse;
 }
 
-/* Text Column */
-.text-col {
+/* ================= CỘT HÌNH ẢNH ================= */
+.about-img-col {
     flex: 1;
-    line-height: 1.8;
-    color: #555;
-    font-size: 1.05rem;
-}
-.text-col h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.2rem;
-    color: #333;
-    margin-bottom: 20px;
+    min-width: 300px;
     position: relative;
 }
-.text-col h2::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 3px;
-    background: #d88a9a;
-    margin-top: 10px;
-}
-
-/* Image Column */
-.img-col { flex: 1; }
-.img-col img {
+.about-img {
     width: 100%;
-    border-radius: 20px; 
-    box-shadow: 0 10px 25px rgba(216, 138, 154, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(216, 138, 154, 0.2);
+    object-fit: cover;
+    height: 450px;
+    transition: transform 0.5s ease;
+}
+.about-img-col:hover .about-img {
+    transform: scale(1.02);
 }
 
-/* Values Section */
-.values-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    text-align: center;
-    margin-top: 50px;
-    margin-bottom: 80px; 
+/* ================= CỘT VĂN BẢN ================= */
+.about-text-col {
+    flex: 1;
+    min-width: 300px;
 }
-.value-item {
-    padding: 30px;
-    background: #fff;
-    border: 1px dashed #e0e0e0;
-    border-radius: 15px;
-    transition: 0.3s;
+.about-heading {
+    font-family: 'Playfair Display', serif;
+    color: #4a4a4a;
+    font-size: 2.2em;
+    margin-bottom: 20px;
 }
-.value-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-    border-color: #d88a9a;
-}
-.value-icon {
-    font-size: 40px;
-    color: #d88a9a;
+.about-desc {
+    font-family: 'Quicksand', sans-serif;
+    color: #666;
+    line-height: 1.8;
+    font-size: 1.05em;
     margin-bottom: 15px;
 }
+.highlight-text {
+    color: #d88a9a;
+    font-weight: bold;
+}
 
-/* Responsive */
+/* Danh sách tính năng GIS */
+.about-list {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 25px;
+    font-family: 'Quicksand', sans-serif;
+    color: #444;
+    line-height: 1.8;
+    font-size: 1.05em;
+}
+.about-list li {
+    margin-bottom: 10px;
+}
+.about-list i {
+    color: #d88a9a;
+    margin-right: 12px;
+    font-size: 1.2em;
+}
+
+/* Khung trích dẫn */
+.about-quote-box {
+    border-left: 4px solid #d88a9a;
+    background: #fff0f3;
+    padding: 15px 15px 15px 20px;
+    border-radius: 0 10px 10px 0;
+}
+.about-quote-text {
+    font-style: italic;
+    font-weight: bold;
+    color: #d88a9a;
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15em;
+}
+
+/* ================= GIÁ TRỊ CỐT LÕI (VALUES) ================= */
+.values-wrapper {
+    margin-top: 100px;
+}
+.values-header-wrapper {
+    text-align: center;
+    margin-bottom: 50px;
+}
+.values-main-heading {
+    font-family: 'Playfair Display', serif;
+    color: #4a4a4a;
+    font-size: 2.5em;
+    margin-bottom: 15px;
+}
+.values-divider {
+    width: 70px;
+    height: 3px;
+    background: #d88a9a;
+    margin: 0 auto;
+    border-radius: 3px;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+.value-card {
+    background: white;
+    padding: 40px 25px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #fce4ec;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.value-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 25px rgba(216, 138, 154, 0.2);
+}
+.value-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    background: #fff0f3;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: #d88a9a;
+    font-size: 2em;
+}
+.value-title {
+    font-family: 'Quicksand', sans-serif;
+    color: #333;
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+.value-desc {
+    color: #666;
+    font-size: 0.95em;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ================= RESPONSIVE (Điện thoại) ================= */
 @media (max-width: 768px) {
-    .content-section, .content-section.reverse {
+    .about-section, .about-section.reverse {
         flex-direction: column;
+        gap: 30px;
     }
-    .values-grid {
-        grid-template-columns: 1fr;
+    .about-img {
+        height: 300px;
+    }
+    .about-header {
+        padding: 40px 20px 20px;
+    }
+    .about-title {
+        font-size: 2.5em;
     }
 }

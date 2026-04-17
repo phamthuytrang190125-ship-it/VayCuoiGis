@@ -44,12 +44,67 @@ body {
     margin-bottom: 15px;
 }
 
-/* LOCATION PANEL */
+/* LOCATION PANEL & SEARCH BOX (Gộp từ HTML qua) */
 .location-panel {
     background: white;
     padding: 15px;
     border-radius: 10px;
     border: 1px dashed var(--primary-color);
+}
+
+.search-box-custom {
+    position: relative; 
+    margin-top: 10px; 
+    padding: 15px;
+    background: #fff0f3; 
+    border-radius: 12px; 
+    border: 1px solid #d88a9a;
+    box-shadow: 0 2px 8px rgba(216, 138, 154, 0.2);
+}
+
+.search-box-custom input {
+    width: 100%; 
+    padding: 12px; 
+    border: 1px solid #ddd;
+    border-radius: 8px; 
+    font-family: 'Quicksand', sans-serif; 
+    box-sizing: border-box;
+    outline: none;
+}
+
+.manual-coords { 
+    display: flex; 
+    gap: 10px; 
+    margin-top: 12px; 
+}
+
+.manual-coords div { flex: 1; }
+
+.manual-coords label { 
+    display: block; 
+    font-size: 11px; 
+    color: #888; 
+    margin-bottom: 3px; 
+}
+
+.manual-coords input { 
+    width: 100%; 
+    padding: 8px; 
+    border: 1px solid #ffc1cc; 
+    border-radius: 6px; 
+    font-size: 12px; 
+    background: #f9f9f9;
+}
+
+.analysis-info { 
+    font-size: 12px; 
+    color: #555; 
+    margin-top: 10px; 
+    background: #fff; 
+    padding: 10px; 
+    border-radius: 8px; 
+    border-left: 4px solid #d88a9a;
+    line-height: 1.4;
 }
 
 .hidden-inputs { display: none; }
@@ -179,6 +234,8 @@ body {
 #map {
     width: 100%;
     height: 100%;
+    background: #f8f9fa; 
+    z-index: 1;
 }
 
 /* VEHICLE SELECTOR OVERLAY */
@@ -208,3 +265,35 @@ body {
 }
 
 .active-vehicle { background: var(--primary-color); color: white; }
+
+/* CHỈ ĐƯỜNG POPUP & ROUTING CONTAINER (Gộp từ HTML qua) */
+.btn-route-popup {
+    background: #d88a9a; 
+    color: white; 
+    border: none; 
+    padding: 10px 15px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600; 
+    width: 100%; 
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-route-popup:hover { background: #c07685; }
+
+.leaflet-routing-container {
+    width: 320px;
+    background-color: white !important;
+    padding: 15px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important;
+    max-height: 80vh !important;
+    overflow-y: auto;
+    font-family: 'Quicksand', sans-serif !important;
+    border: 1px solid #ffccd5 !important;
+    display: block !important;
+}
+
+.leaflet-routing-alt h2 { font-size: 16px; color: #d88a9a; }

@@ -8,54 +8,40 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/base.css' %}?v=9999">
 </head>
 <body>
 
     <nav class="custom-navbar">
         <div class="nav-container">
-            
             <a href="{% url 'home' %}" class="nav-logo">
                 <i class="fas fa-crown"></i> Bridal Luxury
             </a>
-
             <ul class="nav-links">
                 <li><a href="{% url 'home' %}">Trang chủ</a></li>
                 <li><a href="{% url 'about' %}">Giới thiệu</a></li>
                 <li><a href="{% url 'store_list' %}">Cửa hàng</a></li>
                 <li><a href="{% url 'contact' %}">Liên hệ</a></li>
             </ul>
-
             <div class="user-menu">
                 {% if user.is_authenticated %}
                     <span style="color: #555; font-weight: 600; font-size: 15px;">
                         Xin chào, <b style="color: #d88a9a;">{{ user.username }}</b>
                     </span>
-                    
                     {% if user.is_staff %}
                         <a href="{% url 'custom_manager' %}" class="btn-admin-nav">
                             <i class="fas fa-user-shield"></i> Quản lý Shop
                         </a>
                     {% endif %}
-
-                    <a href="{% url 'logout' %}" class="btn-outline">
-                        Đăng xuất
-                    </a>
-
+                    <a href="{% url 'logout' %}" class="btn-outline">Đăng xuất</a>
                 {% else %}
-                    <a href="{% url 'login' %}" style="color: #555; font-weight: bold; font-size: 14px; margin-right: 5px;">
-                        Đăng nhập
-                    </a>
-                    <a href="{% url 'register' %}" class="btn-filled">
-                        Đăng ký
-                    </a>
+                    <a href="{% url 'login' %}" style="color: #555; font-weight: bold; font-size: 14px; margin-right: 5px;">Đăng nhập</a>
+                    <a href="{% url 'register' %}" class="btn-filled">Đăng ký</a>
                 {% endif %}
             </div>
-
         </div>
     </nav>
 
@@ -78,21 +64,36 @@
         {% endblock %}
     </main>
 
-    <footer>
-        <div style="font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 10px;">
-            Bridal Luxury - Wedding GIS
-        </div>
-        <div style="font-size: 13px; color: #aaa;">
-            TRANG - TRANG - THIEN<br>
-            © 2026 All rights reserved.
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-side left">
+                <h2>Thông Tin Liên Hệ</h2>
+                <p><i class="fas fa-map-marker-alt"></i> 236 Lê Văn Sỹ, Tân Bình</p>
+                <p><i class="fas fa-phone"></i> 0909 123 456</p>
+                <p><i class="fas fa-envelope"></i> vaycuoigis@gmail.com</p>
+            </div>
+
+            <div class="footer-main">
+                <h2 class="footer-title">Bridal Luxury - Wedding GIS</h2>
+                <p class="footer-subtext">TRANG - TRANG - THIỆN</p>
+                <p class="footer-copy">© 2026 All rights reserved.</p>
+            </div>
+
+            <div class="footer-side right">
+                <h2>Liên Kết Nhanh</h2>
+                <ul class="footer-links">
+                    <li><a href="{% url 'home' %}">Trang chủ</a> <i class="fas fa-home"></i></li>
+                    <li><a href="{% url 'store_list' %}">Cửa hàng</a> <i class="fas fa-store"></i></li>
+                    <li><a href="{% url 'map_view' %}">Bản đồ</a> <i class="fas fa-map-marked-alt"></i></li>
+                    <li><a href="{% url 'contact' %}">Liên hệ</a> <i class="fas fa-envelope"></i></li>
+                </ul>
+            </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
     <script>
-        // Kích hoạt hiệu ứng bay bay
         AOS.init({
             duration: 1000, 
             once: true,     

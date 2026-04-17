@@ -24,224 +24,223 @@ viFormatter.formatInstruction = function(instr, i) {
     return t;
 };
 
-// 2. HÀM CHUYỂN ĐỔI TAB (CỬA HÀNG / VÁY CƯỚI)
-function openTab(evt, tabId) {
-    // Ẩn tất cả nội dung tab
-    var tabContents = document.querySelectorAll('.tab-content');
-    for (var i = 0; i < tabContents.length; i++) {
-        tabContents[i].classList.remove('active');
-    }
-    
-    // Xóa màu đỏ của các nút tab
-    var tabBtns = document.querySelectorAll('.tab-btn');
-    for (var j = 0; j < tabBtns.length; j++) {
-        tabBtns[j].classList.remove('active');
-    }
-    
-    // Hiện tab được chọn lên
-    document.getElementById(tabId).classList.add('active');
-    evt.currentTarget.classList.add('active');
-}
+// 2. KHỞI TẠO BIẾN TOÀN CỤC
+var map, shopGroup, allMarkers = [], userMarker, bufferLayer, drawnItems, routingControl = null;
+var currentDestLat = null, currentDestLon = null;
 
-// 3. KHỞI TẠO BẢN ĐỒ VÀ CÁC BIẾN TOÀN CỤC
-var currentDestLat = null;
-var currentDestLon = null;
-var currentProfile = 'car'; 
-
-var map = L.map('map').setView([userLat, userLon], 14);
-
-// Nền bản đồ (Base Map)
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap & CARTO'
-}).addTo(map);
-
-// Tạo icon màu đỏ cho vị trí người dùng
-var redIcon = new L.Icon({
+var redIcon = L.icon({
     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
+    iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34]
 });
 
-// Nếu đã định vị thì cắm cờ đỏ lên bản đồ
-if (!isDefault) {
-    var userMarker = L.marker([userLat, userLon], {icon: redIcon}).addTo(map);
-    userMarker.bindPopup("<b>Vị trí của bạn 💃</b>").openPopup();
-}
+// 3. HÀM CẬP NHẬT VỊ TRÍ NGƯỜI DÙNG (MANUAL & TÌM KIẾM)
+window.updateManualPosition = function(lat, lng) {
+    document.getElementById('latInput').value = lat.toFixed(6);
+    document.getElementById('lonInput').value = lng.toFixed(6);
+    userLat = lat; 
+    userLon = lng; 
+    isDefault = false;
 
-// 4. HIỂN THỊ CÁC CỬA HÀNG LÊN BẢN ĐỒ
-var markersLayer = new L.LayerGroup();
-map.addLayer(markersLayer);
-
-// Dùng vòng lặp for truyền thống rải từng cửa hàng
-for (var k = 0; k < stores.length; k++) {
-    var store = stores[k];
-    var m = L.marker([store.lat, store.lon], {title: store.name});
-    
-    // Xử lý hiển thị Khoảng cách và Phí ship nếu đã định vị
-    var distanceText = "";
-    var shippingFeeText = "";
-    
-    if (!isDefault) {
-        distanceText = "<p style='color: #d88a9a; font-weight: bold; margin-bottom: 5px; font-size: 14px;'>Cách bạn: " + store.distance + " km</p>";
-        shippingFeeText = "<p style='color: #e67e22; font-weight: bold; font-size: 14px; margin-top: 0; margin-bottom: 15px;'>🛵 Phí ship: " + store.formatted_fee + "</p>";
+    if (!userMarker) {
+        userMarker = L.marker([lat, lng], {icon: redIcon, zIndexOffset: 1000}).addTo(map);
+    } else {
+        userMarker.setLatLng([lat, lng]);
     }
+    map.flyTo([lat, lng], 15);
+    if(window.runGisAnalysis) runGisAnalysis();
+};
 
-    // Nối chuỗi HTML để tạo Popup (Code kiểu sinh viên hay dùng)
-    var popupHTML = 
-        "<div class='popup-header'><b>" + store.name + "</b></div>" +
-        "<div class='popup-body' style='text-align: left; padding: 12px; background: white; border-radius: 0 0 10px 10px;'>" +
-            "<img src='" + store.image + "' onerror='this.onerror=null; this.src=\"https://dummyimage.com/400x150/fff0f3/d88a9a&text=Bridal+Luxury\";' style='width: 100%; height: 130px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);'>" +                    
-            "<div style='font-size: 12.5px; color: #555; margin-bottom: 6px; line-height: 1.4;'>" +
-                "<b>📍 Địa chỉ:</b> " + store.address +
-            "</div>" +
-            "<div style='font-size: 12.5px; color: #555; margin-bottom: 12px;'>" +
-                "<b>📞 Hotline:</b> " + store.phone +
-            "</div>" +
-            "<div style='text-align: center; border-top: 1px dashed #eee; padding-top: 10px;'>" +
-                distanceText + 
-                shippingFeeText + 
-                "<button class='btn-route-pop' style='width: 100%; padding: 8px; font-weight: bold;' onclick='showRouteTo(" + store.lat + ", " + store.lon + ", \"car\")'>🚗 Chỉ đường tới đây</button>" +
-            "</div>" +
-        "</div>";
-
-    m.bindPopup(popupHTML, { minWidth: 240, className: 'custom-popup' });
-    markersLayer.addLayer(m);
-}
-
-// 5. THANH TÌM KIẾM CỬA HÀNG
-var searchControl = new L.Control.Search({
-    layer: markersLayer,         
-    propertyName: 'title',       
-    initial: false,              
-    zoom: 16,                    
-    marker: false,               
-    textPlaceholder: '🔍 Nhập tên tiệm váy...', 
-    position: 'topleft'          
-});
-
-searchControl.on('search:locationfound', function(e) {
-    e.layer.openPopup();
-});
-map.addControl(searchControl);
-
-// 6. CHỨC NĂNG CHỈ ĐƯỜNG (ROUTING)
-var routingControl = null;
-
-function showRouteTo(destLat, destLon, profile) {
-    // Nếu quên truyền phương tiện thì mặc định là xe hơi
-    if (profile === undefined) {
-        profile = 'car';
-    }
-
+// 4. HÀM VẼ ĐƯỜNG ĐI (ĐÃ TÍCH HỢP CHỌN XE)
+window.focusAndRoute = function(destLat, destLon, profile = 'car') {
     if (isDefault) {
-        alert("Vui lòng bấm 'Định Vị' hoặc 'Tìm Shop Gần Đây' để xác định vị trí của bạn trước khi xem chỉ đường nhé!");
+        alert("Vui lòng nhập địa chỉ, Định vị hoặc click trên bản đồ để chọn vị trí xuất phát trước nhé!");
         return;
     }
 
     currentDestLat = parseFloat(destLat);
     currentDestLon = parseFloat(destLon);
-    currentProfile = profile;
 
-    // Xóa đường vẽ cũ đi (nếu có)
-    if (routingControl !== null) {
-        map.removeControl(routingControl);
-        routingControl = null;
-    }
+    map.closePopup();
+    if (routingControl != null) { map.removeControl(routingControl); }
+    document.body.style.cursor = 'wait';
 
-    // Hiện thanh chọn phương tiện
-    document.getElementById('vehicle-selector').style.display = 'flex';
-    var vehicleBtns = document.querySelectorAll('.btn-vehicle');
-    for (var v = 0; v < vehicleBtns.length; v++) {
-        vehicleBtns[v].classList.remove('active-vehicle');
-    }
-    document.getElementById('btn-' + profile).classList.add('active-vehicle');
+    // Đổi màu nút phương tiện
+    document.querySelectorAll('.btn-vehicle').forEach(btn => btn.classList.remove('active-vehicle'));
+    var btnProfile = document.getElementById('btn-' + profile);
+    if(btnProfile) btnProfile.classList.add('active-vehicle');
 
-    // Chọn máy chủ chỉ đường tương ứng
+    // Chọn Server Routing
     var serverUrl = 'https://routing.openstreetmap.de/routed-car/route/v1';
-    if (profile === 'bike') {
-        serverUrl = 'https://routing.openstreetmap.de/routed-bike/route/v1';
-    } else if (profile === 'foot') {
-        serverUrl = 'https://routing.openstreetmap.de/routed-foot/route/v1';
-    }
+    if (profile === 'bike') serverUrl = 'https://routing.openstreetmap.de/routed-bike/route/v1';
+    else if (profile === 'foot') serverUrl = 'https://routing.openstreetmap.de/routed-foot/route/v1';
 
-    // Vẽ đường đi mới
     routingControl = L.Routing.control({
-        waypoints: [
-            L.latLng(userLat, userLon),
-            L.latLng(currentDestLat, currentDestLon)
-        ],
+        waypoints: [ L.latLng(userLat, userLon), L.latLng(currentDestLat, currentDestLon) ],
+        router: L.Routing.osrmv1({ serviceUrl: serverUrl, profile: 'driving' }), 
         formatter: viFormatter,
-        createMarker: function() { return null; },
         lineOptions: { styles: [{color: '#d88a9a', opacity: 0.9, weight: 6}] },
-        router: L.Routing.osrmv1({
-            serviceUrl: serverUrl,
-            profile: 'driving'
-        }),
-        show: true 
-    }).addTo(map);
-
-    routingControl.on('routingerror', function(e) {
-        console.error("Lỗi: ", e);
+        addWaypoints: false, draggableWaypoints: false, show: true,
+        createMarker: function() { return null; }
+    })
+    .on('routesfound', function(e) {
+        document.body.style.cursor = 'default';
+        var bounds = L.latLngBounds([userLat, userLon], [currentDestLat, currentDestLon]);
+        map.fitBounds(bounds, {padding: [50, 50]});
+    })
+    .on('routingerror', function(e) {
+        document.body.style.cursor = 'default';
         alert("Máy chủ OSM hiện đang quá tải. Vui lòng thử lại sau!");
-    });
-}
+    }).addTo(map);
+};
 
-// Hàm đổi phương tiện khi bấm nút Ô tô / Xe máy / Đi bộ
-function changeVehicle(profile) {
+window.checkAndRoute = function(destLat, destLon) {
+    focusAndRoute(destLat, destLon, 'car');
+};
+
+window.changeVehicle = function(profile) {
     if (currentDestLat !== null && currentDestLon !== null) {
-        showRouteTo(currentDestLat, currentDestLon, profile);
+        focusAndRoute(currentDestLat, currentDestLon, profile);
+    } else {
+        document.querySelectorAll('.btn-vehicle').forEach(btn => btn.classList.remove('active-vehicle'));
+        document.getElementById('btn-' + profile).classList.add('active-vehicle');
     }
-}
+};
 
-// 7. XỬ LÝ SỰ KIỆN BẤM TỪ BÊN NGOÀI
-function focusAndRoute(lat, lon) {
-    map.flyTo([lat, lon], 16);
-    showRouteTo(lat, lon, 'car'); 
-}
+// 5. KHỞI TẠO BẢN ĐỒ KHI TRANG TẢI XONG
+document.addEventListener('DOMContentLoaded', function() {
+    map = L.map('map').setView([userLat, userLon], 13);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap' }).addTo(map);
 
-// Hàm lấy GPS tự động của người dùng
-function forceGetLocation() {
-    if (!navigator.geolocation) {
-        alert("Trình duyệt không hỗ trợ GPS.");
-        return;
-    }
-    navigator.geolocation.getCurrentPosition(function(pos) {
-        document.getElementById('latInput').value = pos.coords.latitude;
-        document.getElementById('lonInput').value = pos.coords.longitude;
-        document.getElementById('locationForm').submit();
-    }, function(error) {
-        alert("Vui lòng cấp quyền vị trí cho trình duyệt web để tìm cửa hàng gần bạn nhất.");
+    shopGroup = L.layerGroup().addTo(map);
+    drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
+
+    // ĐỔ DỮ LIỆU CỬA HÀNG VÀ TRẢ LẠI POPUP GỐC CỦA BẠN
+    storesData.forEach(function(store) {
+        var popupContent = `
+            <div style="text-align: center; min-width: 220px; font-family: 'Quicksand', sans-serif;">
+                <div style="font-weight: 700; color: #d88a9a; margin-bottom: 5px; font-size: 16px;">${store.name}</div>
+                <img src="${store.image}" onerror="this.src='https://via.placeholder.com/150x100?text=Bridal+Luxury'" 
+                    style="width: 100%; height: 110px; object-fit: cover; border-radius: 8px; margin: 5px 0;">
+                <div style="font-size: 12px; color: #666; line-height: 1.4; text-align: left; margin-bottom: 10px;">
+                    📍 <b>Địa chỉ:</b> ${store.address}<br>
+                    📞 <b>Hotline:</b> ${store.phone || 'Đang cập nhật'}
+                </div>
+                <div style="border-top: 1px dashed #eee; padding-top: 10px; margin-bottom: 10px;">
+                    <div style="color: #d88a9a; font-weight: 700; font-size: 14px;">Cách bạn: ${store.distance || '--'} km</div>
+                    <div style="color: #e67e22; font-weight: 700; font-size: 14px;">
+                        <i class="fa-solid fa-motorcycle"></i> Phí ship: ${store.formatted_fee || 'Miễn phí'}
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 10px;">
+    <a href="/stores/${store.id}/" style="flex: 1; background: #333; color: white; padding: 8px 5px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: bold; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 5px;" onmouseover="this.style.background='#555'" onmouseout="this.style.background='#333'">
+        <i class="fa-solid fa-shirt"></i> Xem Váy
+    </a>
+    
+    <button class="btn-route-popup" onclick="checkAndRoute(${store.lat}, ${store.lon})" style="flex: 1; margin-top: 0; padding: 8px 5px; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 5px;">
+         <i class="fa-solid fa-location-arrow"></i> Chỉ đường
+    </button>
+</div>
+            </div>
+        `;
+        var marker = L.marker([store.lat, store.lon]).bindPopup(popupContent, {maxWidth: 250});
+        marker.storeData = store;
+        shopGroup.addLayer(marker);
+        allMarkers.push(marker);
     });
+
+    if (!isDefault) updateManualPosition(userLat, userLon);
+
+    // Bắt sự kiện Click trên map
+    map.on('click', function(e) { updateManualPosition(e.latlng.lat, e.latlng.lng); });
+
+    // Bắt sự kiện Enter tìm địa chỉ bằng Photon API
+    var searchInput = document.getElementById('custom-address-search');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                var query = this.value;
+                if (!query) return;
+                document.body.style.cursor = 'wait';
+                fetch("https://photon.komoot.io/api/?q=" + encodeURIComponent(query + ", Việt Nam") + "&limit=1")
+                    .then(res => res.json())
+                    .then(data => {
+                        document.body.style.cursor = 'default';
+                        if (data.features && data.features.length > 0) {
+                            updateManualPosition(data.features[0].geometry.coordinates[1], data.features[0].geometry.coordinates[0]);
+                        } else {
+                            alert("Không tìm ra địa chỉ này. Hãy thử gõ ngắn gọn lại tên đường và quận nhé!");
+                        }
+                    }).catch(() => { document.body.style.cursor = 'default'; });
+            }
+        });
+    }
+
+    // Công cụ vẽ vùng Leaflet Draw
+    var drawControl = new L.Control.Draw({
+        position: 'topleft',
+        draw: { polygon: true, rectangle: true, circle: false, marker: false, polyline: false, circlemarker: false },
+        edit: { featureGroup: drawnItems }
+    });
+    map.addControl(drawControl);
+
+    map.on(L.Draw.Event.CREATED, function (e) {
+        drawnItems.clearLayers();
+        if (bufferLayer) map.removeLayer(bufferLayer);
+        drawnItems.addLayer(e.layer);
+        var shape = e.layer.toGeoJSON();
+        var count = 0;
+        shopGroup.clearLayers(); 
+        allMarkers.forEach(m => {
+            if (turf.booleanPointInPolygon(turf.point([m.storeData.lon, m.storeData.lat]), shape)) { shopGroup.addLayer(m); count++; }
+        });
+        document.getElementById('gis-analysis').innerHTML = `<i class="fa-solid fa-filter"></i> Đã lọc theo vùng vẽ | Tìm thấy: <b>${count}</b> cửa hàng.`;
+    });
+
+    // 6. XỬ LÝ FOCUS TỪ TRANG KHÁC
+    var urlParams = new URLSearchParams(window.location.search);
+    var focusId = urlParams.get('focus_store');
+    if (focusId) {
+        var targetStore = storesData.find(s => s.id == focusId);
+        if (targetStore) {
+            map.flyTo([targetStore.lat, targetStore.lon], 16, { animate: true, duration: 1.5 });
+            setTimeout(() => {
+                L.popup().setLatLng([targetStore.lat, targetStore.lon])
+                         .setContent("<div style='text-align:center; color: #d88a9a;'><h3 style='margin:0'>" + targetStore.name + "</h3></div>")
+                         .openOn(map);
+            }, 1000);
+            if (!isDefault) setTimeout(() => { checkAndRoute(targetStore.lat, targetStore.lon); }, 1500);
+        }
+    }
+});
+
+// 7. CÁC HÀM TIỆN ÍCH KHÁC
+window.runGisAnalysis = function() {
+    var radius = parseFloat(document.getElementById('radiusInput').value) || 5;
+    if (drawnItems) drawnItems.clearLayers(); 
+    var buffered = turf.buffer(turf.point([userLon, userLat]), radius, {units: 'kilometers'});
+    if (bufferLayer) map.removeLayer(bufferLayer);
+    bufferLayer = L.geoJSON(buffered, {style: { color: '#d88a9a', weight: 2, fillColor: '#ffc1cc', fillOpacity: 0.25 }}).addTo(map);
+    var count = 0;
+    shopGroup.clearLayers(); 
+    allMarkers.forEach(m => {
+        if (turf.booleanPointInPolygon(turf.point([m.storeData.lon, m.storeData.lat]), buffered)) { shopGroup.addLayer(m); count++; }
+    });
+    document.getElementById('gis-analysis').innerHTML = `<i class="fa-solid fa-location-dot"></i> Bán kính: ${radius}km | Tìm thấy: <b>${count}</b> cửa hàng.`;
+};
+
+window.forceGetLocation = function() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => { updateManualPosition(pos.coords.latitude, pos.coords.longitude); }, 
+        () => { alert("Không thể truy cập GPS. Hãy tự chọn vị trí trên bản đồ!"); });
+    }
 }
 
-// Xử lý khi người dùng bấm "Xem bản đồ" từ trang khác chuyển tới
-var urlParams = new URLSearchParams(window.location.search);
-var focusId = urlParams.get('focus_store');
-
-if (focusId) {
-    var targetStore = null;
-    // Tìm cửa hàng theo ID (kiểu sinh viên)
-    for (var s = 0; s < stores.length; s++) {
-        if (stores[s].id == focusId) {
-            targetStore = stores[s];
-            break;
-        }
-    }
-
-    if (targetStore !== null) {
-        map.flyTo([targetStore.lat, targetStore.lon], 16, { animate: true, duration: 1.5 });
-        
-        setTimeout(function() {
-            L.popup()
-                .setLatLng([targetStore.lat, targetStore.lon])
-                .setContent("<div style='text-align:center; color: #d88a9a;'><h3 style='margin:0'>" + targetStore.name + "</h3></div>")
-                .openOn(map);
-        }, 1000);
-        
-        if (!isDefault) {
-            setTimeout(function() {
-                showRouteTo(targetStore.lat, targetStore.lon, 'car');
-            }, 1500);
-        }
-    }
+window.openTab = function(evt, tabName) {
+    document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.getElementById(tabName).classList.add("active");
+    evt.currentTarget.classList.add("active");
 }
