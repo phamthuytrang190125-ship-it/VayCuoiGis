@@ -3,56 +3,131 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'css/edit_product.css' %}">
+<style>
+    .form-label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 8px;
+        display: block;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 14.5px;
+    }
+    .form-input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #fce4ec;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 15px;
+        outline: none;
+        transition: all 0.3s ease;
+        background: white;
+    }
+    .form-input:focus {
+        border-color: #d88a9a;
+        box-shadow: 0 0 8px rgba(216,138,154,0.2);
+    }
+    .img-preview-box {
+        display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;
+    }
+    .img-preview-item {
+        width: 70px; height: 90px; object-fit: cover; border-radius: 8px; border: 2px solid #fce4ec;
+    }
+</style>
 
-<div class="edit-product-container">
+<div class="container" style="max-width: 900px; margin: 40px auto; padding: 0 20px; min-height: 70vh;">
     
-    <h3 class="edit-product-title">
-        ✏️ Sửa Thông Tin Váy Cưới
-    </h3>
+    <div data-aos="zoom-in" style="background: #fffcfd; padding: 40px; border-radius: 20px; box-shadow: 0 8px 30px rgba(216, 138, 154, 0.1); border: 1px solid #fce4ec;">
 
-    <form method="POST" enctype="multipart/form-data" class="edit-product-form">
-        {% csrf_token %}
-        
-        <label>Tên váy cưới:</label>
-        <input type="text" name="name" value="{{ product.name }}" required>
+        <h2 style="color: #4a4a4a; margin-top: 0; margin-bottom: 30px; font-family: 'Playfair Display', serif; font-size: 2.2em; font-weight: bold; text-align: center; border-bottom: 2px dashed #fce4ec; padding-bottom: 20px;">
+            <i class="fa-solid fa-pen-to-square" style="color: #d88a9a;"></i> Cập Nhật Váy Cưới
+        </h2>
 
-        <label>Giá thuê (đ):</label>
-        <input type="number" name="price" value="{{ product.price }}" required>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 0 25px;">
+                
+                <div style="grid-column: 1 / -1;">
+                    <label class="form-label">Tên váy cưới:</label>
+                    <input type="text" name="name" class="form-input" value="{{ product.name }}" required>
+                </div>
 
-        <label>Mô tả ngắn:</label>
-        <input type="text" name="description" value="{{ product.description|default:'' }}">
+                <div>
+                    <label class="form-label">Giá thuê (VNĐ):</label>
+                    <input type="number" name="price" class="form-input" value="{{ product.price }}" required>
+                </div>
+                <div>
+                    <label class="form-label">Thuộc cửa hàng:</label>
+                    <select name="store" class="form-input" required>
+                        {% for s in stores %}
+                            <option value="{{ s.id }}" {% if s.id == product.store.id %}selected{% endif %}>
+                                {{ s.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-        <label>Thuộc cửa hàng:</label>
-        <select name="store" required>
-            {% for s in stores %}
-                <option value="{{ s.id }}" {% if s.id == product.store.id %}selected{% endif %}>
-                    {{ s.name }}
-                </option>
-            {% endfor %}
-        </select>
+                <div>
+                    <label class="form-label">Tồn kho:</label>
+                    <input type="number" name="quantity" class="form-input" value="{{ product.quantity|default:1 }}" required>
+                </div>
+                <div>
+                    <label class="form-label">Tình trạng váy:</label>
+                    <select name="status" class="form-input" required>
+                        <option value="available" {% if product.status == 'available' %}selected{% endif %}>Sẵn sàng</option>
+                        <option value="rented" {% if product.status == 'rented' %}selected{% endif %}>Đang thuê</option>
+                        <option value="washing" {% if product.status == 'washing' %}selected{% endif %}>Đang giặt</option>
+                    </select>
+                </div>
 
-        <label>Tồn kho:</label>
-        <input type="number" name="quantity" value="{{ product.quantity|default:1 }}" required>
+                <div style="grid-column: 1 / -1;">
+                    <label class="form-label">Mô tả ngắn (Hiển thị ở danh sách):</label>
+                    <input type="text" name="short_description" class="form-input" value="{{ product.short_description|default:'' }}" placeholder="Váy lụa trơn, phong cách Minimalist...">
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label class="form-label">Mô tả chi tiết:</label>
+                    <textarea name="description" class="form-input" rows="4" style="resize: vertical;">{{ product.description|default:'' }}</textarea>
+                </div>
 
-        <label>Tình trạng váy:</label>
-        <select name="status" required>
-            <option value="available" {% if product.status == 'available' %}selected{% endif %}>Sẵn sàng</option>
-            <option value="rented" {% if product.status == 'rented' %}selected{% endif %}>Đang thuê</option>
-            <option value="washing" {% if product.status == 'washing' %}selected{% endif %}>Đang giặt</option>
-        </select>
-        <label>Hình ảnh (Bỏ trống nếu giữ nguyên ảnh cũ):</label>
-        {% if product.image %}
-            <div>
-                <img src="{{ product.image.url }}" class="edit-product-img-preview" style="max-width: 150px; border-radius: 8px; margin-bottom: 10px;">
+                <div>
+                    <label class="form-label">Ảnh đại diện (Thumbnail):</label>
+                    {% if product.image %}
+                        <div class="img-preview-box">
+                            <img src="{{ product.image.url }}" class="img-preview-item" title="Ảnh hiện tại">
+                        </div>
+                    {% endif %}
+                    <input type="file" name="image" class="form-input" style="padding: 9px 15px; background: white;" accept="image/*">
+                    <small style="color: #888; font-style: italic; display: block; margin-top: -15px; margin-bottom: 20px;">Bỏ trống nếu muốn giữ nguyên ảnh cũ.</small>
+                </div>
+
+                <div>
+                    <label class="form-label">Ảnh Album (Nhiều tấm):</label>
+                    {% if product.images.all %}
+                        <div class="img-preview-box">
+                            {% for img in product.images.all %}
+                                <img src="{{ img.image.url }}" class="img-preview-item" title="Ảnh phụ">
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <input type="file" name="album_anh" class="form-input" style="padding: 9px 15px; background: white;" multiple accept="image/*">
+                    <small style="color: #888; font-style: italic; display: block; margin-top: -15px; margin-bottom: 20px;">Tải thêm ảnh chi tiết cho váy (nếu có).</small>
+                </div>
+
             </div>
-        {% endif %}
-        <input type="file" name="image">
 
-        <div class="edit-product-actions">
-            <button type="submit" class="btn-save-product">💾 Lưu Thay Đổi</button>
-            <a href="{% url 'custom_manager' %}" class="btn-cancel-product">Hủy / Trở về</a>
-        </div>
-    </form>
+            <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 20px; padding-top: 20px; border-top: 1px dashed #fce4ec;">
+                <a href="{% url 'custom_manager' %}" class="btn-outline" style="padding: 14px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1.05em; display: flex; align-items: center; gap: 8px;">
+                    Hủy Bỏ
+                </a>
+                <button type="submit" class="btn-filled" style="border: none; padding: 14px 40px; border-radius: 30px; font-weight: bold; font-size: 1.05em; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-floppy-disk"></i> LƯU THAY ĐỔI
+                </button>
+            </div>
+            
+        </form>
+    </div>
 </div>
 {% endblock %}

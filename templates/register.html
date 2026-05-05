@@ -3,28 +3,135 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'css/register.css' %}">
+<style>
+    /* Ép khoảng cách các khối do Django tự sinh */
+    form p {
+        margin-top: 0;
+        margin-bottom: 12px; /* Thu gọn khoảng cách giữa các ô */
+    }
 
-<div style="max-width: 450px; margin: 50px auto; padding: 30px; border: 1px solid #ddd; border-top: 4px solid #d88a9a; background-color: #fff;">
+    form p label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 4px; /* Xích nhãn lại gần ô nhập */
+        display: inline-block;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 0.95em;
+    }
     
-    <h2 style="text-align: center; color: #d88a9a; margin-bottom: 20px;">
-        Đăng Ký Tài Khoản
-    </h2>
+    /* Thu gọn độ dày ô input */
+    .form-input {
+        width: 100%;
+        padding: 12px 15px; /* Giảm padding trên dưới */
+        border: 2px solid #fce4ec;
+        border-radius: 10px; /* Giảm độ bo góc một chút cho gọn */
+        box-sizing: border-box;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 14.5px;
+        outline: none;
+        transition: all 0.3s ease;
+        background: white;
+    }
+    
+    .form-input:focus {
+        border-color: #d88a9a;
+        box-shadow: 0 0 8px rgba(216,138,154,0.2);
+    }
 
-    <form method="post">
-        {% csrf_token %}
-        
-        {{ form.as_p }}
+    /* Ép khuôn siêu gọn cho mớ chữ hướng dẫn (helptext) của Django */
+    .helptext {
+        font-size: 0.75em; /* Thu nhỏ chữ */
+        color: #999; /* Đổi màu nhạt xíu cho đỡ rối mắt */
+        display: block;
+        margin-top: 4px;
+        line-height: 1.3; /* Ép các dòng sát lại nhau */
+        font-style: italic;
+    }
 
-        <button type="submit" style="width: 100%; padding: 10px; background-color: #d88a9a; color: white; border: none; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 15px;">
-            Đăng Ký
-        </button>
-    </form>
+    /* Ép khuôn cho các dòng báo lỗi của Django */
+    form ul {
+        padding-left: 15px;
+        font-size: 0.85em;
+        color: #d87093;
+        margin-top: 2px;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+</style>
 
-    <div style="text-align: center; margin-top: 20px; font-size: 14px;">
-        Đã có tài khoản? <a href="{% url 'login' %}" style="color: #d88a9a; font-weight: bold; text-decoration: none;">Đăng nhập</a>
+<div class="container" style="max-width: 450px; margin: 30px auto 60px auto; padding: 0 15px;">
+    
+    <div data-aos="zoom-in" style="background: #fffcfd; padding: 30px; border-radius: 18px; box-shadow: 0 8px 30px rgba(216, 138, 154, 0.1); border: 1px solid #fce4ec;">
+
+        <h2 style="text-align: center; color: #4a4a4a; margin-top: 0; margin-bottom: 20px; font-family: 'Playfair Display', serif; font-size: 2em; font-weight: bold;">
+            <i class="fa-solid fa-user-plus" style="color: #d88a9a; font-size: 0.9em;"></i> Đăng Ký
+        </h2>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            {{ form.as_p }}
+
+            <button type="submit" class="btn-filled" style="width: 100%; border: none; padding: 14px; border-radius: 25px; font-size: 1.05em; letter-spacing: 1px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 15px;">
+                TẠO TÀI KHOẢN
+            </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 0.95em; color: #666; padding-top: 15px; border-top: 1px dashed #fce4ec;">
+            Đã có tài khoản? 
+            <a href="{% url 'login' %}" style="color: #d88a9a; font-weight: bold; text-decoration: none; margin-left: 5px; transition: 0.3s;" onmouseover="this.style.color='#c47686'" onmouseout="this.style.color='#d88a9a'">
+                Đăng nhập
+            </a>
+        </div>
+
     </div>
 
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var inputs = document.querySelectorAll("input[type='text'], input[type='password'], input[type='email']");
+        inputs.forEach(function(input) {
+            input.classList.add("form-input");
+        });
+
+        var passwordInputs = document.querySelectorAll("input[type='password']");
+        
+        passwordInputs.forEach(function(input) {
+            var wrapper = document.createElement('div');
+            wrapper.style.position = 'relative';
+            wrapper.style.display = 'block';
+
+            input.parentNode.insertBefore(wrapper, input);
+            wrapper.appendChild(input);
+
+            var eyeIcon = document.createElement('i');
+            eyeIcon.className = 'fa-regular fa-eye-slash'; 
+            eyeIcon.style.position = 'absolute';
+            eyeIcon.style.right = '15px';
+            /* Thuật toán canh giữa con mắt bất chấp độ cao input */
+            eyeIcon.style.top = '50%'; 
+            eyeIcon.style.transform = 'translateY(-50%)';
+            eyeIcon.style.cursor = 'pointer';
+            eyeIcon.style.color = '#d88a9a';
+            eyeIcon.style.fontSize = '15px';
+            eyeIcon.style.transition = '0.3s';
+
+            wrapper.appendChild(eyeIcon);
+
+            eyeIcon.addEventListener('click', function() {
+                if (input.type === 'password') {
+                    input.type = 'text'; 
+                    eyeIcon.className = 'fa-regular fa-eye'; 
+                    eyeIcon.style.color = '#c47686';
+                } else {
+                    input.type = 'password'; 
+                    eyeIcon.className = 'fa-regular fa-eye-slash'; 
+                    eyeIcon.style.color = '#d88a9a';
+                }
+            });
+        });
+    });
+</script>
 
 {% endblock %}

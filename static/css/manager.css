@@ -23,9 +23,41 @@
     background: white; 
     border-radius: 12px; 
     box-shadow: 0 5px 20px rgba(0,0,0,0.05); 
-    overflow: hidden; 
     border: 1px solid #eee; 
+    
+    /* 1. Giới hạn chiều cao và bật thanh cuộn dọc */
+    max-height: 500px; 
+    overflow-y: auto; 
 }
+
+/* 2. Đóng băng dòng tiêu đề (Sticky Header) */
+.table-container th { 
+    padding: 15px; 
+    background-color: #fce4ec; 
+    color: #d88a9a; 
+    border-bottom: 2px solid #ebd4d8; 
+    position: sticky; 
+    top: 0; 
+    z-index: 2; /* Đảm bảo chữ ở dưới cuộn lên không đè qua tiêu đề */
+}
+
+/* 3. Làm đẹp thanh cuộn cho chuẩn gu Bridal Luxury (Chỉ hoạt động trên Chrome/Edge/Safari) */
+.table-container::-webkit-scrollbar {
+    width: 8px; /* Độ rộng thanh cuộn */
+}
+.table-container::-webkit-scrollbar-track {
+    background: #fdfbf7; /* Màu nền đường ray */
+    border-radius: 10px;
+}
+.table-container::-webkit-scrollbar-thumb {
+    background: #ebd4d8; /* Màu cục cuộn */
+    border-radius: 10px;
+}
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #d88a9a; /* Màu cục cuộn khi di chuột vào */
+}
+
+
 .table-container table { 
     width: 100%; 
     border-collapse: collapse; 

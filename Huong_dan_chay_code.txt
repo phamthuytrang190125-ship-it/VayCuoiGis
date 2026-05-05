@@ -1,0 +1,25 @@
+HƯỚNG DẪN CÀI ĐẶT VÀ CHẠY DỰ ÁN VAYCUOIGIS
+------------------------------------------
+
+BƯỚC 1: TẠO CƠ SỞ DỮ LIỆU
+1. Mở pgAdmin, tạo một Database mới tên là: vaycuoigis
+2. Click chuột phải vào database vừa tạo, chọn Restore (hoặc dùng Query Tool) để nạp file "database_backup.sql" vào hệ thống.
+
+BƯỚC 2: CÀI ĐẶT MÔI TRƯỜNG KHÔNG GIAN (VIRTUAL ENVIRONMENT)
+1. Mở Terminal tại thư mục dự án.
+2. Tạo môi trường ảo: python -m venv venv
+3. Kích hoạt môi trường:
+   - Mac/Linux: source venv/bin/activate
+   - Windows: venv\Scripts\activate
+4. Cài đặt thư viện: pip install -r requirements.txt
+
+BƯỚC 3: CẤU HÌNH DATABASE
+Mở file vaycuoigis/settings.py, tìm đến mục DATABASES và chỉnh sửa lại 'USER' và 'PASSWORD' cho khớp với PostgreSQL trên máy tính của Thầy.
+
+BƯỚC 4: CHẠY MÁY CHỦ
+Gõ lệnh: python manage.py runserver
+Truy cập vào link http://127.0.0.1:8000/ để xem giao diện web.
+
+* Tài khoản Admin quản lý Shop: 
+- User: doangis@2026
+- Pass: Trang@0306 

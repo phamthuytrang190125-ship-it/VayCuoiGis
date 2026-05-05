@@ -1,5 +1,3 @@
-// static/js/map.js
-
 // 1. CẤU HÌNH DỊCH THUẬT CHỈ ĐƯỜNG SANG TIẾNG VIỆT
 var viFormatter = new L.Routing.Formatter();
 viFormatter.formatInstruction = function(instr, i) {
@@ -48,7 +46,7 @@ window.updateManualPosition = function(lat, lng) {
         userMarker.setLatLng([lat, lng]);
     }
     map.flyTo([lat, lng], 15);
-    if(window.runGisAnalysis) runGisAnalysis();
+    if(window.runGisAnalysis) runGisAnalysis(); // Tự quét vùng khi có tọa độ mới
 };
 
 // 4. HÀM VẼ ĐƯỜNG ĐI (ĐÃ TÍCH HỢP CHỌN XE)
@@ -65,12 +63,10 @@ window.focusAndRoute = function(destLat, destLon, profile = 'car') {
     if (routingControl != null) { map.removeControl(routingControl); }
     document.body.style.cursor = 'wait';
 
-    // Đổi màu nút phương tiện
     document.querySelectorAll('.btn-vehicle').forEach(btn => btn.classList.remove('active-vehicle'));
     var btnProfile = document.getElementById('btn-' + profile);
     if(btnProfile) btnProfile.classList.add('active-vehicle');
 
-    // Chọn Server Routing
     var serverUrl = 'https://routing.openstreetmap.de/routed-car/route/v1';
     if (profile === 'bike') serverUrl = 'https://routing.openstreetmap.de/routed-bike/route/v1';
     else if (profile === 'foot') serverUrl = 'https://routing.openstreetmap.de/routed-foot/route/v1';
@@ -94,10 +90,7 @@ window.focusAndRoute = function(destLat, destLon, profile = 'car') {
     }).addTo(map);
 };
 
-window.checkAndRoute = function(destLat, destLon) {
-    focusAndRoute(destLat, destLon, 'car');
-};
-
+window.checkAndRoute = function(destLat, destLon) { focusAndRoute(destLat, destLon, 'car'); };
 window.changeVehicle = function(profile) {
     if (currentDestLat !== null && currentDestLon !== null) {
         focusAndRoute(currentDestLat, currentDestLon, profile);
@@ -116,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
     drawnItems = new L.FeatureGroup();
     map.addLayer(drawnItems);
 
-    // ĐỔ DỮ LIỆU CỬA HÀNG VÀ TRẢ LẠI POPUP GỐC CỦA BẠN
     storesData.forEach(function(store) {
         var popupContent = `
             <div style="text-align: center; min-width: 220px; font-family: 'Quicksand', sans-serif;">
@@ -134,14 +126,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
                 <div style="display: flex; gap: 8px; margin-top: 10px;">
-    <a href="/stores/${store.id}/" style="flex: 1; background: #333; color: white; padding: 8px 5px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: bold; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 5px;" onmouseover="this.style.background='#555'" onmouseout="this.style.background='#333'">
-        <i class="fa-solid fa-shirt"></i> Xem Váy
-    </a>
-    
-    <button class="btn-route-popup" onclick="checkAndRoute(${store.lat}, ${store.lon})" style="flex: 1; margin-top: 0; padding: 8px 5px; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 5px;">
-         <i class="fa-solid fa-location-arrow"></i> Chỉ đường
-    </button>
-</div>
+                    <a href="/stores/${store.id}/" style="flex: 1; background: #333; color: white; padding: 8px 5px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: bold; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 5px;" onmouseover="this.style.background='#555'" onmouseout="this.style.background='#333'">
+                        <i class="fa-solid fa-shirt"></i> Xem Váy
+                    </a>
+                    <button class="btn-route-popup" onclick="checkAndRoute(${store.lat}, ${store.lon})" style="flex: 1; margin-top: 0; padding: 8px 5px; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                         <i class="fa-solid fa-location-arrow"></i> Chỉ đường
+                    </button>
+                </div>
             </div>
         `;
         var marker = L.marker([store.lat, store.lon]).bindPopup(popupContent, {maxWidth: 250});
@@ -152,10 +143,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!isDefault) updateManualPosition(userLat, userLon);
 
-    // Bắt sự kiện Click trên map
     map.on('click', function(e) { updateManualPosition(e.latlng.lat, e.latlng.lng); });
 
-    // Bắt sự kiện Enter tìm địa chỉ bằng Photon API
     var searchInput = document.getElementById('custom-address-search');
     if (searchInput) {
         searchInput.addEventListener('keypress', function(e) {
@@ -178,7 +167,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Công cụ vẽ vùng Leaflet Draw
     var drawControl = new L.Control.Draw({
         position: 'topleft',
         draw: { polygon: true, rectangle: true, circle: false, marker: false, polyline: false, circlemarker: false },
@@ -193,13 +181,28 @@ document.addEventListener('DOMContentLoaded', function() {
         var shape = e.layer.toGeoJSON();
         var count = 0;
         shopGroup.clearLayers(); 
+        var filteredStores = [];
+
         allMarkers.forEach(m => {
-            if (turf.booleanPointInPolygon(turf.point([m.storeData.lon, m.storeData.lat]), shape)) { shopGroup.addLayer(m); count++; }
+            if (turf.booleanPointInPolygon(turf.point([m.storeData.lon, m.storeData.lat]), shape)) { 
+                shopGroup.addLayer(m); 
+                filteredStores.push(m.storeData);
+                count++; 
+            }
         });
-        document.getElementById('gis-analysis').innerHTML = `<i class="fa-solid fa-filter"></i> Đã lọc theo vùng vẽ | Tìm thấy: <b>${count}</b> cửa hàng.`;
+
+        // IN CHUỖI CỬA HÀNG CHO CÔNG CỤ VẼ HÌNH
+        var storeNamesString = filteredStores.map(s => s.name).join(", ");
+        var textOut = `<i class="fa-solid fa-filter"></i> Lọc theo vùng vẽ | Tìm thấy: <b>${count}</b> cửa hàng.`;
+        if (count > 0) {
+            textOut += `<div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #fce4ec; color: #d88a9a; font-size: 13px;">
+                <b><i class="fa-solid fa-list-ul"></i> Chuỗi tiệm trong vùng:</b> ${storeNamesString}
+            </div>`;
+        }
+        document.getElementById('gis-analysis').innerHTML = textOut;
+        updateStoreListUI(filteredStores);
     });
 
-    // 6. XỬ LÝ FOCUS TỪ TRANG KHÁC
     var urlParams = new URLSearchParams(window.location.search);
     var focusId = urlParams.get('focus_store');
     if (focusId) {
@@ -216,19 +219,89 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// 7. CÁC HÀM TIỆN ÍCH KHÁC
+// 6. THUẬT TOÁN QUÉT VÙNG GIS THEO BÁN KÍNH
 window.runGisAnalysis = function() {
-    var radius = parseFloat(document.getElementById('radiusInput').value) || 5;
+    var radius = parseFloat(document.getElementById('radiusInput').value);
+    
+    if (isDefault) {
+        alert("Vui lòng xác định vị trí của bạn trước khi quét vùng!");
+        return;
+    }
+    if (!radius || radius <= 0) {
+        radius = 5; document.getElementById('radiusInput').value = 5;
+    }
+
     if (drawnItems) drawnItems.clearLayers(); 
     var buffered = turf.buffer(turf.point([userLon, userLat]), radius, {units: 'kilometers'});
     if (bufferLayer) map.removeLayer(bufferLayer);
     bufferLayer = L.geoJSON(buffered, {style: { color: '#d88a9a', weight: 2, fillColor: '#ffc1cc', fillOpacity: 0.25 }}).addTo(map);
+    map.fitBounds(bufferLayer.getBounds());
+
     var count = 0;
     shopGroup.clearLayers(); 
+    var filteredStores = [];
+    var userLatLng = L.latLng(userLat, userLon);
+
     allMarkers.forEach(m => {
-        if (turf.booleanPointInPolygon(turf.point([m.storeData.lon, m.storeData.lat]), buffered)) { shopGroup.addLayer(m); count++; }
+        var distanceKm = (userLatLng.distanceTo(m.getLatLng()) / 1000);
+        if (distanceKm <= radius) { 
+            shopGroup.addLayer(m); 
+            m.storeData.distance = distanceKm.toFixed(2);
+            filteredStores.push(m.storeData);
+            count++; 
+        }
     });
-    document.getElementById('gis-analysis').innerHTML = `<i class="fa-solid fa-location-dot"></i> Bán kính: ${radius}km | Tìm thấy: <b>${count}</b> cửa hàng.`;
+    
+    filteredStores.sort(function(a, b) { return parseFloat(a.distance) - parseFloat(b.distance); });
+
+    // IN CHUỖI TÊN CỬA HÀNG LÊN GIAO DIỆN
+    var storeNamesString = filteredStores.map(s => s.name).join(", ");
+    var textOutput = `<i class="fa-solid fa-location-dot"></i> Bán kính: <b>${radius}km</b> | Tìm thấy: <b>${count}</b> cửa hàng.`;
+    
+    if (count > 0) {
+        textOutput += `
+        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #fce4ec; font-size: 13px; line-height: 1.6; color: #555;">
+            <i class="fa-solid fa-list-ul" style="color: #d88a9a;"></i> <b style="color: #d88a9a;">Chuỗi tiệm:</b> 
+            <span style="font-weight: 600; color: #444;">${storeNamesString}</span>
+        </div>`;
+    }
+
+    document.getElementById('gis-analysis').innerHTML = textOutput;
+    updateStoreListUI(filteredStores);
+};
+
+// Hàm tạo lại HTML cho phần danh sách thẻ Cửa Hàng bên sidebar
+window.updateStoreListUI = function(storeArray) {
+    var storeTabContent = document.getElementById('storeTab');
+    storeTabContent.innerHTML = ''; 
+
+    if (storeArray.length === 0) {
+        storeTabContent.innerHTML = `
+            <div style="padding:30px 20px; text-align:center; color:#888; line-height: 1.6;">
+                <i class="fa-regular fa-face-frown" style="font-size: 2em; color: #d88a9a; margin-bottom: 10px; display: block;"></i>
+                Không có shop nào lọt vào vùng này. Hãy thử nới rộng bán kính nhé!
+            </div>`;
+    } else {
+        storeArray.forEach(function(store) {
+            // Giữ nguyên thiết kế HTML CSS của bạn, chỉ truyền biến JS vào
+            var feeDisplay = store.formatted_fee ? store.formatted_fee : 'Miễn phí';
+            var html = `
+                <div class="store-card" onclick="checkAndRoute(${store.lat}, ${store.lon})">
+                    <div class="store-name">${store.name}</div>
+                    <div class="store-addr"><i class="fa-solid fa-location-dot" style="color:#d88a9a;"></i> ${store.address}</div>
+                    <div style="margin-top: 12px; border-top: 1px dashed #fce4ec; padding-top: 12px; display: flex; align-items: center;">
+                        <span style="background:#fff0f3; color:#d88a9a; padding:5px 10px; border-radius:20px; font-size:12px; font-weight:bold;">
+                            <i class="fa-solid fa-route"></i> ${store.distance} km
+                        </span>
+                        <span style="margin-left:10px; font-size:12px; color:#555; font-weight: 600;">
+                            <i class="fa-solid fa-truck-fast" style="color:#d88a9a;"></i> Phí: ${feeDisplay}
+                        </span>
+                    </div>
+                </div>
+            `;
+            storeTabContent.innerHTML += html;
+        });
+    }
 };
 
 window.forceGetLocation = function() {
@@ -236,11 +309,4 @@ window.forceGetLocation = function() {
         navigator.geolocation.getCurrentPosition(pos => { updateManualPosition(pos.coords.latitude, pos.coords.longitude); }, 
         () => { alert("Không thể truy cập GPS. Hãy tự chọn vị trí trên bản đồ!"); });
     }
-}
-
-window.openTab = function(evt, tabName) {
-    document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
-    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-    document.getElementById(tabName).classList.add("active");
-    evt.currentTarget.classList.add("active");
 }

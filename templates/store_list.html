@@ -4,18 +4,24 @@
 {% block content %}
 <div class="container" style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
     
-    <h2 data-aos="fade-up" style="text-align: center; color: #4a4a4a; margin-bottom: 40px; font-family: 'Playfair Display', serif; font-size: 2.2em;">
-        Hệ Thống Cửa Hàng
+    <h2 data-aos="fade-up" style="text-align: center; color: #4a4a4a; margin-bottom: 40px; font-family: 'Playfair Display', serif; font-size: 2.2em; font-weight: bold;">
+        <i class="fa-solid fa-store" style="color: #d88a9a;"></i> Hệ Thống Cửa Hàng
     </h2>
+
+    <div style="max-width: 600px; margin: 0 auto 40px auto; position: relative;">
+        <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 22px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #d88a9a;"></i>
+        <input type="text" id="searchInput" placeholder="Nhập tên hoặc địa chỉ tiệm để tìm nhanh..." 
+               style="width: 100%; box-sizing: border-box; padding: 16px 20px 16px 55px; border-radius: 30px; border: 2px solid #fce4ec; font-family: 'Quicksand', sans-serif; font-size: 16px; outline: none; transition: 0.3s; box-shadow: 0 5px 15px rgba(216,112,147,0.05); color: #555;">
+    </div>
 
     <div data-aos="fade-up" data-aos-delay="100" style="background: #fffcfd; padding: 40px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #fce4ec;">
 
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px;">
             
             {% for store in stores %}
-            <div style="background: white; border: 1px solid #fce4ec; border-radius: 15px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.02); transition: all 0.3s ease; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 20px rgba(216, 138, 154, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 10px rgba(0,0,0,0.02)'">
+            <div class="store-card" style="background: white; border: 1px solid #fce4ec; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(216, 138, 154, 0.05); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-8px)'" onmouseout="this.style.transform='translateY(0)'">
                 
-                <div style="height: 180px; width: 100%; overflow: hidden; border-bottom: 1px solid #fce4ec;">
+                <div style="height: 200px; width: 100%; overflow: hidden; border-bottom: 1px solid #fce4ec;">
                     {% if store.image %}
                         <img src="{{ store.image.url }}" alt="{{ store.name }}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
                     {% else %}
@@ -25,27 +31,27 @@
                     {% endif %}
                 </div>
                 
-                <div style="padding: 20px; display: flex; flex-direction: column; flex-grow: 1;">
-                    <h3 style="color: #d88a9a; margin-top: 0; margin-bottom: 12px; font-family: 'Playfair Display', serif; font-size: 1.4em; line-height: 1.3;">
+                <div style="padding: 25px; display: flex; flex-direction: column; flex-grow: 1;">
+                    <h3 style="color: #d88a9a; margin-top: 0; margin-bottom: 15px; font-family: 'Playfair Display', serif; font-size: 1.5em; font-weight: bold;">
                         {{ store.name }}
                     </h3>
                     
-                    <p style="color: #666; font-size: 0.9em; line-height: 1.5; margin-bottom: 10px; display: flex; gap: 10px;">
-                        <i class="fa-solid fa-location-dot" style="color: #d88a9a; margin-top: 4px;"></i> 
+                    <p style="color: #666; font-size: 0.95em; line-height: 1.5; margin-bottom: 10px; display: flex; gap: 10px;">
+                        <i class="fa-solid fa-location-dot" style="color: #bbb; margin-top: 4px;"></i> 
                         <span>{{ store.address }}</span>
                     </p>
                     
-                    <p style="color: #666; font-size: 0.9em; margin-bottom: 20px; display: flex; gap: 10px; flex-grow: 1;">
-                        <i class="fa-solid fa-phone" style="color: #d88a9a; margin-top: 4px;"></i> 
-                        <span>{{ store.phone }}</span>
+                    <p style="color: #666; font-size: 0.95em; margin-bottom: 25px; display: flex; gap: 10px; flex-grow: 1;">
+                        <i class="fa-solid fa-phone" style="color: #bbb; margin-top: 4px;"></i> 
+                        <span style="font-weight: 600; color: #555;">{{ store.phone }}</span>
                     </p>
                     
                     <div style="display: flex; gap: 10px; margin-top: auto;">
-                        <a href="{% url 'store_detail_view' store.id %}" style="flex: 1; text-align: center; background: #333; color: white; padding: 10px; border-radius: 25px; text-decoration: none; font-size: 0.85em; font-weight: bold; transition: 0.3s;" onmouseover="this.style.background='#d88a9a'" onmouseout="this.style.background='#333'">
+                        <a href="{% url 'store_detail_view' store.id %}" class="btn-filled" style="flex: 1; text-align: center; display: flex; justify-content: center; align-items: center; gap: 8px; padding: 12px; border: none; text-decoration: none;">
                             <i class="fa-solid fa-shirt"></i> Sản Phẩm
                         </a>
                         
-                        <a href="{% url 'map_view' %}?focus_store={{ store.id }}" style="flex: 1; text-align: center; background: white; color: #d88a9a; padding: 10px; border-radius: 25px; text-decoration: none; font-size: 0.85em; font-weight: bold; border: 1px solid #d88a9a; transition: 0.3s;" onmouseover="this.style.background='#fff0f3'" onmouseout="this.style.background='white'">
+                        <a href="{% url 'map_view' %}?focus_store={{ store.id }}" class="btn-outline" style="flex: 1; text-align: center; display: flex; justify-content: center; align-items: center; gap: 8px; padding: 12px; text-decoration: none;">
                             <i class="fa-solid fa-map-location-dot"></i> Bản Đồ
                         </a>
                     </div>
@@ -53,38 +59,63 @@
 
             </div>
             {% empty %}
-            <p style="text-align:center; grid-column: 1/-1; color: #888; font-size: 1.1em; padding: 20px 0;">Hệ thống đang cập nhật cửa hàng.</p>
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #888;">
+                <i class="fa-solid fa-shop-slash fa-3x" style="color: #fce4ec; margin-bottom: 15px;"></i>
+                <p style="font-size: 1.1em; font-family: 'Quicksand', sans-serif;">Hệ thống đang cập nhật cửa hàng.</p>
+            </div>
             {% endfor %}
 
         </div>
+    </div> 
 
-    </div> <div data-aos="fade-up" style="display: flex; justify-content: center; margin-top: 40px; margin-bottom: 40px;">
-        <ul class="pagination-custom" style="display: flex; list-style: none; padding: 0; gap: 10px;">
+    <div data-aos="fade-up" style="display: flex; justify-content: center; margin-top: 40px; margin-bottom: 40px;">
+        <ul style="display: flex; list-style: none; padding: 0; gap: 8px; align-items: center;">
             {% if stores.has_previous %}
                 <li>
-                    <a href="?page=1" style="padding: 8px 15px; border-radius: 20px; background: #fff0f3; color: #d88a9a; text-decoration: none; font-weight: bold; border: 1px solid #fce4ec; transition: 0.3s;" onmouseover="this.style.background='#d88a9a'; this.style.color='white'" onmouseout="this.style.background='#fff0f3'; this.style.color='#d88a9a'">&laquo; Đầu</a>
+                    <a href="?page=1" class="btn-outline" style="padding: 8px 15px; font-size: 0.9em;"><i class="fa-solid fa-angles-left"></i> Đầu</a>
                 </li>
                 <li>
-                    <a href="?page={{ stores.previous_page_number }}" style="padding: 8px 15px; border-radius: 20px; background: #fff0f3; color: #d88a9a; text-decoration: none; font-weight: bold; border: 1px solid #fce4ec; transition: 0.3s;" onmouseover="this.style.background='#d88a9a'; this.style.color='white'" onmouseout="this.style.background='#fff0f3'; this.style.color='#d88a9a'">Trước</a>
+                    <a href="?page={{ stores.previous_page_number }}" class="btn-outline" style="padding: 8px 15px; font-size: 0.9em;"><i class="fa-solid fa-angle-left"></i> Trước</a>
                 </li>
             {% endif %}
 
             <li>
-                <span style="padding: 8px 20px; border-radius: 20px; background: #d88a9a; color: white; font-weight: bold; box-shadow: 0 2px 5px rgba(216,138,154,0.3);">
+                <span class="btn-filled" style="padding: 8px 20px; cursor: default; pointer-events: none; box-shadow: 0 4px 10px rgba(216,138,154,0.3);">
                     Trang {{ stores.number }} / {{ stores.paginator.num_pages }}
                 </span>
             </li>
 
             {% if stores.has_next %}
                 <li>
-                    <a href="?page={{ stores.next_page_number }}" style="padding: 8px 15px; border-radius: 20px; background: #fff0f3; color: #d88a9a; text-decoration: none; font-weight: bold; border: 1px solid #fce4ec; transition: 0.3s;" onmouseover="this.style.background='#d88a9a'; this.style.color='white'" onmouseout="this.style.background='#fff0f3'; this.style.color='#d88a9a'">Sau</a>
+                    <a href="?page={{ stores.next_page_number }}" class="btn-outline" style="padding: 8px 15px; font-size: 0.9em;">Sau <i class="fa-solid fa-angle-right"></i></a>
                 </li>
                 <li>
-                    <a href="?page={{ stores.paginator.num_pages }}" style="padding: 8px 15px; border-radius: 20px; background: #fff0f3; color: #d88a9a; text-decoration: none; font-weight: bold; border: 1px solid #fce4ec; transition: 0.3s;" onmouseover="this.style.background='#d88a9a'; this.style.color='white'" onmouseout="this.style.background='#fff0f3'; this.style.color='#d88a9a'">Cuối &raquo;</a>
+                    <a href="?page={{ stores.paginator.num_pages }}" class="btn-outline" style="padding: 8px 15px; font-size: 0.9em;">Cuối <i class="fa-solid fa-angles-right"></i></a>
                 </li>
             {% endif %}
         </ul>
     </div>
 
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const storeCards = document.querySelectorAll('.store-card');
+
+        searchInput.addEventListener('keyup', function() {
+            let filterText = this.value.toLowerCase().trim();
+
+            storeCards.forEach(function(card) {
+                let cardContent = card.textContent.toLowerCase();
+                
+                if (cardContent.includes(filterText)) {
+                    card.style.display = ""; 
+                } else {
+                    card.style.display = "none"; 
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}

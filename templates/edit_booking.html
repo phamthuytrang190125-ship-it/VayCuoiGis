@@ -1,45 +1,142 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% load static %}
 
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'css/edit_booking.css' %}">
-
-<div class="edit-booking-container">
+<style>
+    .form-label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 8px;
+        display: block;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 14.5px;
+    }
+    .form-input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #fce4ec;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 15px;
+        outline: none;
+        transition: all 0.3s ease;
+        background: white;
+    }
+    .form-input:focus {
+        border-color: #d88a9a;
+        box-shadow: 0 0 8px rgba(216,138,154,0.2);
+    }
     
-    <h3 class="edit-booking-title">
-        📝 Cập Nhật Đơn Đặt Lịch
-    </h3>
+    /* Box hiển thị thông tin Read-only */
+    .readonly-box {
+        background: #fffafb;
+        border: 1px dashed #d88a9a;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+    }
+    .readonly-box p { margin: 0 0 10px 0; color: #4a4a4a; font-size: 15px; }
+    .readonly-box p:last-child { margin: 0; }
+</style>
 
-    <form method="POST" class="edit-booking-form">
-        {% csrf_token %}
-        
-        <div class="edit-booking-info-box">
-            <p><b>👗 Váy muốn thử:</b> <span class="info-highlight-pink">{{ booking.product.name }}</span></p>
-            <p><b>⏰ Ngày giờ hẹn:</b> <span class="info-highlight-gold">{{ booking.booking_date|date:"H:i - d/m/Y" }}</span></p>
-        </div>
+<div class="container" style="max-width: 850px; margin: 40px auto; padding: 0 20px; min-height: 70vh;">
+    
+    <div data-aos="zoom-in" style="background: #fffcfd; padding: 40px; border-radius: 20px; box-shadow: 0 8px 30px rgba(216, 138, 154, 0.1); border: 1px solid #fce4ec;">
 
-        <label>Tên khách hàng:</label>
-        <input type="text" name="customer_name" value="{{ booking.customer_name }}" required>
+        <h2 style="color: #4a4a4a; margin-top: 0; margin-bottom: 30px; font-family: 'Playfair Display', serif; font-size: 2.2em; font-weight: bold; text-align: center; border-bottom: 2px dashed #fce4ec; padding-bottom: 20px;">
+            <i class="fa-solid fa-file-signature" style="color: #d88a9a;"></i> Cập Nhật Lịch Hẹn #{{ booking.id }}
+        </h2>
 
-        <label>Số điện thoại:</label>
-        <input type="text" name="phone" value="{{ booking.phone }}" required>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="readonly-box">
+                <p>
+                    <i class="fa-solid fa-clock" style="color: #d88a9a; width: 25px;"></i> 
+                    <b>Thời gian hẹn:</b> <span style="color: #c47686; font-weight: bold; font-size: 1.1em;">{{ booking.booking_date|date:"H:i - d/m/Y" }}</span>
+                </p>
+                
+                <p>
+                    <i class="fa-solid fa-shop" style="color: #bfa05f; width: 25px;"></i> 
+                    <b>Chi nhánh phụ trách:</b> 
+                    <span style="font-weight: bold; color: #4a4a4a;">
+                        {% for p in booking.products.all|slice:":1" %}
+                            {{ p.store.name }}
+                        {% empty %}
+                            {{ booking.product.store.name }}
+                        {% endfor %}
+                    </span>
+                </p>
 
-        <label>Ghi chú thêm:</label>
-        <textarea name="note" rows="3">{{ booking.note|default:'' }}</textarea>
+                <p>
+                    {% if booking.address %}
+                        <i class="fa-solid fa-truck-fast" style="color: #2e7d32; width: 25px;"></i> <b>Hình thức:</b> Giao váy tận nơi
+                    {% else %}
+                        <i class="fa-solid fa-location-dot" style="color: #1565c0; width: 25px;"></i> <b>Hình thức:</b> Thử váy tại tiệm
+                    {% endif %}
+                </p>
+                <p style="margin-top: 15px;">
+                    <i class="fa-solid fa-shirt" style="color: #d88a9a; width: 25px;"></i> <b>Danh sách váy khách chọn:</b>
+                </p>
+                <ul style="margin: 5px 0 0 25px; color: #555; font-size: 14.5px; line-height: 1.6;">
+                    {% for p in booking.products.all %}
+                        <li>{{ p.name }} <strong style="color: #d88a9a;">({{ p.price|intcomma }} đ)</strong></li>
+                    {% empty %}
+                        <li>{{ booking.product.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
 
-        <label>Trạng thái đơn hàng:</label>
-        <select name="status">
-            <option value="pending" {% if booking.status == 'pending' %}selected{% endif %}>Chờ duyệt</option>
-            <option value="confirmed" {% if booking.status == 'confirmed' %}selected{% endif %}>Đã duyệt</option>
-            <option value="done" {% if booking.status == 'done' %}selected{% endif %}>Đã xong</option>
-            <option value="cancelled" {% if booking.status == 'cancelled' %}selected{% endif %}>Đã hủy</option>
-        </select>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0 25px;">
+                
+                <div>
+                    <label class="form-label">Tên khách hàng:</label>
+                    <input type="text" name="customer_name" class="form-input" value="{{ booking.customer_name }}" required>
+                </div>
 
-        <div class="edit-booking-actions">
-            <button type="submit" class="btn-update">💾 Cập Nhật</button>
-            <a href="{% url 'custom_manager' %}" class="btn-cancel">Hủy / Trở về</a>
-        </div>
-    </form>
+                <div>
+                    <label class="form-label">Số điện thoại liên hệ:</label>
+                    <input type="text" name="phone" class="form-input" value="{{ booking.phone }}" required>
+                </div>
+
+                {% if booking.address %}
+                <div style="grid-column: 1 / -1;">
+                    <label class="form-label">Địa chỉ giao váy:</label>
+                    <input type="text" name="address" class="form-input" value="{{ booking.address }}">
+                </div>
+                {% endif %}
+
+                <div style="grid-column: 1 / -1;">
+                    <label class="form-label">Ghi chú của khách hàng (Hoặc admin):</label>
+                    <textarea name="note" class="form-input" rows="3" style="resize: vertical;">{{ booking.note|default:'' }}</textarea>
+                </div>
+
+                <div style="grid-column: 1 / -1;">
+                    <label class="form-label">Trạng thái xử lý:</label>
+                    <select name="status" class="form-input" style="font-weight: bold; color: #4a4a4a;" required>
+                        <option value="pending" {% if booking.status == 'pending' %}selected{% endif %}>⏳ Chờ duyệt</option>
+                        <option value="confirmed" {% if booking.status == 'confirmed' %}selected{% endif %}>✅ Đã duyệt - Chờ thử váy</option>
+                        <option value="done" {% if booking.status == 'done' %}selected{% endif %}>🎉 Đã xong / Đã trả váy</option>
+                        <option value="cancelled" {% if booking.status == 'cancelled' %}selected{% endif %}>❌ Đã hủy</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 10px; padding-top: 20px; border-top: 1px dashed #fce4ec;">
+                <a href="{% url 'custom_manager' %}" class="btn-outline" style="padding: 14px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1.05em; display: flex; align-items: center; gap: 8px;">
+                    Hủy Bỏ
+                </a>
+                <button type="submit" class="btn-filled" style="border: none; padding: 14px 40px; border-radius: 30px; font-weight: bold; font-size: 1.05em; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-floppy-disk"></i> LƯU CẬP NHẬT
+                </button>
+            </div>
+            
+        </form>
+    </div>
 </div>
 {% endblock %}

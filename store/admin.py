@@ -30,7 +30,7 @@ class ProductAdmin(admin.ModelAdmin):
 # 3. Quản lý đặt lịch (Booking)
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('customer_name', 'phone', 'product', 'get_store', 'formatted_date', 'status')
+    list_display = ('id', 'customer_name', 'phone', 'get_products', 'booking_date', 'status')
     list_filter = ('status', 'booking_date')
     search_fields = ('customer_name', 'phone')
     list_editable = ('status',)
@@ -44,3 +44,9 @@ class BookingAdmin(admin.ModelAdmin):
             return obj.booking_date.strftime("%H:%M - %d/%m/%Y")
         return "Chưa chọn ngày"
     formatted_date.short_description = 'Ngày giờ hẹn'
+
+    def get_products(self, obj):
+        # Lấy tất cả váy trong đơn này, nối tên lại bằng dấu phẩy
+        return ", ".join([p.name for p in obj.products.all()])
+    
+    get_products.short_description = 'Các váy muốn thử'

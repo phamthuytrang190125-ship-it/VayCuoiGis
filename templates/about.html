@@ -2,82 +2,120 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/about.css' %}">
+<div class="container" style="max-width: 1100px; margin: 60px auto; padding: 0 20px; margin-bottom: 100px;">
 
-<div class="about-header" data-aos="fade-in">
-    <h1 class="about-title">Về Bridal Luxury</h1>
-    <div class="about-subtitle">"Biến giấc mơ công chúa của bạn thành hiện thực"</div>
-</div>
+    <!-- PHẦN MỞ ĐẦU -->
+    <div data-aos="fade-down" style="text-align: center; margin-bottom: 70px;">
+        <h1 style="color: #d88a9a; font-family: 'Playfair Display', serif; font-size: 2.8em; margin-bottom: 15px; font-weight: bold;">
+            {{ about_content.main_title|default:"Câu Chuyện Của Chúng Tôi" }}
+        </h1>
+        <p style="color: #888; font-family: 'Playfair Display', serif; font-size: 1.3em; font-style: italic;">
+            "{{ about_content.slogan|default:'Nơi những giấc mơ lấp lánh hóa thành hiện thực trong ngày hạnh phúc...' }}"
+        </p>
+    </div>
 
-<div class="about-container">
-
-    <div class="about-section" data-aos="fade-up">
-        <div class="about-img-col" data-aos="fade-right">
-            <img class="about-img" src="https://i.pinimg.com/1200x/0f/37/82/0f3782f56e83807ead6bf86f9eec6352.jpg" alt="About Bridal Luxury">
+    <!-- PHẦN 1: KHỞI NGUỒN CỦA CÁI ĐẸP -->
+    <div data-aos="fade-up" style="display: flex; flex-wrap: wrap; align-items: center; gap: 50px; margin-bottom: 90px;">
+        <div style="flex: 1; min-width: 300px; position: relative;" data-aos="fade-right" data-aos-delay="100">
+            <div style="position: absolute; top: 20px; left: -20px; width: 100%; height: 100%; border: 2px solid #fce4ec; border-radius: 20px; z-index: 0;"></div>
+            {% if about_content.origin_image %}
+                <img src="{{ about_content.origin_image.url }}" alt="Khởi nguồn Bridal Luxury" style="width: 100%; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative; z-index: 1;">
+            {% else %}
+                <img src="https://i.pinimg.com/1200x/0f/37/82/0f3782f56e83807ead6bf86f9eec6352.jpg" alt="Váy cưới Bridal Luxury" style="width: 100%; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative; z-index: 1;">
+            {% endif %}
         </div>
-        <div class="about-text-col" data-aos="fade-left">
-            <h2 class="about-heading">Khởi Nguồn Hạnh Phúc</h2>
-            <p class="about-desc">
-                Chào mừng bạn đến với <span class="highlight-text">Bridal Luxury</span>. Chúng tôi tin rằng mỗi cô dâu đều xứng đáng trở thành nữ hoàng trong ngày trọng đại nhất của cuộc đời mình.
-            </p>
-            <p class="about-desc">
-                Hơn cả một cửa hàng cho thuê váy cưới, Bridal Luxury là nơi lưu giữ những thiết kế tinh tế nhất, từ phong cách cổ điển sang trọng đến hiện đại phá cách. Mỗi chiếc váy đều được chúng tôi tuyển chọn kỹ lưỡng để tôn vinh vẻ đẹp duy nhất của bạn.
-            </p>
+        
+        <div style="flex: 1; min-width: 300px;" data-aos="fade-left" data-aos-delay="200">
+            <h2 style="color: #4a4a4a; font-family: 'Playfair Display', serif; font-size: 2.2em; margin-bottom: 25px;">
+                {{ about_content.origin_title|default:"Khởi Nguồn Của <span style='color: #d88a9a;'>Cái Đẹp</span>"|safe }}
+            </h2>
+            <div style="color: #666; font-size: 1.1em; line-height: 1.8; margin-bottom: 20px; text-align: justify;">
+                {% if about_content.origin_content %}
+                    {{ about_content.origin_content|linebreaks }}
+                {% else %}
+                    <p>Giữa nhịp sống vội vã, <strong style="color: #d88a9a;">Bridal Luxury</strong> ra đời như một nốt trầm dịu dàng, nâng niu giấc mơ của mọi cô gái. Chúng tôi tin rằng, khoảnh khắc khoác lên mình chiếc váy cưới là lúc bạn rạng rỡ và đài các như một đóa hoa bung nở trọn vẹn nhất.</p>
+                    <p>Hơn cả một thương hiệu, nơi đây là chốn cất giữ những bộ cánh kiêu sa, được thêu dệt từ tình yêu và sự tỉ mỉ. Từ nét cổ điển vương giả đến vẻ đẹp hiện đại thanh tao, mỗi thiết kế đều đang chờ đợi để tôn vinh vóc dáng ngọc ngà của riêng bạn.</p>
+                {% endif %}
+            </div>
         </div>
     </div>
 
-    <div class="about-section reverse" data-aos="fade-up">
-        <div class="about-img-col" data-aos="fade-left">
-            <img class="about-img" src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Technology GIS">
+    <!-- PHẦN 2: CẢM XÚC GIAO THOA CÔNG NGHỆ -->
+    <div data-aos="fade-up" style="display: flex; flex-wrap: wrap; align-items: center; gap: 50px; margin-bottom: 100px; flex-direction: row-reverse;">
+        <div style="flex: 1; min-width: 300px; position: relative;" data-aos="fade-left" data-aos-delay="100">
+            <div style="position: absolute; top: 20px; right: -20px; width: 100%; height: 100%; border: 2px solid #fce4ec; border-radius: 20px; z-index: 0;"></div>
+            {% if about_content.tech_image %}
+                <img src="{{ about_content.tech_image.url }}" alt="Công nghệ GIS" style="width: 100%; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative; z-index: 1;">
+            {% else %}
+                <img src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Công nghệ Wedding GIS" style="width: 100%; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative; z-index: 1;">
+            {% endif %}
         </div>
-        <div class="about-text-col" data-aos="fade-right">
-            <h2 class="about-heading">Tiên Phong Công Nghệ Wedding GIS</h2>
-            <p class="about-desc">
-                Thấu hiểu sự bận rộn của các cặp đôi, Bridal Luxury tự hào là đơn vị đầu tiên tại Việt Nam tích hợp <span class="highlight-text">Hệ thống Bản đồ Số (GIS)</span> vào dịch vụ thuê váy.
-            </p>
-            <p class="about-desc">
-                Không còn nỗi lo di chuyển xa xôi hay lạc đường. Chỉ với một cú click chuột, hệ thống của chúng tôi sẽ:
-            </p>
+        
+        <div style="flex: 1; min-width: 300px;" data-aos="fade-right" data-aos-delay="200">
+            <h2 style="color: #4a4a4a; font-family: 'Playfair Display', serif; font-size: 2.2em; margin-bottom: 25px;">
+                {{ about_content.tech_title|default:"Cảm Xúc Giao Thoa <span style='color: #d88a9a;'>Công Nghệ</span>"|safe }}
+            </h2>
+            <div style="color: #666; font-size: 1.1em; line-height: 1.8; margin-bottom: 20px; text-align: justify;">
+                {% if about_content.tech_content %}
+                    {{ about_content.tech_content|safe }} 
+                {% else %}
+                    <p>Gác lại những âu lo và tất bật của ngày chuẩn bị, Bridal Luxury khéo léo đan cài công nghệ <strong style="color: #d88a9a;">Bản đồ Số (GIS)</strong> vào hành trình tìm kiếm chiếc váy trong mơ của bạn. Không còn những chiều rong ruổi mỏi mệt, chỉ với một cái chạm nhẹ, không gian của chúng tôi sẽ thu bé lại vừa bằng một ánh nhìn:</p>
+                    <ul style="list-style: none; padding: 0; margin: 0 0 25px 0;">
+                        <li style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 15px;">
+                            <i class="fa-solid fa-location-dot" style="color: #d88a9a; font-size: 1.2em; margin-top: 4px;"></i>
+                            <span style="color: #555; font-size: 1.05em; line-height: 1.6;">Chạm nhẹ để <strong>định vị</strong> cánh cửa gần nhất dẫn đến sự lộng lẫy.</span>
+                        </li>
+                        <li style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 15px;">
+                            <i class="fa-solid fa-route" style="color: #d88a9a; font-size: 1.2em; margin-top: 4px;"></i>
+                            <span style="color: #555; font-size: 1.05em; line-height: 1.6;">Vẽ nên <strong>cung đường</strong> ngắn nhất, êm ái nhất đưa bạn đến với cái đẹp.</span>
+                        </li>
+                        <li style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 15px;">
+                            <i class="fa-solid fa-heart" style="color: #d88a9a; font-size: 1.2em; margin-top: 4px;"></i>
+                            <span style="color: #555; font-size: 1.05em; line-height: 1.6;">Hiển thị <strong>minh bạch</strong> mọi chi phí để chặng đường thêm thảnh thơi.</span>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
             
-            <ul class="about-list">
-                <li><i class="fa-solid fa-location-dot"></i><b>Định vị ngay lập tức</b> cửa hàng gần bạn nhất.</li>
-                <li><i class="fa-solid fa-route"></i><b>Vẽ lộ trình ngắn nhất</b> giúp bạn tiết kiệm thời gian.</li>
-                <li><i class="fa-solid fa-sack-dollar"></i><b>Minh bạch chi phí</b> vận chuyển dựa trên thực tế.</li>
-            </ul>
-            
-            <div class="about-quote-box">
-                <p class="about-quote-text">
-                    "Công nghệ vị nhân sinh - Để bạn dành trọn thời gian cho tình yêu."
+            <div style="background: #fff0f3; padding: 20px 25px; border-left: 4px solid #d88a9a; border-radius: 0 10px 10px 0;">
+                <p style="margin: 0; color: #c47686; font-style: italic; font-weight: 600; font-size: 1.1em; line-height: 1.6;">
+                    "{{ about_content.tech_quote|default:'Trao công nghệ, nhận thảnh thơi – Để bạn cất bước thật nhẹ nhàng vào bến đỗ tình yêu.' }}"
                 </p>
             </div>
         </div>
     </div>
 
-    <div class="values-wrapper" data-aos="fade-up">
-        
-        <div class="values-header-wrapper">
-            <h2 class="values-main-heading">Tại Sao Chọn Chúng Tôi?</h2>
-            <div class="values-divider"></div>
-        </div>
+    <!-- PHẦN CÁC TIÊU CHÍ NỔI BẬT (Thêm động từ Admin) -->
+    <div data-aos="fade-up">
+        <h2 style="text-align: center; color: #4a4a4a; font-family: 'Playfair Display', serif; font-size: 2.2em; margin-bottom: 50px;">
+            Tại Sao Chọn <span style="color: #d88a9a;">Chúng Tôi?</span>
+        </h2>
 
-        <div class="values-grid">
-            <div class="value-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="value-icon-wrapper"><i class="fa-solid fa-gem"></i></div>
-                <h3 class="value-title">Thiết Kế Đẳng Cấp</h3>
-                <p class="value-desc">Hơn 500+ mẫu váy được cập nhật liên tục theo xu hướng thời trang cưới quốc tế.</p>
-            </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px;">
             
-            <div class="value-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="value-icon-wrapper"><i class="fa-solid fa-map-location-dot"></i></div>
-                <h3 class="value-title">Mạng Lưới Rộng Khắp</h3>
-                <p class="value-desc">Hệ thống cửa hàng phủ sóng toàn thành phố, dễ dàng tìm kiếm qua Bản đồ GIS.</p>
+            {% for feature in about_features %}
+            <div data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:'1' }}00" style="background: white; padding: 40px 30px; border-radius: 20px; border: 1px solid #fce4ec; text-align: center; box-shadow: 0 5px 20px rgba(216,138,154,0.06); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div style="width: 70px; height: 70px; background: #fff0f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px auto; overflow: hidden;">
+                    {% if feature.icon_image %}
+                        <img src="{{ feature.icon_image.url }}" alt="icon" style="width: 100%; height: 100%; object-fit: contain;">
+                    {% else %}
+                        <i class="fa-solid fa-gem fa-2x" style="color: #d88a9a;"></i>
+                    {% endif %}
+                </div>
+                <h3 style="color: #4a4a4a; font-family: 'Playfair Display', serif; font-size: 1.5em; margin-bottom: 15px;">{{ feature.title }}</h3>
+                <p style="color: #666; font-size: 1em; line-height: 1.6; margin: 0;">{{ feature.description }}</p>
             </div>
-            
-            <div class="value-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="value-icon-wrapper"><i class="fa-solid fa-heart"></i></div>
-                <h3 class="value-title">Dịch Vụ Tận Tâm</h3>
-                <p class="value-desc">Đội ngũ stylist chuyên nghiệp sẵn sàng tư vấn 1:1 để bạn tìm được chiếc váy trong mơ.</p>
-            </div>
+            {% empty %}
+                <!-- Nội dung mặc định nếu Admin chưa tạo thẻ nào -->
+                <div data-aos="fade-up" data-aos-delay="100" style="background: white; padding: 40px 30px; border-radius: 20px; border: 1px solid #fce4ec; text-align: center; box-shadow: 0 5px 20px rgba(216,138,154,0.06); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="width: 70px; height: 70px; background: #fff0f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px auto;">
+                        <i class="fa-solid fa-gem fa-2x" style="color: #d88a9a;"></i>
+                    </div>
+                    <h3 style="color: #4a4a4a; font-family: 'Playfair Display', serif; font-size: 1.5em; margin-bottom: 15px;">Tuyệt Tác Váy Cưới</h3>
+                    <p style="color: #666; font-size: 1em; line-height: 1.6; margin: 0;">Hơn 500+ mẫu váy mang âm hưởng lãng mạn, đón đầu những làn gió thời trang tinh tế nhất.</p>
+                </div>
+            {% endfor %}
+
         </div>
     </div>
 

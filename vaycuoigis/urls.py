@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 from store import views
 from django.contrib.auth import views as auth_views
 
+
 urlpatterns = [
     # Admin 
     path('admin/', admin.site.urls),
@@ -30,7 +31,7 @@ urlpatterns = [
     path('', views.home_shop, name='home'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
-    
+    path('tra-cuu/', views.tra_cuu, name='tra_cuu'),
     # Cửa hàng & Sản phẩm 
     path('stores/', views.store_list, name='store_list'),
     path('stores/<int:store_id>/', views.store_detail_view, name='store_detail_view'),
@@ -62,6 +63,28 @@ urlpatterns = [
     path('manager/add-product/', views.add_product, name='add_product'),
     path('manager/edit-product/<int:id>/', views.edit_product, name='edit_product'),
 
+    # Trong vaycuoigis/urls.py
+
+    path('manager/export-products/', views.export_products_excel, name='export_products_excel'),
+    path('manager/import-products/', views.import_products_excel, name='import_products_excel'),
+    path('add-trial/<int:product_id>/', views.add_to_trial, name='add_to_trial'),
+    path('trial-cart/', views.trial_cart, name='trial_cart'),
+    path('remove-trial/<int:product_id>/', views.remove_from_trial, name='remove_from_trial'),
+
+    # 4 URL DÀNH CHO TÍNH NĂNG QUÊN MẬT KHẨU
+    path('reset_password/', auth_views.PasswordResetView.as_view(template_name="password_reset_form.html"), name="reset_password"),
+    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="password_reset_done.html"), name="password_reset_done"),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="password_reset_confirm.html"), name="password_reset_confirm"),
+    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="password_reset_complete.html"), name="password_reset_complete"),
+
+    path('activate/<uidb64>/<token>/', views.activate, name='activate'),
+    
+    path('manager/update-about/', views.update_about_content, name='update_about_content'),
+    path('manager/add-about-feature/', views.add_about_feature, name='add_about_feature'),
+    path('manager/delete-about-feature/<int:feature_id>/', views.delete_about_feature, name='delete_about_feature'),
+
+    path('manager/toggle-user/<int:user_id>/', views.toggle_user_status, name='toggle_user_status'),
+    path('manager/delete-user/<int:user_id>/', views.delete_user, name='delete_user'),
 ]
 
 # Ảnh upload

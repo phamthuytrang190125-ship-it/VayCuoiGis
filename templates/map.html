@@ -17,111 +17,186 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
     
-    <link rel="stylesheet" href="{% static 'css/map.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'css/map.css' %}?v=2">
     
     <style>
-        #map { height: 100%; width: 100%; background: #f8f9fa; z-index: 1; }
+        /* =========================================================
+           1. BỐ CỤC CHUNG (FLEXBOX FULL MÀN HÌNH)
+           ========================================================= */
+        body {
+            margin: 0; padding: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden; 
+            font-family: 'Quicksand', sans-serif;
+            background: #fffafb;
+        }
+
+        /* KHUNG SIDEBAR BÊN TRÁI */
+        .sidebar {
+            width: 400px;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 20px rgba(216,138,154,0.15);
+            z-index: 10;
+        }
+
+        /* KHUNG CHỨA BẢN ĐỒ BÊN PHẢI */
+        .map-container { 
+            flex: 1; 
+            position: relative;
+        }
+        #map { height: 100%; width: 100%; z-index: 1; }
+
+        /* =========================================================
+           2. RESPONSIVE DÀNH CHO ĐIỆN THOẠI / IPAD (DƯỚI 768px)
+           ========================================================= */
+        @media (max-width: 768px) {
+            body { flex-direction: column; } 
+            
+            .map-container {
+                width: 100%;
+                height: 50vh !important; 
+                order: 1; 
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: 50vh !important; 
+                order: 2; 
+                border-top: 3px solid #fce4ec;
+                box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+                overflow-y: auto !important; /* QUAN TRỌNG: Cho phép vuốt trên điện thoại */
+            }
+            
+            .scroll-content {
+                overflow-y: visible !important;
+                flex: none !important;
+            }
+        }
+
+        /* =========================================================
+           3. LÀM ĐẸP GIAO DIỆN BÊN TRONG SIDEBAR
+           ========================================================= */
+        .sidebar-header { padding: 20px; background: #fffcfd; border-bottom: 1px solid #fce4ec; }
+        .brand-title { font-family: 'Playfair Display', serif; color: #d88a9a; margin: 0 0 5px 0; font-size: 24px; font-weight: bold; }
+        .sub-title { font-size: 14px; color: #777; font-weight: 500; }
 
         .search-box-custom {
-            position: relative; 
-            margin-top: 10px; 
-            padding: 15px;
-            background: #fff0f3; 
-            border-radius: 12px; 
-            border: 1px solid #d88a9a;
-            box-shadow: 0 2px 8px rgba(216, 138, 154, 0.2);
+            margin-top: 15px; padding: 20px;
+            background: #fffafb; border-radius: 15px; 
+            border: 1px dashed #d88a9a;
         }
 
         .search-box-custom input {
-            width: 100%; 
-            padding: 12px; 
-            border: 1px solid #ddd;
-            border-radius: 8px; 
-            font-family: 'Quicksand', sans-serif; 
-            box-sizing: border-box;
-            outline: none;
+            width: 100%; padding: 12px 15px; 
+            border: 2px solid #fce4ec; border-radius: 10px; 
+            font-family: 'Quicksand', sans-serif; font-size: 14px;
+            box-sizing: border-box; outline: none; transition: 0.3s;
         }
+        .search-box-custom input:focus { border-color: #d88a9a; box-shadow: 0 0 8px rgba(216,138,154,0.2); }
 
-        .manual-coords { 
-            display: flex; 
-            gap: 10px; 
-            margin-top: 12px; 
-        }
-
+        .manual-coords { display: flex; gap: 10px; margin-top: 12px; }
         .manual-coords div { flex: 1; }
-
-        .manual-coords label { 
-            display: block; 
-            font-size: 11px; 
-            color: #888; 
-            margin-bottom: 3px; 
-        }
-
-        .manual-coords input { 
-            width: 100%; 
-            padding: 8px; 
-            border: 1px solid #ffc1cc; 
-            border-radius: 6px; 
-            font-size: 12px; 
-            background: #f9f9f9;
-        }
+        .manual-coords label { display: block; font-size: 12px; font-weight: bold; color: #888; margin-bottom: 5px; }
 
         .analysis-info { 
-            font-size: 12px; 
-            color: #555; 
-            margin-top: 10px; 
-            background: #fff; 
-            padding: 10px; 
-            border-radius: 8px; 
-            border-left: 4px solid #d88a9a;
-            line-height: 1.4;
-        }
+        font-size: 13px; color: #666; margin-top: 15px; 
+        background: white; padding: 15px; border-radius: 10px; 
+        border-left: 4px solid #d88a9a; line-height: 1.5;
+        
+        /* Chặn chiều cao tối đa khoảng 120px (tầm 4-5 dòng) */
+        max-height: 120px; 
+        overflow-y: auto; /* Bật thanh cuộn dọc nếu chữ tràn ra ngoài */
+    }
 
+    /* Trang trí thanh cuộn mini cho ô thông báo nhìn mượt hơn */
+    .analysis-info::-webkit-scrollbar { width: 5px; }
+    .analysis-info::-webkit-scrollbar-track { background: transparent; }
+    .analysis-info::-webkit-scrollbar-thumb { background: #fce4ec; border-radius: 10px; }
+    .analysis-info::-webkit-scrollbar-thumb:hover { background: #d88a9a; }
+
+        /* Nút bấm đồng bộ */
+        .btn-filled { background: #d88a9a; color: white; border: none; border-radius: 30px; font-weight: bold; cursor: pointer; transition: 0.3s; font-family: 'Quicksand', sans-serif;}
+        .btn-filled:hover { background: #c47686; }
+        .btn-outline { background: white; color: #d88a9a; border: 2px solid #d88a9a; border-radius: 30px; font-weight: bold; cursor: pointer; transition: 0.3s; font-family: 'Quicksand', sans-serif;}
+        .btn-outline:hover { background: #fff0f3; }
+
+        /* TABS */
+        .tab-container { display: flex; border-bottom: 2px solid #fce4ec; background: white; }
+        .tab-btn {
+            flex: 1; background: transparent; border: none; padding: 15px; font-family: 'Quicksand', sans-serif;
+            font-weight: bold; color: #888; cursor: pointer; border-bottom: 3px solid transparent; transition: 0.3s;
+        }
+        .tab-btn.active { color: #d88a9a; border-bottom: 3px solid #d88a9a; }
+
+        /* VÙNG CUỘN (SCROLL) DÀNH RIÊNG CHO DANH SÁCH SHOP/VÁY */
+        .scroll-content { flex: 1; overflow-y: auto; padding: 15px; background: #fffafb; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Card Cửa Hàng */
+        .store-card {
+            background: white; border: 1px solid #fce4ec; border-radius: 15px;
+            padding: 15px; margin-bottom: 15px; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        }
+        .store-card:hover { border-color: #d88a9a; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(216,138,154,0.1); }
+        .store-name { font-weight: bold; color: #d88a9a; font-size: 16px; margin-bottom: 5px; }
+        .store-addr { font-size: 13px; color: #555; line-height: 1.4; }
+
+        /* Card Váy Cưới */
+        .dress-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .dress-card {
+            background: white; border: 1px solid #fce4ec; border-radius: 15px; overflow: hidden;
+            text-decoration: none; display: block; transition: 0.3s;
+        }
+        .dress-card:hover { border-color: #d88a9a; box-shadow: 0 6px 15px rgba(216,138,154,0.1); transform: translateY(-2px); }
+        .dress-img-box { height: 180px; width: 100%; overflow: hidden; }
+        .dress-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .dress-info { padding: 12px; }
+        .dress-name { font-weight: bold; color: #4a4a4a; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .dress-price { color: #d88a9a; font-weight: bold; font-size: 14px; margin-top: 5px; }
+
+        /* UI Selector Phương tiện */
+        .vehicle-selector {
+            position: absolute; top: 15px; right: 15px; z-index: 1000;
+            background: white; padding: 5px; border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #fce4ec;
+            display: flex; gap: 5px;
+        }
+        .btn-vehicle { border: none; background: transparent; padding: 8px 15px; border-radius: 20px; font-weight: bold; color: #888; cursor: pointer; font-family: 'Quicksand', sans-serif;}
+        .btn-vehicle.active-vehicle { background: #fff0f3; color: #d88a9a; }
+        
+        /* Tinh chỉnh UI Routing của Leaflet */
         .leaflet-routing-container {
-            width: 320px;
-            background-color: white !important;
-            padding: 15px !important;
-            border-radius: 12px !important;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
-            max-height: 80vh !important;
-            font-family: 'Quicksand', sans-serif !important;
-            border: 1px solid #eee !important;
+            width: 320px !important; background-color: white !important; padding: 15px !important;
+            border-radius: 15px !important; box-shadow: 0 8px 25px rgba(0,0,0,0.1) !important;
+            font-family: 'Quicksand', sans-serif !important; border: 1px solid #fce4ec !important;
         }
-
-        .leaflet-routing-alt h2 { font-size: 16px; color: #d88a9a; }
-        .leaflet-routing-alt table { font-size: 13px; }
-
-        .btn-route-popup {
-            background: #d88a9a; 
-            color: white; 
-            border: none; 
-            padding: 10px 15px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 600; 
-            width: 100%; 
-            margin-top: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-route-popup:hover { background: #c07685; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .leaflet-routing-alt h2 { color: #d88a9a !important; font-family: 'Playfair Display', serif; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
         <div class="sidebar-header">
-            <h2 class="brand-title">Bridal Luxury</h2>
-            <div class="sub-title">Hệ thống cửa hàng</div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h2 class="brand-title"><i class="fa-solid fa-crown" style="font-size: 0.8em;"></i> Bridal Luxury</h2>
+                    <div class="sub-title">Bản đồ Hệ thống Cửa hàng</div>
+                </div>
+                <a href="{% url 'home' %}" style="color: #d88a9a; text-decoration: none; font-size: 20px;" title="Về trang chủ"><i class="fa-solid fa-house"></i></a>
+            </div>
             
             <div class="location-panel">
                 <form method="POST" id="locationForm">
                     {% csrf_token %}
                     
                     <div class="search-box-custom">
-                        <div style="font-size: 13px; color: #d88a9a; font-weight: 600; margin-bottom: 8px;">
-                            <i class="fa-solid fa-map-location-dot"></i> Tìm vị trí của bạn:
+                        <div style="font-size: 14px; color: #4a4a4a; font-weight: bold; margin-bottom: 10px;">
+                            <i class="fa-solid fa-location-crosshairs" style="color: #d88a9a;"></i> Vị trí của bạn:
                         </div>
                         
                         <input type="text" id="custom-address-search" placeholder="Nhập tên đường, phường, quận..." autocomplete="off">
@@ -131,34 +206,35 @@
                             <div><label>Kinh độ (Lon)</label><input type="text" name="lon" id="lonInput" value="{{ user_lon }}" readonly></div>
                         </div>
 
-                        <div style="margin-top: 10px;">
-                            <label style="font-size: 12px; color: #d88a9a; font-weight: 500;">Bán kính lọc shop (km):</label>
-                            <input type="number" name="radius" id="radiusInput" value="5" min="0" step="any" style="width: 100%; padding: 8px; border: 1px solid #ffc1cc; border-radius: 6px; margin-top: 5px;">                        </div>
+                        <div style="margin-top: 15px;">
+                            <label style="font-size: 13px; color: #555; font-weight: bold;">Bán kính lọc shop (km):</label>
+                            <input type="number" name="radius" id="radiusInput" value="5" min="0" step="any" style="width: 100%; padding: 10px 15px; border: 2px solid #fce4ec; border-radius: 10px; margin-top: 5px; font-family: 'Quicksand', sans-serif; outline: none;">                        
+                        </div>
                         
-                        <div class="btn-action-group" style="display: flex; gap: 10px; margin-top: 15px;">
-                            <button type="button" onclick="runGisAnalysis()" class="btn-scan" style="flex:1; background:#f1a1b1; color:white; border:none; padding:10px; border-radius:8px; cursor:pointer; font-weight:600;">
+                        <div style="display: flex; gap: 10px; margin-top: 20px;">
+                            <button type="button" onclick="runGisAnalysis()" class="btn-filled" style="flex:1; padding:12px;">
                                 <i class="fa-solid fa-bullseye"></i> Quét Vùng
                             </button>
-                            <button type="button" onclick="forceGetLocation()" class="btn-gps-white" style="flex:1; background:white; color:#d88a9a; border:2px solid #d88a9a; padding:10px; border-radius:8px; cursor:pointer; font-weight:600;">
-                                <i class="fa-solid fa-crosshairs"></i> Định Vị
+                            <button type="button" onclick="forceGetLocation()" class="btn-outline" style="flex:1; padding:12px;">
+                                <i class="fa-solid fa-location-arrow"></i> Định Vị
                             </button>
                         </div>
 
                         <div id="gis-analysis" class="analysis-info">
-                            <i class="fa-solid fa-circle-info"></i> Gõ địa chỉ và nhấn Enter, click map, hoặc vẽ để lọc
+                            <i class="fa-solid fa-lightbulb" style="color: #d88a9a;"></i> Gõ địa chỉ và nhấn Enter, click trực tiếp lên Map, hoặc vẽ hình học để lọc cửa hàng.
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-save-dark" style="width:100%; background:#333; color:white; padding:15px; border-radius:10px; margin-top:15px; font-weight:bold; border:none; cursor:pointer;">
-                        <i class="fa-solid fa-floppy-disk"></i> Lưu vị trí này
+                    <button type="submit" class="btn-filled" style="width:100%; padding:15px; margin-top:15px; font-size: 15px;">
+                        <i class="fa-solid fa-floppy-disk"></i> LƯU VỊ TRÍ NÀY
                     </button>
                 </form>
             </div>
         </div>
 
         <div class="tab-container">
-            <button class="tab-btn active" onclick="openTab(event, 'storeTab')">Cửa Hàng</button>
-            <button class="tab-btn" onclick="openTab(event, 'dressTab')">Váy Cưới</button>
+            <button class="tab-btn active" onclick="openTab(event, 'storeTab')"><i class="fa-solid fa-store"></i> Cửa Hàng</button>
+            <button class="tab-btn" onclick="openTab(event, 'dressTab')"><i class="fa-solid fa-shirt"></i> Váy Cưới</button>
         </div>
 
         <div class="scroll-content">
@@ -166,22 +242,25 @@
                 {% for store in stores %}
                 <div class="store-card" onclick="checkAndRoute({{ store.lat|stringformat:'f' }}, {{ store.lon|stringformat:'f' }})">
                     <div class="store-name">{{ store.name }}</div>
-                    <div class="store-addr"><i class="fa-solid fa-location-dot"></i> {{ store.address }}</div>
-                    <div style="margin-top: 12px; border-top: 1px dashed #ffd1dc; padding-top: 10px;">
+                    <div class="store-addr"><i class="fa-solid fa-location-dot" style="color:#d88a9a;"></i> {{ store.address }}</div>
+                    <div style="margin-top: 12px; border-top: 1px dashed #fce4ec; padding-top: 12px; display: flex; align-items: center;">
                         {% if not is_default %}
-                            <span class="badge-dist" style="background:#fff0f3; color:#d88a9a; padding:4px 8px; border-radius:15px; font-size:11px; font-weight:600;">
+                            <span style="background:#fff0f3; color:#d88a9a; padding:5px 10px; border-radius:20px; font-size:12px; font-weight:bold;">
                                 <i class="fa-solid fa-route"></i> {{ store.distance }} km
                             </span>
-                            <span class="badge-fee" style="margin-left:10px; font-size:11px; color:#666;">
-                                <i class="fa-solid fa-truck"></i> Ship: {{ store.formatted_fee }}
+                            <span style="margin-left:10px; font-size:12px; color:#555; font-weight: 600;">
+                                <i class="fa-solid fa-truck-fast" style="color:#d88a9a;"></i> Phí: {{ store.formatted_fee }}
                             </span>
                         {% else %}
-                            <span style="color:#ccc; font-size:11px;">Chưa có dữ liệu khoảng cách</span>
+                            <span style="color:#aaa; font-size:12px; font-style: italic;">Chưa có dữ liệu khoảng cách. Vui lòng định vị!</span>
                         {% endif %}
                     </div>
                 </div>
                 {% empty %}
-                <div style="padding:20px; text-align:center; color:#999;">Không có shop nào trong vùng này.</div>
+                <div style="padding:30px 20px; text-align:center; color:#888; line-height: 1.6;">
+                    <i class="fa-regular fa-face-frown" style="font-size: 2em; color: #d88a9a; margin-bottom: 10px; display: block;"></i>
+                    Không có shop nào trong bán kính này. Hãy thử nới rộng khoảng cách!
+                </div>
                 {% endfor %}
             </div>
 
@@ -193,14 +272,18 @@
                             {% if p.image %}
                                 <img src="{{ p.image.url }}" alt="{{ p.name }}">
                             {% else %}
-                                <div style="background:#eee; height:100%; display:flex; align-items:center; justify-content:center;">No Image</div>
+                                <div style="background:#fffcfd; height:100%; display:flex; align-items:center; justify-content:center; color: #d88a9a;"><i class="fa-regular fa-image fa-2x"></i></div>
                             {% endif %}
                         </div>
                         <div class="dress-info">
-                            <div class="dress-name">{{ p.name }}</div>
+                            <div class="dress-name" title="{{ p.name }}">{{ p.name }}</div>
                             <div class="dress-price">{{ p.price|intcomma }} đ</div>
                         </div>
                     </a>
+                    {% empty %}
+                    <div style="grid-column: span 2; padding:30px 20px; text-align:center; color:#888; line-height: 1.6;">
+                        Vùng bạn chọn hiện không có váy cưới nào.
+                    </div>
                     {% endfor %}
                 </div>
             </div>
@@ -213,6 +296,7 @@
             <button id="btn-bike" class="btn-vehicle" onclick="changeVehicle('bike')">🛵 Xe máy</button>
             <button id="btn-foot" class="btn-vehicle" onclick="changeVehicle('foot')">🚶 Đi bộ</button>
         </div>
+        
         <div id="map"></div>
     </div>
 
@@ -229,7 +313,24 @@
         var isDefault = {% if is_default %}true{% else %}false{% endif %};
     </script>
     
-    <script src="{% static 'js/map.js' %}?v=6"></script>
+    <!-- ĐỔI SỐ NÀY ĐỂ TRÌNH DUYỆT TẢI LẠI FILE JS MỚI -->
+    <script src="{% static 'js/map.js' %}?v=7"></script>
 
+    <script>
+        // JS Xử lý chuyển Tab trong Sidebar
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
 </body>
 </html>

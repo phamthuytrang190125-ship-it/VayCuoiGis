@@ -20,7 +20,7 @@ function openMgrTab(evt, tabName) {
     evt.currentTarget.className += " active";
 }
 
-// Tính năng Tìm kiếm nhanh Live Search (Xịn hơn Django Admin)
+// Tính năng Tìm kiếm nhanh Live Search 
 function filterProducts() {
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("searchProduct");

@@ -2,50 +2,138 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<link rel="stylesheet" href="{% static 'css/edit_store.css' %}">
+<style>
+    .form-label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 8px;
+        display: block;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 14.5px;
+    }
+    .form-input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #fce4ec;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 15px;
+        outline: none;
+        transition: all 0.3s ease;
+        background: white;
+    }
+    .form-input:focus {
+        border-color: #d88a9a;
+        box-shadow: 0 0 8px rgba(216,138,154,0.2);
+    }
+    .edit-card {
+        background: #fffcfd;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(216, 138, 154, 0.1);
+        border: 1px solid #fce4ec;
+    }
+    #mini-map {
+        height: 300px;
+        width: 100%;
+        border-radius: 15px;
+        border: 2px solid #fce4ec;
+        margin-bottom: 20px;
+        z-index: 1;
+    }
+</style>
 
-<div class="edit-store-container">
+<div class="container" style="max-width: 900px; margin: 40px auto; padding: 0 20px; min-height: 70vh;">
     
-    <h3 class="edit-store-title">
-        🏪 Sửa Thông Tin Cửa Hàng
-    </h3>
+    <div class="edit-card" data-aos="zoom-in">
 
-    <form method="POST" enctype="multipart/form-data" class="edit-store-form">
-        {% csrf_token %}
-        
-        <label>Tên cửa hàng:</label>
-        <input type="text" name="name" value="{{ store.name }}" required>
+        <h2 style="color: #4a4a4a; margin-top: 0; margin-bottom: 30px; font-family: 'Playfair Display', serif; font-size: 2.2em; font-weight: bold; text-align: center; border-bottom: 2px dashed #fce4ec; padding-bottom: 20px;">
+            <i class="fa-solid fa-shop" style="color: #d88a9a;"></i> Cập Nhật Chi Nhánh
+        </h2>
 
-        <label>Hotline:</label>
-        <input type="text" name="phone" value="{{ store.phone }}" required>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0 25px;">
+                
+                <div>
+                    <label class="form-label">Tên cửa hàng:</label>
+                    <input type="text" name="name" class="form-input" value="{{ store.name }}" required>
 
-        <label>Địa chỉ chi tiết:</label>
-        <input type="text" name="address" value="{{ store.address }}" required>
+                    <label class="form-label">Số điện thoại Hotline:</label>
+                    <input type="text" name="phone" class="form-input" value="{{ store.phone }}" required>
 
-        <div class="form-row-split">
-            <div class="form-col-half">
-                <label>Vĩ độ (Lat):</label>
-                <input type="number" step="any" name="lat" value="{{ store.latitude|stringformat:'f' }}" required>
+                    <label class="form-label">Địa chỉ chi tiết:</label>
+                    <input type="text" name="address" id="address_input" class="form-input" value="{{ store.address }}" required>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <div style="flex: 1;">
+                            <label class="form-label">Vĩ độ (Lat):</label>
+                            <input type="number" step="any" name="lat" id="lat_input" class="form-input" value="{{ store.latitude|stringformat:'f' }}" readonly style="background: #f9f9f9;">
+                        </div>
+                        <div style="flex: 1;">
+                            <label class="form-label">Kinh độ (Lon):</label>
+                            <input type="number" step="any" name="lon" id="lon_input" class="form-input" value="{{ store.longitude|stringformat:'f' }}" readonly style="background: #f9f9f9;">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="form-label">Vị trí trên bản đồ (Click để đổi):</label>
+                    <div id="mini-map"></div>
+
+                    <label class="form-label">Ảnh cửa hàng:</label>
+                    {% if store.image %}
+                        <img src="{{ store.image.url }}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; border: 1px solid #fce4ec;">
+                    {% endif %}
+                    <input type="file" name="image" class="form-input" style="padding: 9px 15px; background: white;">
+                </div>
+
             </div>
-            <div class="form-col-half">
-                <label>Kinh độ (Lon):</label>
-                <input type="number" step="any" name="lon" value="{{ store.longitude|stringformat:'f' }}" required>
-            </div>
-        </div>
 
-        <label>Hình ảnh hiện tại:</label>
-        {% if store.image %}
-            <div>
-                <img src="{{ store.image.url }}" class="edit-store-img-preview">
+            <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 20px; padding-top: 20px; border-top: 1px dashed #fce4ec;">
+                <a href="{% url 'custom_manager' %}" class="btn-outline" style="padding: 14px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1.05em; display: flex; align-items: center; gap: 8px;">
+                    Hủy Bỏ
+                </a>
+                <button type="submit" class="btn-filled" style="border: none; padding: 14px 40px; border-radius: 30px; font-weight: bold; font-size: 1.05em; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-floppy-disk"></i> LƯU THÔNG TIN
+                </button>
             </div>
-        {% endif %}
-        <input type="file" name="image">
-
-        <div class="edit-store-actions">
-            <button type="submit" class="btn-save-store">💾 Lưu Thay Đổi</button>
-            <a href="{% url 'custom_manager' %}" class="btn-cancel-store">Hủy / Trở về</a>
-        </div>
-    </form>
+            
+        </form>
+    </div>
 </div>
+
+<script>
+    // Khởi tạo bản đồ mini
+    var initialLat = {{ store.latitude|stringformat:'f' }};
+    var initialLon = {{ store.longitude|stringformat:'f' }};
+    
+    var map = L.map('mini-map').setView([initialLat, initialLon], 15);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(map);
+
+    var marker = L.marker([initialLat, initialLon], {draggable: true}).addTo(map);
+
+    // Khi click vào map
+    map.on('click', function(e) {
+        var lat = e.latlng.lat;
+        var lon = e.latlng.lng;
+        marker.setLatLng([lat, lon]);
+        document.getElementById('lat_input').value = lat.toFixed(6);
+        document.getElementById('lon_input').value = lon.toFixed(6);
+    });
+
+    // Khi kéo marker
+    marker.on('dragend', function(e) {
+        var lat = marker.getLatLng().lat;
+        var lon = marker.getLatLng().lng;
+        document.getElementById('lat_input').value = lat.toFixed(6);
+        document.getElementById('lon_input').value = lon.toFixed(6);
+    });
+</script>
 {% endblock %}

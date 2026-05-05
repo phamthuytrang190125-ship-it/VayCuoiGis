@@ -3,28 +3,125 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<style>
+    .form-label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 8px;
+        display: inline-block;
+        font-family: 'Quicksand', sans-serif;
+    }
+    .form-input {
+        width: 100%;
+        padding: 14px 20px;
+        border: 2px solid #fce4ec;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 15px;
+        outline: none;
+        transition: all 0.3s ease;
+        background: white;
+    }
+    /* Hiệu ứng khi click vào ô nhập liệu */
+    .form-input:focus {
+        border-color: #d88a9a;
+        box-shadow: 0 0 8px rgba(216,138,154,0.2);
+    }
+</style>
 
-<div style="max-width: 450px; margin: 50px auto; padding: 30px; border: 1px solid #ddd; border-top: 4px solid #d88a9a; background-color: #fff;">
+<div class="container" style="max-width: 450px; margin: 80px auto; padding: 0 20px; margin-bottom: 100px;">
     
-    <h2 style="text-align: center; color: #d88a9a; margin-bottom: 20px;">
-        Đăng Nhập
-    </h2>
+    <div data-aos="zoom-in" style="background: #fffcfd; padding: 40px; border-radius: 20px; box-shadow: 0 8px 30px rgba(216, 138, 154, 0.1); border: 1px solid #fce4ec;">
 
-    <form method="post">
-        {% csrf_token %}
-        
-        {{ form.as_p }}
+        <h2 style="text-align: center; color: #4a4a4a; margin-top: 0; margin-bottom: 30px; font-family: 'Playfair Display', serif; font-size: 2.2em; font-weight: bold;">
+            <i class="fa-solid fa-right-to-bracket" style="color: #d88a9a;"></i> Đăng Nhập
+        </h2>
 
-        <button type="submit" style="width: 100%; padding: 10px; background-color: #d88a9a; color: white; border: none; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 15px;">
-            Đăng Nhập
-        </button>
-    </form>
+        <form method="post">
+            {% csrf_token %}
+            
+            <label for="{{ form.username.id_for_label }}" class="form-label">
+                <i class="fa-regular fa-user" style="color: #d88a9a; margin-right: 5px;"></i> Tên đăng nhập:
+            </label>
+            {{ form.username }}
+            
+            <label for="{{ form.password.id_for_label }}" class="form-label" style="margin-top: 5px;">
+                <i class="fa-solid fa-lock" style="color: #d88a9a; margin-right: 5px;"></i> Mật khẩu:
+            </label>
+            {{ form.password }}
+            
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 25px;">
+                <a href="{% url 'reset_password' %}" style="color: #d88a9a; text-decoration: none; font-size: 0.95em; font-weight: 600; font-family: 'Quicksand', sans-serif; transition: 0.3s;" onmouseover="this.style.color='#c47686'" onmouseout="this.style.color='#d88a9a'">
+                    Quên mật khẩu?
+                </a>
+            </div>
 
-    <div style="text-align: center; margin-top: 20px; font-size: 14px;">
-        Chưa có tài khoản? <a href="{% url 'register' %}" style="color: #d88a9a; font-weight: bold; text-decoration: none;">Đăng ký ngay</a>
+            <button type="submit" class="btn-filled" style="width: 100%; border: none; padding: 16px; border-radius: 30px; font-size: 1.1em; letter-spacing: 1px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                ĐĂNG NHẬP
+            </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 25px; font-size: 1em; color: #666; padding-top: 20px; border-top: 1px dashed #fce4ec;">
+            Chưa có tài khoản? 
+            <a href="{% url 'register' %}" style="color: #d88a9a; font-weight: bold; text-decoration: none; margin-left: 5px; transition: 0.3s;" onmouseover="this.style.color='#c47686'" onmouseout="this.style.color='#d88a9a'">
+                Đăng ký ngay
+            </a>
+        </div>
+
     </div>
 
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. Thêm class và placeholder cho tất cả input
+        var inputs = document.querySelectorAll("input[type='text'], input[type='password']");
+        inputs.forEach(function(input) {
+            input.classList.add("form-input");
+            if (input.type === 'text' && !input.placeholder) input.placeholder = 'Nhập tên đăng nhập...';
+            if (input.type === 'password' && !input.placeholder) input.placeholder = 'Nhập mật khẩu...';
+        });
+
+        // 2. Thuật toán Gắn Mắt Thần cho ô mật khẩu
+        var passwordInput = document.querySelector("input[type='password']");
+        if (passwordInput) {
+            // Tạo bọc relative
+            var wrapper = document.createElement('div');
+            wrapper.style.position = 'relative';
+            wrapper.style.display = 'block';
+
+            passwordInput.parentNode.insertBefore(wrapper, passwordInput);
+            wrapper.appendChild(passwordInput);
+
+            // Tạo icon con mắt
+            var eyeIcon = document.createElement('i');
+            eyeIcon.className = 'fa-regular fa-eye-slash'; 
+            eyeIcon.style.position = 'absolute';
+            eyeIcon.style.right = '20px';
+            eyeIcon.style.top = '50%';
+            eyeIcon.style.transform = 'translateY(-50%)';
+            eyeIcon.style.marginTop = '-7px'; // Cân chỉnh lại do lề của label ở trên
+            eyeIcon.style.cursor = 'pointer';
+            eyeIcon.style.color = '#d88a9a';
+            eyeIcon.style.fontSize = '16px';
+            eyeIcon.style.zIndex = '10';
+
+            wrapper.appendChild(eyeIcon);
+
+            // Bắt sự kiện click
+            eyeIcon.addEventListener('click', function() {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    eyeIcon.className = 'fa-regular fa-eye';
+                } else {
+                    passwordInput.type = 'password';
+                    eyeIcon.className = 'fa-regular fa-eye-slash';
+                }
+            });
+        }
+    });
+</script>
 
 {% endblock %}

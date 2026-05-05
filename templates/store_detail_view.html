@@ -3,50 +3,105 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/store_detail.css' %}">
+<div class="container" style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
 
-<div class="store-detail-container">
-
-    <div class="store-header-box">
-        <h1>{{ store.name }}</h1>
-        <p>🏠 {{ store.address }} | 📞 {{ store.phone }}</p>
+    <div data-aos="fade-down" style="background: #fffcfd; padding: 40px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #fce4ec; text-align: center; margin-bottom: 50px;">
+        <h1 style="color: #d88a9a; font-family: 'Playfair Display', serif; font-size: 2.5em; font-weight: bold; margin-bottom: 20px;">
+            <i class="fa-solid fa-shop"></i> {{ store.name }}
+        </h1>
         
-        <a href="{% url 'map_view' %}?focus_store={{ store.id }}" class="btn-view-map">
-            📍 Xem vị trí trên bản đồ
+        <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; color: #555; font-size: 1.1em; margin-bottom: 30px;">
+            <span style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-location-dot" style="color: #d88a9a;"></i> {{ store.address }}
+            </span>
+            <span style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-phone" style="color: #d88a9a;"></i> <strong style="color: #333;">{{ store.phone }}</strong>
+            </span>
+        </div>
+        
+        <a href="{% url 'map_view' %}?focus_store={{ store.id }}" class="btn-filled" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1.05em;">
+            <i class="fa-solid fa-map-location-dot"></i> Xem vị trí trên bản đồ
         </a>
     </div>
 
-    <h3 style="margin-bottom: 20px; font-family: 'Playfair Display', serif; color: #4a4a4a;">
-        Sản phẩm đang có tại cửa hàng:
-    </h3>
+    <div data-aos="fade-up" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-bottom: 2px dashed #fce4ec; padding-bottom: 15px; margin-bottom: 40px; gap: 20px;">
+        <h3 style="margin: 0; font-family: 'Playfair Display', serif; color: #4a4a4a; font-size: 1.8em; font-weight: bold;">
+            <i class="fa-solid fa-shirt" style="color: #d88a9a;"></i> Sản phẩm tại cửa hàng
+        </h3>
+        
+        <div style="position: relative; width: 100%; max-width: 350px;">
+            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 15px; color: #d88a9a;"></i>
+            <input type="text" id="searchProduct" placeholder="Tìm tên váy nhanh..." 
+                   style="width: 100%; box-sizing: border-box; padding: 12px 15px 12px 45px; border-radius: 30px; border: 2px solid #fce4ec; font-family: 'Quicksand', sans-serif; font-size: 15px; outline: none; transition: 0.3s; box-shadow: 0 4px 10px rgba(216,112,147,0.05); color: #555;">
+        </div>
+    </div>
     
-    <div class="store-product-grid">
+    <div data-aos="fade-up" data-aos-delay="100" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; margin-bottom: 60px;">
+        
         {% for p in products %}
-        <div class="store-product-card">
-            <a href="{% url 'product_detail' p.id %}" style="text-decoration: none;">
+        <div class="product-card" style="background: white; border: 1px solid #fce4ec; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(216, 138, 154, 0.05); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-8px)'" onmouseout="this.style.transform='translateY(0)'">
+            <a href="{% url 'product_detail' p.id %}" style="text-decoration: none; color: inherit; display: block;">
                 
-                <div class="store-product-img-box">
+                <div style="height: 350px; width: 100%; overflow: hidden; border-bottom: 1px solid #fce4ec; position: relative;">
                     {% if p.image %}
-                        <img src="{{ p.image.url }}" alt="{{ p.name }}">
+                        <img src="{{ p.image.url }}" alt="{{ p.name }}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
                     {% else %}
-                        <div style="background: #eee; height: 100%; display: flex; align-items: center; justify-content: center; color: #aaa;">
-                            No Image
+                        <div style="width: 100%; height: 100%; background: #fffcfd; display: flex; align-items: center; justify-content: center; color: #f1a1b1;">
+                            <i class="fa-solid fa-image fa-3x"></i>
                         </div>
                     {% endif %}
+                    
+                    <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(255,255,255,0.9); color: #d88a9a; padding: 6px 12px; border-radius: 20px; font-size: 0.85em; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                        Xem chi tiết <i class="fa-solid fa-arrow-right" style="font-size: 0.9em;"></i>
+                    </div>
                 </div>
 
-                <div class="store-product-info">
-                    <h3>{{ p.name }}</h3>
-                    <p>{{ p.price|intcomma }} đ</p>
+                <div style="padding: 20px; text-align: center;">
+                    <h3 style="color: #333; margin-top: 0; margin-bottom: 10px; font-family: 'Quicksand', sans-serif; font-size: 1.25em; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ p.name }}">
+                        {{ p.name }}
+                    </h3>
+                    <p style="color: #d88a9a; font-weight: bold; font-size: 1.3em; margin: 0;">
+                        {{ p.price|intcomma }} <span style="font-size: 0.8em;">VNĐ</span>
+                    </p>
                 </div>
+
             </a>
         </div>
+        
         {% empty %}
-            <p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">
-                Cửa hàng này chưa cập nhật sản phẩm nào.
-            </p>
+            <div style="grid-column: 1/-1; text-align: center; padding: 50px; background: #fff0f3; border-radius: 20px; border: 1px solid #fce4ec;">
+                <i class="fa-solid fa-box-open fa-4x" style="color: #fce4ec; margin-bottom: 20px;"></i>
+                <p style="font-size: 1.2em; color: #777; font-family: 'Quicksand', sans-serif; margin: 0;">
+                    Cửa hàng <strong style="color: #d88a9a;">{{ store.name }}</strong> hiện chưa cập nhật bộ sưu tập váy nào.
+                </p>
+            </div>
         {% endfor %}
+        
     </div>
 
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchProduct');
+        const productCards = document.querySelectorAll('.product-card');
+
+        if(searchInput) {
+            searchInput.addEventListener('keyup', function() {
+                let filterText = this.value.toLowerCase().trim();
+
+                productCards.forEach(function(card) {
+                    // Lấy nội dung chữ của từng thẻ váy (chủ yếu là tên váy)
+                    let cardContent = card.textContent.toLowerCase();
+                    
+                    if (cardContent.includes(filterText)) {
+                        card.style.display = ""; // Khớp thì hiện
+                    } else {
+                        card.style.display = "none"; // Không khớp thì ẩn
+                    }
+                });
+            });
+        }
+    });
+</script>
 {% endblock %}

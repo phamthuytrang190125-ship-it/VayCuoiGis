@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<div class="container" style="max-width: 1000px; margin: 40px auto; padding: 0 20px; min-height: 70vh;">
+    
+    <h2 data-aos="fade-up" style="text-align: center; color: #4a4a4a; margin-bottom: 40px; font-family: 'Playfair Display', serif; font-size: 2.2em; font-weight: bold;">
+        Danh Sách Váy Chờ Thử
+    </h2>
+
+    {% if products %}
+        <div data-aos="fade-up" data-aos-delay="100" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; margin-bottom: 40px;">
+            {% for p in products %}
+            <div style="position: relative; border: 1px solid #fce4ec; border-radius: 15px; padding: 15px; text-align: center; background: #fffcfd; box-shadow: 0 5px 15px rgba(216,112,147,0.05); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                
+                <a href="{% url 'remove_from_trial' p.id %}" style="position: absolute; top: -10px; right: -10px; background: #ff4d4f; color: white; width: 28px; height: 28px; border-radius: 50%; text-decoration: none; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(255,77,79,0.4); transition: 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <i class="fa-solid fa-xmark"></i>
+                </a>
+
+                <div style="width: 100%; height: 200px; border-radius: 10px; overflow: hidden; margin-bottom: 15px;">
+                    {% if p.image %}
+                        <img src="{{ p.image.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    {% else %}
+                        <div style="width: 100%; height: 100%; background: #f0e6ea; display: flex; align-items: center; justify-content: center; color: #d87093;">Chưa có ảnh</div>
+                    {% endif %}
+                </div>
+                
+                <h4 style="font-size: 1.1em; color: #333; margin: 0 0 5px 0; font-weight: 600;">{{ p.name }}</h4>
+                <p style="color: #d88a9a; font-weight: bold; font-size: 1.1em; margin: 0 0 10px 0;">{{ p.price|intcomma }} đ</p>
+                <p style="font-size: 0.85em; color: #777; margin: 0; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                    <i class="fa-solid fa-store" style="color: #bbb;"></i> {{ p.store.name }}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div data-aos="fade-up" data-aos-delay="200" style="background: #fffcfd; padding: 40px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #fce4ec;">
+            <h3 style="color: #d88a9a; margin-top: 0; margin-bottom: 25px; font-family: 'Playfair Display', serif; font-size: 1.6em; border-bottom: 2px dashed #fce4ec; padding-bottom: 15px;">
+                <i class="fa-solid fa-clipboard-list"></i> Hoàn Tất Đặt Lịch
+            </h3>
+            
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 20px;">
+                    <input type="text" name="customer_name" required placeholder="Họ và tên của bạn" 
+                           style="flex: 1; min-width: 200px; padding: 14px 20px; border-radius: 12px; border: 2px solid #fce4ec; font-family: 'Quicksand', sans-serif; font-size: 15px; outline: none;">
+                    
+                    <input type="text" name="phone_number" required placeholder="Số điện thoại liên hệ" 
+                           style="flex: 1; min-width: 200px; padding: 14px 20px; border-radius: 12px; border: 2px solid #fce4ec; font-family: 'Quicksand', sans-serif; font-size: 15px; outline: none;">
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; color: #555; font-weight: 600; margin-bottom: 8px;"><i class="fa-regular fa-calendar"></i> Chọn ngày & giờ thử váy:</label>
+                    <input type="datetime-local" name="booking_date" required 
+                           style="width: 100%; padding: 14px 20px; border-radius: 12px; border: 2px solid #fce4ec; font-family: 'Quicksand', sans-serif; font-size: 15px; outline: none; color: #555;">
+                </div>
+                
+                <div style="margin-bottom: 20px; padding: 25px; border: 2px dashed #fce4ec; border-radius: 15px; background: white;">
+                    <label style="cursor: pointer; display: inline-flex; align-items: center; gap: 10px; font-weight: bold; color: #d88a9a; font-size: 1.1em; transition: 0.3s;">
+                        <input type="checkbox" id="home_try_on" name="is_shipping" style="width: 20px; height: 20px; cursor: pointer; accent-color: #d88a9a;">
+                        <i class="fa-solid fa-truck-fast"></i> Giao váy tận nhà (Thử tại nhà)
+                    </label>
+
+                    <div id="shipping_section" style="display: none; margin-top: 20px;">
+                        
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <input type="text" name="address" id="address_input" placeholder="Nhập địa chỉ nhà bạn..." 
+                                   style="flex: 1; padding: 12px 20px; border: 2px solid #fce4ec; border-radius: 30px; font-family: 'Quicksand', sans-serif; outline: none;">
+                            <button type="button" id="btn_search_address" class="btn-filled" style="border: none; border-radius: 30px; padding: 0 25px;">
+                                <i class="fa-solid fa-magnifying-glass"></i> Tìm
+                            </button>
+                        </div>
+                        
+                        <p style="font-size: 0.9em; color: #777; margin-bottom: 10px;">
+                            <i class="fa-solid fa-circle-info" style="color: #d88a9a;"></i> Bấm "Tìm" hoặc click lên bản đồ. <b>(Nhấn giữ và kéo ghim xanh để chỉnh vị trí cho chuẩn xác nhất)</b>
+                        </p>
+                        
+                        <div id="customerMap" style="height: 300px; width: 100%; border-radius: 12px; border: 1px solid #fce4ec; z-index: 1; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);"></div>
+                        
+                        <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                            <input type="text" name="latitude" id="lat_input" readonly placeholder="Vĩ độ (Lat)" 
+                                   style="flex: 1; padding: 12px; border: 1px solid #fce4ec; border-radius: 8px; background: #fffcfd; color: #d88a9a; font-weight: bold; outline: none; cursor: not-allowed; text-align: center; font-family: 'Quicksand', sans-serif;">
+                            <input type="text" name="longitude" id="lon_input" readonly placeholder="Kinh độ (Long)" 
+                                   style="flex: 1; padding: 12px; border: 1px solid #fce4ec; border-radius: 8px; background: #fffcfd; color: #d88a9a; font-weight: bold; outline: none; cursor: not-allowed; text-align: center; font-family: 'Quicksand', sans-serif;">
+                        </div>
+
+                        <div id="shipping_info" style="display: none; background: #fff0f3; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #fce4ec;">
+                            <p style="margin: 0 0 5px 0; font-size: 1em; color: #555;">
+                                Khoảng cách từ tiệm <strong style="color: #333;">{{ products.0.store.name }}</strong>: <strong id="distance_display" style="color: #d88a9a; font-size: 1.1em;">0 km</strong>
+                            </p>
+                            <p style="margin: 0; font-size: 1.1em; color: #333;">
+                                Phí vận chuyển (5k/km): <strong id="fee_display" style="color: #d88a9a; font-size: 1.2em;">0 đ</strong>
+                            </p>
+                        </div>
+
+                        <input type="hidden" name="shipping_fee" id="fee_input" value="0">
+                    </div>
+                </div>
+
+                <textarea name="note" rows="3" placeholder="Ghi chú thêm (VD: chiều cao 1m60, cân nặng 48kg...)" 
+                          style="width: 100%; padding: 15px 20px; border-radius: 12px; border: 2px solid #fce4ec; font-family: 'Quicksand', sans-serif; font-size: 15px; outline: none; margin-bottom: 25px; resize: vertical;"></textarea>
+                
+                <button type="submit" class="btn-filled" style="width: 100%; padding: 16px; border: none; border-radius: 30px; font-size: 1.1em; text-transform: uppercase; letter-spacing: 1px;">
+                    <i class="fa-solid fa-check-circle"></i> XÁC NHẬN ĐẶT LỊCH ({{ products.count }} VÁY)
+                </button>
+            </form>
+        </div>
+
+    {% else %}
+        <div data-aos="zoom-in" style="background: #fff0f3; color: #d88a9a; padding: 40px; border-radius: 20px; text-align: center; border: 1px solid #fce4ec; box-shadow: 0 5px 15px rgba(216,112,147,0.05);">
+            <i class="fa-regular fa-face-frown-open fa-3x" style="margin-bottom: 15px; color: #c47686;"></i>
+            <p style="font-size: 1.2em; margin-bottom: 20px; font-weight: 500; color: #555;">Giỏ váy thử của bạn đang trống.</p>
+            <a href="{% url 'store_list' %}" class="btn-filled" style="display: inline-block; text-decoration: none; padding: 12px 30px; font-size: 1.1em;">
+                <i class="fa-solid fa-arrow-left"></i> Quay lại khám phá váy
+            </a>
+        </div>
+    {% endif %}
+
+</div>
+
+{% if products %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkbox = document.getElementById('home_try_on');
+        const shippingSection = document.getElementById('shipping_section');
+        let map = null;
+        let currentMarker = null;
+        
+        // Lấy tọa độ gốc
+        const storeLat = parseFloat("{{ products.0.store.latitude|default:'10.762622' }}".replace(',', '.'));
+        const storeLon = parseFloat("{{ products.0.store.longitude|default:'106.660172' }}".replace(',', '.'));
+
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                shippingSection.style.display = 'block';
+                if (!map) {
+                    initMap();
+                } else {
+                    map.invalidateSize(); 
+                }
+            } else {
+                shippingSection.style.display = 'none';
+                document.getElementById('lat_input').value = '';
+                document.getElementById('lon_input').value = '';
+                document.getElementById('fee_input').value = '0';
+                document.getElementById('shipping_info').style.display = 'none';
+            }
+        });
+
+        function initMap() {
+            map = L.map('customerMap').setView([storeLat, storeLon], 13);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            var redIcon = new L.Icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
+            });
+            L.marker([storeLat, storeLon], {icon: redIcon}).addTo(map).bindPopup("<b>Gốc tính Ship ({{ products.0.store.name }})</b>");
+
+            map.on('click', function(e) {
+                updateLocation(e.latlng.lat, e.latlng.lng);
+            });
+
+            document.getElementById('btn_search_address').addEventListener('click', function() {
+                const addr = document.getElementById('address_input').value;
+                if (!addr) return alert("Vui lòng nhập địa chỉ cần giao váy!");
+                
+                const btn = this;
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>...';
+                
+                fetch("https://photon.komoot.io/api/?q=" + encodeURIComponent(addr) + "&limit=1")
+                .then(res => res.json())
+                .then(data => {
+                    btn.innerHTML = originalHtml;
+                    if (data.features && data.features.length > 0) {
+                        const lon = data.features[0].geometry.coordinates[0];
+                        const lat = data.features[0].geometry.coordinates[1];
+                        updateLocation(lat, lon);
+                        map.setView([lat, lon], 15);
+                    } else {
+                        alert("Không tìm thấy địa chỉ. Vui lòng click ghim trực tiếp trên bản đồ.");
+                    }
+                }).catch(e => {
+                    btn.innerHTML = originalHtml;
+                    alert("Lỗi tìm kiếm địa chỉ.");
+                });
+            });
+        }
+
+        function updateLocation(lat, lon) {
+            document.getElementById('lat_input').value = lat.toFixed(6);
+            document.getElementById('lon_input').value = lon.toFixed(6);
+
+            if (currentMarker) map.removeLayer(currentMarker);
+            
+            currentMarker = L.marker([lat, lon], {draggable: true}).addTo(map).bindPopup("Nhấn giữ và kéo để đổi vị trí").openPopup();
+
+            currentMarker.on('dragend', function(event) {
+                var position = currentMarker.getLatLng();
+                document.getElementById('lat_input').value = position.lat.toFixed(6);
+                document.getElementById('lon_input').value = position.lng.toFixed(6);
+                calculateShipping(position.lat, position.lng);
+            });
+
+            calculateShipping(lat, lon);
+        }
+
+        function calculateShipping(customerLat, customerLon) {
+            const storeLatLng = L.latLng(storeLat, storeLon);
+            const customerLatLng = L.latLng(customerLat, customerLon);
+            
+            const distanceMeters = storeLatLng.distanceTo(customerLatLng);
+            const distanceKm = (distanceMeters / 1000).toFixed(2);
+            
+            let fee = Math.round(distanceKm * 5000);
+            
+            document.getElementById('distance_display').innerText = distanceKm + " km";
+            document.getElementById('fee_display').innerText = fee.toLocaleString('vi-VN') + " đ";
+            
+            document.getElementById('fee_input').value = fee;
+            document.getElementById('shipping_info').style.display = 'block';
+        }
+    });
+</script>
+{% endif %}
+{% endblock %}

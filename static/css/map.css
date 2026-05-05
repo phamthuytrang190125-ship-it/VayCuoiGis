@@ -97,15 +97,20 @@ body {
 }
 
 .analysis-info { 
-    font-size: 12px; 
-    color: #555; 
-    margin-top: 10px; 
-    background: #fff; 
-    padding: 10px; 
-    border-radius: 8px; 
-    border-left: 4px solid #d88a9a;
-    line-height: 1.4;
-}
+        font-size: 13px; color: #666; margin-top: 15px; 
+        background: white; padding: 15px; border-radius: 10px; 
+        border-left: 4px solid #d88a9a; line-height: 1.5;
+        
+        /* Chặn chiều cao tối đa khoảng 120px (tầm 4-5 dòng) */
+        max-height: 120px; 
+        overflow-y: auto; /* Bật thanh cuộn dọc nếu chữ tràn ra ngoài */
+    }
+
+    /* Trang trí thanh cuộn mini cho ô thông báo nhìn mượt hơn */
+    .analysis-info::-webkit-scrollbar { width: 5px; }
+    .analysis-info::-webkit-scrollbar-track { background: transparent; }
+    .analysis-info::-webkit-scrollbar-thumb { background: #fce4ec; border-radius: 10px; }
+    .analysis-info::-webkit-scrollbar-thumb:hover { background: #d88a9a; }
 
 .hidden-inputs { display: none; }
 

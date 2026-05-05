@@ -3,90 +3,109 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
-
-<div class="detail-container">
-    <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+<div class="container" style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+    <div style="display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start;">
         
-        <div class="detail-main">
-            <div class="main-img-box">
+        <div style="flex: 2; min-width: 350px;" data-aos="fade-right">
+            
+            <div style="max-width: 480px; margin: 0 auto 20px auto; border-radius: 20px; overflow: hidden; border: 1px solid #fce4ec; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
                 {% if product.image %}
-                    <img id="main-wedding-img" src="{{ product.image.url }}" alt="{{ product.name }}">
+                    <img id="main-wedding-img" src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%; height: auto; aspect-ratio: 3/4; object-fit: cover; object-position: top; transition: opacity 0.3s ease; display: block;">
                 {% else %}
-                    <div style="width: 100%; height: 500px; background: #eee; display: flex; align-items: center; justify-content: center;">Chưa có ảnh</div>
+                    <div style="width: 100%; aspect-ratio: 3/4; background: #fffcfd; display: flex; align-items: center; justify-content: center; color: #f1a1b1;">
+                        <i class="fa-solid fa-image fa-4x"></i>
+                    </div>
                 {% endif %}
             </div>
 
-            <div class="thumb-bar">
+            <div style="display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; justify-content: center; flex-wrap: wrap;">
                 {% if product.image %}
-                <img src="{{ product.image.url }}" onclick="changeImage(this.src)" class="thumb-img" style="border: 2px solid #b5838d;">
+                <img src="{{ product.image.url }}" onclick="changeImage(this.src, this)" class="thumb-img active-thumb" style="width: 80px; height: 110px; object-fit: cover; border-radius: 10px; cursor: pointer; border: 2px solid #d88a9a; transition: 0.3s; flex-shrink: 0; opacity: 1;">
                 {% endif %}
 
                 {% for img in product.images.all %}
-                <img src="{{ img.image.url }}" onclick="changeImage(this.src)" class="thumb-img">
+                <img src="{{ img.image.url }}" onclick="changeImage(this.src, this)" class="thumb-img" style="width: 80px; height: 110px; object-fit: cover; border-radius: 10px; cursor: pointer; border: 2px solid transparent; transition: 0.3s; flex-shrink: 0; opacity: 0.6;" onmouseover="this.style.opacity='1'" onmouseout="if(!this.classList.contains('active-thumb')) this.style.opacity='0.6'">
                 {% endfor %}
             </div>
             
-            <h1 class="product-title">{{ product.name }}</h1>
-            <p class="product-price">Giá thuê: {{ product.price|intcomma }} VNĐ</p>
+            <h1 style="font-family: 'Playfair Display', serif; color: #4a4a4a; font-size: 2.5em; margin: 30px 0 10px 0; font-weight: bold; text-align: left; line-height: 1.3;">
+                {{ product.name }}
+            </h1>
 
-            <div class="store-info-box">
-                <h3 style="margin-top: 0; color: #6d6875; font-size: 1.1rem; margin-bottom: 10px;">📍 Sản phẩm đang có sẵn tại:</h3>
-                <p style="font-size: 1.1rem; font-weight: bold; color: #4a4a4a; margin-bottom: 5px;">{{ product.store.name }}</p>
-                <p style="color: #666; margin-bottom: 15px; font-size: 0.95rem;">🏠 Địa chỉ: {{ product.store.address }}</p>
+            {% if product.short_description %}
+            <p style="font-family: 'Quicksand', sans-serif; font-size: 1.15em; color: #777; font-style: italic; margin: 0 0 15px 0; line-height: 1.6; border-left: 3px solid #fce4ec; padding-left: 15px;">
+                {{ product.short_description }}
+            </p>
+            {% endif %}
 
-                <a href="{% url 'map_view' %}?focus_store={{ product.store.id }}" class="btn-map-direct">
-                   🗺️ Xem vị trí trên bản đồ & Chỉ đường
+            <p style="color: #d88a9a; font-weight: bold; font-size: 1.8em; margin: 0 0 30px 0; border-bottom: 2px dashed #fce4ec; padding-bottom: 20px; text-align: left;">
+                {{ product.price|intcomma }} <span style="font-size: 0.6em; color: #888; font-weight: normal;">VNĐ / Lần thuê</span>
+            </p>
+
+            <div style="background: #fffcfd; padding: 25px 30px; border-radius: 15px; border: 1px solid #fce4ec; margin-bottom: 35px; display: flex; flex-direction: column; gap: 15px;">
+                <h3 style="margin: 0; color: #4a4a4a; font-family: 'Playfair Display', serif; font-size: 1.4em;">
+                    <i class="fa-solid fa-store" style="color: #d88a9a;"></i> Sản phẩm đang có sẵn tại:
+                </h3>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <p style="font-size: 1.2em; font-weight: bold; color: #d88a9a; margin: 0;">{{ product.store.name }}</p>
+                    <p style="color: #666; margin: 0; font-size: 1.05em;"><i class="fa-solid fa-location-dot" style="color: #bbb; width: 20px;"></i> {{ product.store.address }}</p>
+                </div>
+
+                <a href="{% url 'map_view' %}?focus_store={{ product.store.id }}" class="btn-outline" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 20px; border-radius: 30px; text-decoration: none; width: fit-content; margin-top: 5px;">
+                   <i class="fa-solid fa-map-location-dot"></i> Xem vị trí trên bản đồ & Chỉ đường
                 </a>
             </div>
 
-            <div style="margin-top: 30px;">
-                <h4 style="border-bottom: 2px solid #f5ebe0; padding-bottom: 10px; color: #6d6875; font-size: 1.3rem;">Mô tả sản phẩm</h4>
-                <div style="line-height: 1.8; color: #555; background: #fffafb; padding: 20px; border-radius: 15px; margin-top: 15px; border: 1px solid #f5ebe0;">
+            <div>
+                <h4 style="font-family: 'Playfair Display', serif; color: #4a4a4a; font-size: 1.5em; margin-bottom: 15px;">
+                    <i class="fa-solid fa-circle-info" style="color: #d88a9a;"></i> Mô tả sản phẩm
+                </h4>
+                <div style="line-height: 1.8; color: #555; background: #fffcfd; padding: 25px; border-radius: 15px; border: 1px solid #fce4ec; font-size: 1.05em; text-align: justify;">
                     {{ product.description|linebreaks }}
                 </div>
             </div>
             
-            <a href="{% url 'home' %}" style="display: inline-block; margin-top: 30px; color: #b5838d; text-decoration: none; font-weight: 600;">← Quay lại trang chủ</a>
+            <a href="javascript:history.back()" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 30px; color: #d88a9a; text-decoration: none; font-weight: bold; transition: 0.3s;" onmouseover="this.style.transform='translateX(-5px)'" onmouseout="this.style.transform='translateX(0)'">
+                <i class="fa-solid fa-arrow-left"></i> Quay lại
+            </a>
         </div>
 
-        <div class="detail-sidebar">
-            <div class="booking-card">
-                <h2>✨ Đặt Lịch Thử Váy</h2>
-                <p style="text-align: center; color: #b5838d; font-size: 0.9rem; margin-bottom: 25px;">Hân hạnh đón tiếp bạn tại <strong>{{ product.store.name }}</strong></p>
+        <div style="flex: 1; min-width: 320px; position: sticky; top: 100px;" data-aos="fade-left">
+            <div style="background: white; padding: 35px; border-radius: 20px; border: 1px solid #fce4ec; box-shadow: 0 10px 30px rgba(216,138,154,0.08);">
                 
-                <form method="POST">
-                    {% csrf_token %} 
-                    <div class="form-group">
-                        <label>Họ và tên:</label>
-                        <input type="text" name="customer_name" required placeholder="Tên của bạn">
-                    </div>
+                <h2 style="text-align: center; color: #4a4a4a; font-family: 'Playfair Display', serif; font-size: 1.8em; margin-top: 0; margin-bottom: 10px;">
+                    <i class="fa-regular fa-calendar-check" style="color: #d88a9a;"></i> Đặt Lịch Thử Váy
+                </h2>
+                <p style="text-align: center; color: #777; font-size: 0.95em; margin-bottom: 30px;">
+                    Hân hạnh đón tiếp bạn tại <strong style="color: #d88a9a;">{{ product.store.name }}</strong>
+                </p>
+                
+                <a href="{% url 'add_to_trial' product.id %}" style="display: flex; justify-content: center; align-items: center; gap: 10px; background: #fff0f3; color: #d88a9a; border: 2px solid #fce4ec; padding: 15px; border-radius: 30px; font-weight: bold; font-size: 0.95em; text-decoration: none; margin-bottom: 15px; transition: all 0.3s ease;" onmouseover="this.style.background='#d88a9a'; this.style.color='white';">
+                    <i class="fa-solid fa-cart-plus" style="font-size: 1.2em;"></i> THÊM VÀO GIỎ THỬ VÁY
+                </a>
 
-                    <div class="form-group">
-                        <label>Số điện thoại:</label>
-                        <input type="text" name="phone_number" required placeholder="Số điện thoại liên hệ">
-                    </div>
+                <a href="{% url 'trial_cart' %}" class="btn-filled" style="display: flex; justify-content: center; align-items: center; gap: 10px; border: none; padding: 15px; border-radius: 30px; font-weight: bold; font-size: 0.95em; text-decoration: none; margin-bottom: 30px;">
+                    ĐI ĐẾN GIỎ HÀNG 
+                </a>
 
-                    <div class="form-group">
-                        <label>Ngày và giờ hẹn:</label>
-                        <input type="datetime-local" name="booking_date" required>
-                    </div>
+                <div style="padding: 20px; background: #fffafb; border-left: 4px solid #d88a9a; border-radius: 0 10px 10px 0; font-size: 0.95em; color: #666; line-height: 1.6; text-align: justify; margin-bottom: 25px;">
+                    <i class="fa-regular fa-lightbulb" style="color: #d88a9a; font-size: 1.2em;"></i> <strong>Mẹo nhỏ:</strong> Bạn có thể dạo quanh shop, thêm nhiều mẫu váy yêu thích vào danh sách. Sau đó điền thông tin giao váy <strong>1 lần duy nhất</strong> tại trang Danh sách chờ thử nhé!
+                </div>
 
-                    <div class="form-group">
-                        <label>Ghi chú thêm:</label>
-                        <textarea name="note" rows="3" placeholder="Ví dụ: Chiều cao, cân nặng..."></textarea>
-                    </div>
-
-                    <button type="submit" class="btn-booking-submit">HOÀN TẤT ĐẶT LỊCH</button>
-                </form>
+                <a href="{% url 'store_detail_view' product.store.id %}" class="btn-outline" style="display: flex; justify-content: center; align-items: center; gap: 10px; padding: 12px; border-radius: 30px; font-weight: bold; font-size: 0.9em; text-decoration: none;">
+                    <i class="fa-solid fa-store"></i> XEM THÊM VÁY TẠI TIỆM NÀY
+                </a>
+                
             </div>
         </div>
+
     </div>
 </div>
 
 <script>
-    function changeImage(src) {
+    function changeImage(src, element) {
         const mainImg = document.getElementById('main-wedding-img');
+        
         mainImg.style.opacity = '0.3'; 
         setTimeout(() => {
             mainImg.src = src;
@@ -94,8 +113,15 @@
         }, 150);
         
         const thumbs = document.querySelectorAll('.thumb-img');
-        thumbs.forEach(t => t.style.border = '1px solid #ddd');
-        event.target.style.border = '2px solid #b5838d';
+        thumbs.forEach(t => {
+            t.style.border = '2px solid transparent';
+            t.style.opacity = '0.6';
+            t.classList.remove('active-thumb');
+        });
+        
+        element.style.border = '2px solid #d88a9a';
+        element.style.opacity = '1';
+        element.classList.add('active-thumb');
     }
 </script>
 {% endblock %}

@@ -1,0 +1,22 @@
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #fce4ec; border-radius: 10px; background-color: #fffafb;">
+    <h2 style="color: #d88a9a; text-align: center;">👑 Bridal Luxury</h2>
+    <h3 style="color: #4a4a4a;">Xin chào {{ user.username }},</h3>
+    <p style="color: #555; line-height: 1.6;">
+        Cảm ơn bạn đã đăng ký thành viên tại Hệ thống Váy Cưới Bridal Luxury. <br>
+        Để hoàn tất quá trình đăng ký và bắt đầu đặt lịch thử váy, vui lòng nhấn vào nút bên dưới để xác thực email của bạn:
+    </p>
+    
+    <div style="text-align: center; margin: 30px 0;">
+        <a href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}" 
+           style="background-color: #d88a9a; color: white; padding: 12px 25px; text-decoration: none; font-weight: bold; border-radius: 25px; display: inline-block;">
+            XÁC THỰC TÀI KHOẢN
+        </a>
+    </div>
+
+    <p style="color: #888; font-size: 12px; margin-top: 20px; border-top: 1px dashed #fce4ec; padding-top: 15px;">
+        Nếu nút bấm không hoạt động, bạn có thể copy đường link này dán vào trình duyệt:<br>
+        <span style="color: #1565c0;">http://{{ domain }}{% url 'activate' uidb64=uid token=token %}</span>
+        <br><br>
+        <i>*Đây là email tự động, vui lòng không trả lời.</i>
+    </p>
+</div>
