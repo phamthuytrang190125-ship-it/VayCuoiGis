@@ -1,0 +1,38 @@
+DANH SÁCH CÁC CHỨC NĂNG CÓ TRONG ĐỒ ÁN
+
+Các chức năng đã bổ sung hoàn chỉnh:
+    - Nhập excel
+    - Quản lý trang giới thiệu
+    - Lọc và xuất danh sách các cửa hàng đã quét vùng
+    - Sửa lại reponsive ở trang quản trị hệ thống 
+
+
+1. Nhóm chức năng tài khoản, bảo mật:
+    - Đăng ký & đăng nhập: cho phép người dùng tạo và quản lý tài khoản cá nhân.
+    - Quên mật khẩu: hỗ trợ người dùng khôi phục mật khẩu an toàn.
+    - Xác thực mật khẩu: tích hợp công cụ Mailtrap để tự động gửi email xác nhận hoặc cấp lại mật khẩu.
+
+2. Nhóm chức giao diện & trải nghiệm người dùng:
+    - Giao diện tương thích (Responsive): tự động co giãn, hiển thị mượt mà trên cả điện thoại, máy tính bảng và PC.
+    - Xem bộ sưu tập: trưng bày danh sách sản phẩm váy cưới và thông tin các chi nhánh cửa hàng.
+    - Tìm kiếm & lọc: cho phép tìm sản phẩm hoặc cửa hàng nhanh chóng theo từ khóa.
+    - Phân trang dữ liệu: chia nhỏ danh sách sản phẩm/cửa hàng thành nhiều trang để web tải nhanh và dễ nhìn hơn.
+
+3. Nhóm chức năng bản đồ:
+    - Hiển thị bản đồ nền trực tuyến.
+    - Cho phép người dùng nhập địa chỉ và tự động chuyển đổi thành tọa độ GPS để xác định vị trí.
+    - Tìm kiếm và quét vùng để lọc ra danh sách các cửa hàng váy cưới trong bán kính nhất định.
+    - Tính khoảng cách để sắp xếp cửa hàng từ gần đến xa.
+    - Vẽ lộ trình di chuyển trên bản đồ từ vị trí khách hàng đến chi nhánh cửa hàng được chọn.
+    - Hiển thị thẻ thông tin khi click vào 1 cửa hàng bất kì trên bản đồ.
+
+
+4. Nhóm chức năng quản trị hệ thống: 
+    - Quản lý Booking: giúp quản trị viên theo dõi, duyệt đơn và quản lý lịch hẹn của khách hàng.
+    - Quản lý váy cưới: thêm, sửa, xóa thông tin sản phẩm và upload hình ảnh (tích hợp thư viện Pillow xử lý ảnh).
+    - Nhập & Xuất dữ liệu qua Excel: hỗ trợ tính năng đọc và xuất dữ liệu báo cáo ra file .xlsx
+    - Quản lý cửa hàng: cập nhật địa chỉ, số điện thoại, hình ảnh và tọa độ (Lat/Lon) của từng chi nhánh có tích hợp bản đồ.
+    - Quản lý giới thiệu: cho phép cập nhật linh hoạt nội dung trang giới thiệu trực tiếp trên web mà không cần can thiệp vào mã nguồn.
+    - Quản lý tài khoản: theo dõi danh sách, tìm kiếm theo email/tên, phân biệt rõ ràng quyền quản trị và có quyền khóa/xóa các tài khoản vi phạm.
+
+

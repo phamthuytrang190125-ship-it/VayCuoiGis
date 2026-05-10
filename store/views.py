@@ -81,20 +81,29 @@ def about(request):
 def map_view(request):
     products = Product.objects.all()
     stores = Store.objects.all()
+    
     user_lat = 10.7721 
     user_lon = 106.6983
     is_default = True  
     
-    if request.method == 'POST':
+    lat_str = request.POST.get('lat') or request.GET.get('lat', '')
+    lon_str = request.POST.get('lon') or request.GET.get('lon', '')
+    
+    if lat_str and lon_str:
         try:
-            lat_str = str(request.POST.get('lat', '')).replace(',', '.')
-            lon_str = str(request.POST.get('lon', '')).replace(',', '.')
+            lat_str = str(lat_str).replace(',', '.')
+            lon_str = str(lon_str).replace(',', '.')
             
             user_lat = float(lat_str)
             user_lon = float(lon_str)
             is_default = False 
+            
+            print(f"-----> [THÀNH CÔNG] Nhận tọa độ mới: Lat={user_lat}, Lon={user_lon}")
         except (ValueError, TypeError):
+            print("-----> [LỖI] Dữ liệu tọa độ gửi lên không hợp lệ!")
             pass 
+    else:
+        print("-----> [CẢNH BÁO] Không nhận được tọa độ từ web, đang xài tọa độ Q1 mặc định!")
 
     store_list = []
     for s in stores:
@@ -106,6 +115,7 @@ def map_view(request):
             dist = 0
             fee = 0
             formatted_fee = "---" 
+            
         store_list.append({
             'id': s.id,
             'name': s.name, 'address': s.address, 'phone': s.phone,
